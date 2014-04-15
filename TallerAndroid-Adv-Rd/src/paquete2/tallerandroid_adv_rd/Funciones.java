@@ -10,7 +10,7 @@ import android.util.Log;
 public class Funciones {
 
  private JSONParser jsonParser;
- private static String URL_LOGIN= "http://192.168.49.59/Taller_Android_ServicioRest/api/login.php";
+ private static String URL_LOGIN= "http://192.168.1.34/Taller_Android_ServicioRest/api/login.php";
  private static String ACCIONES[]= {"login"};
  
  /* CONSTRUCTOR */
@@ -20,7 +20,6 @@ public class Funciones {
  /* LOGIN */  
 	public JSONObject login(String codigo , String clave)
 	{
-		Log.e("ACCION", ACCIONES[0]);
 		//Construyendo los parametros.  NameValuePair encapsula (Attributo/Valor).
 		List<NameValuePair> parametros = new ArrayList<NameValuePair>();
 		parametros.add( new BasicNameValuePair("accion", ACCIONES[0]));
@@ -28,9 +27,8 @@ public class Funciones {
 		parametros.add( new BasicNameValuePair("clave", clave));
 		//Envia los parametros a la clase para obtener json.
 		JSONObject json = jsonParser.obtenerJSON_URL(URL_LOGIN, parametros);
-		Log.e("TAG-PARSER-JSON", json+"");
 		return json;
 	}
-	
+ 	
 	
 }

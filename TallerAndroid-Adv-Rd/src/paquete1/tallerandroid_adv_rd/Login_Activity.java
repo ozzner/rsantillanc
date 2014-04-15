@@ -1,8 +1,9 @@
 package paquete1.tallerandroid_adv_rd;
 
+import org.json.JSONException;
 import org.json.JSONObject;
-
 import paquete2.tallerandroid_adv_rd.Funciones;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -14,12 +15,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Login_Activity extends Activity {
+public class Login_Activity<Testing> extends Activity {
 
-EditText edCodigo;
-EditText edPassword;
-TextView tvMensaje;
-Button 	 bnLogin;
+ private static String KEY_STATUS="status";
+	EditText edCodigo;
+	EditText edPassword;
+	TextView tvMensaje;
+	Button 	 bnLogin;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,49 +34,87 @@ Button 	 bnLogin;
 		
 		bnLogin.setOnClickListener(new OnClickListener() {
 			
-			public void onClick(View v) {
+			public void onClick(View v) 
+			{
+				Testing test =  new Testing();
+				test.execute();
 				
-				Thread thread = new Thread(new Runnable(){
-					
-					String sCod = edCodigo.getText().toString();
-					String sPas = edPassword.getText().toString();
-					
-				    @Override
-				    public void run() {
+			}
+			
+			class Testing extends AsyncTask<String, Void,String> {
+				
+				String sInfo ="";
+					@Override
+					protected String doInBackground(String... arg0) {
+						
+						String sCod  = edCodigo.getText().toString();
+						String sPas  = edPassword.getText().toString();
+						
+						String sStat = "";
 				    	Funciones oFun = new Funciones();
 						JSONObject oJson = oFun.login(sCod,sPas);//Envia los parametros.
 						
-				    	try{
-							String sInfo = oJson.getString("info");//informa del evento.
-							
-							if (oJson.getString("status")=="no login!") {
-								Toast.makeText(getApplicationContext(),sInfo, Toast.LENGTH_SHORT).show();
-							}else if(oJson.getString("status") == "error!") {
-								Toast.makeText(getApplicationContext(),sInfo, Toast.LENGTH_SHORT).show();
-							}else if(oJson.getString("status") !="ok!") {
-								Log.e("acceso denegado",oJson.getString("info") );
-								Toast.makeText(getApplicationContext(),"Error en el servicio", Toast.LENGTH_SHORT).show();
-							}else{
-								
-									if(oJson.getString("usuario")=="alumno")
-									{	Intent itAlum = new Intent(getApplicationContext(), Alumno_Activity.class);
-										startActivity(itAlum);}
-									else
-									{	Intent itPro = new Intent(getApplicationContext(), Profesor_Activity.class);
+						try{
+			    		
+			    		if ((oJson.get("status").toString()).equals("no login!")) {
+								sInfo = oJson.getString("info");
+								sStat = oJson.getString("status");
+								Log.e("TAG-01", oJson.getString("status"));
+						}else if((oJson.get("status").toString()).equals("no user!")) {
+								sInfo = oJson.getString("info");
+								sStat = oJson.getString("status");
+								Log.e("TAG-02", oJson.getString("status"));
+						}else if((oJson.get("status").toString()).equals("user!")) {
+							sInfo = oJson.getString("info");
+							sStat = oJson.getString("status");
+							Log.e("TAG-03", oJson.getString("status"));
+						}else if((oJson.get("status").toString()).equals("ok!")) {
+								sInfo = oJson.getString("info");
+								sStat = oJson.getString("status");
+								Log.e("TAG-04", oJson.getString("status"));
+								if((oJson.getString("usuario")).equals("alumno"))
+									
+								{	Intent itAlum = new Intent(getApplicationContext(), Alumno_Activity.class);
+									startActivity(itAlum);}
+								else
+								{	Intent itPro = new Intent(getApplicationContext(), Profesor_Activity.class);
 									startActivity(itPro);}
+						}else{
+							sInfo = oJson.getString("info");
+							sStat = oJson.getString("status");
+							Log.e("TAG-05", oJson.getString("status"));
 							}
-						}catch (Exception e) {
-							Log.e("ERROR-SERVICIO", e.getMessage());
+				    	} catch (JSONException e) {
+							e.printStackTrace();
 						}
-				    }
-				});
+						return sStat;
+					}
+										
+					protected void onPostExecute(String result) {
+										
+						if(result.equals("no user!"))
+							Toast.makeText(getApplicationContext(), sInfo, Toast.LENGTH_SHORT).show();
+						else if(result.equals("no login!"))
+							Toast.makeText(getApplicationContext(), sInfo, Toast.LENGTH_SHORT).show();
+						else if(result.equals("user!"))
+							Toast.makeText(getApplicationContext(), sInfo, Toast.LENGTH_SHORT).show();
+						else if(result.equals("ok!"))
+							Toast.makeText(getApplicationContext(), "Wellcome!", Toast.LENGTH_LONG).show();
+						else
+						Toast.makeText(getApplicationContext(),"Error: "+sInfo, Toast.LENGTH_SHORT).show();
+			        }
 
-				thread.start(); 
+			        @Override
+			        protected void onPreExecute() {	
+			        }
+
+			        protected void onProgressUpdate(Void... values) {
+			        }
+				}
 				
-			}
+			
+
 		});
+		
 	}
-
-	
-
 }

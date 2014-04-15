@@ -50,7 +50,7 @@ public class JSONParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    	
+    	Log.e("TAG-INPUTSTREAM", inStream +"");
     	/* Recibe la data, la almacena y la transforma a una cadena String*/
     	try {
     		/*Permite manejar el flujo de caracteres de entrada almacenado en búfer.*/

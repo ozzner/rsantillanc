@@ -17,7 +17,7 @@ public class Profesor_Activity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.inicio_, menu);
+		getMenuInflater().inflate(R.menu.alumno_activity, menu);
 		return true;
 	}
 
@@ -26,11 +26,11 @@ public class Profesor_Activity extends Activity {
 
 		switch (item.getItemId()) {
 
-		case R.id.menu1:
+		case R.id.mnu1:
 			break;
-		case R.id.menu2:
+		case R.id.mnu2:
 			break;
-		case R.id.menu3:
+		case R.id.mnu3:
 			break;
 		}
 

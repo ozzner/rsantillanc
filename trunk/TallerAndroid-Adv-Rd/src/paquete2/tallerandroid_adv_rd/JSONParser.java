@@ -59,7 +59,7 @@ public class JSONParser {
     	    String sLinea = null;
     	    while((sLinea = buffReader.readLine()) != null)
     	    {
-    	    	sBuider.append(sLinea); //Agrega los datos a stringBuider
+    	    	sBuider.append(sLinea+"\n"); //Agrega los datos a stringBuider
     	    }
     	    inStream.close();//Cerramos el string
     	    json = sBuider.toString();

@@ -13,8 +13,9 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        <!-- Login -->
         <activity
-            android:name="paquete1.tallerandroid_adv_rd.Inicio_Activity"
+            android:name="paquete1.tallerandroid_adv_rd.Login_Activity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +23,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+        <!-- Alumno -->
+        <activity 
+            android:label="Alumno"
+            android:name=".Alumno_Activity"></activity>
+        <!-- Profesor -->
+        <activity 
+            android:label="Profesor"
+            android:name=".Profesor_Activity"></activity>
     </application>
-
+    
+    
+ <!-- permisos -->
+	<uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

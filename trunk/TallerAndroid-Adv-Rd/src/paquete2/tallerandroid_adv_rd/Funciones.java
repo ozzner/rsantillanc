@@ -10,7 +10,7 @@ import android.util.Log;
 public class Funciones {
 
  private JSONParser jsonParser;
- private static String URL_LOGIN= "http://192.168.1.34/Taller_Android_ServicioRest/api/login.php";
+ private static String URL_LOGIN= "http://192.168.49.59/Taller_Android_ServicioRest/api/login.php";
  private static String ACCIONES[]= {"login"};
  
  /* CONSTRUCTOR */
@@ -30,5 +30,4 @@ public class Funciones {
 		return json;
 	}
  	
-	
 }

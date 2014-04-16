@@ -17,22 +17,12 @@ public class Profesor_Activity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.alumno_activity, menu);
+		getMenuInflater().inflate(R.menu.profesor, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-
-		switch (item.getItemId()) {
-
-		case R.id.mnu1:
-			break;
-		case R.id.mnu2:
-			break;
-		case R.id.mnu3:
-			break;
-		}
 
 		return true;
 

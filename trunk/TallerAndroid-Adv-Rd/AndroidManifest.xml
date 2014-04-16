@@ -29,12 +29,12 @@
         <!-- Alumno -->
         <activity 
             android:label="Alumno"
-            android:uiOptions="splitActionBarWhenNarrow"
+           
             android:name=".Alumno_Activity"></activity>
         <!-- Profesor -->
         <activity 
             android:label="Profesor"
-            android:uiOptions="splitActionBarWhenNarrow"
+           
             android:name=".Profesor_Activity"></activity>
     </application>
     

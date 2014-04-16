@@ -18,7 +18,7 @@ import org.json.JSONObject;
 import android.util.Log;
 
 public class JSONParser {
-	static InputStream inStream = null; //Leertor de bytes
+	static InputStream inStream = null;//Leertor de bytes
     static JSONObject oJson = null;//Objeto json
     static String json = ""; //Variable
     
@@ -38,6 +38,7 @@ public class JSONParser {
     		HttpPost httpPost = new HttpPost(url);					 
     		/* lanzada por httpPost.setEntity().*/
     		httpPost.setEntity(new UrlEncodedFormEntity(parametros));
+    		
     		HttpResponse httpResponse = cliente_Http.execute(httpPost);
     		/*Entidad que puede ser enviada o recibida con mensaje http*/
     		HttpEntity httpEntity = httpResponse.getEntity();

@@ -17,7 +17,7 @@ private TextView tvUser;
 		
 		tvUser = (TextView)findViewById(R.id.tvWellcomeProfesor);
 		Bundle oBundle = getIntent().getExtras();
-		tvUser.setText("Bienvenido profesor, "+oBundle.getInt("usuario"));
+		tvUser.setText("Bienvenido profesor, "+oBundle.getString("usuario"));
 	}
 
 	@Override

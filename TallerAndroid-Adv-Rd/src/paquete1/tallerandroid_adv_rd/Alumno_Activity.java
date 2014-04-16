@@ -16,24 +16,21 @@ public class Alumno_Activity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.alumno_activity, menu);
+		getMenuInflater().inflate(R.menu.alumno, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-
 		switch (item.getItemId()) {
 		case R.id.mnu1:
+			// do something for menu 1
 			break;
 		case R.id.mnu2:
-			break;
-		case R.id.mnu3:
+			// do something for menu 2
 			break;
 		}
-
-		return true;
-
+		return super.onOptionsItemSelected(item);
 	}
 
 }

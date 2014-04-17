@@ -6,6 +6,7 @@ import paquete2.tallerandroid_adv_rd.Funciones;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,7 @@ public class Login_Activity<Testing> extends Activity {
  private static String KEY_STATUS="status";
  private static String KEY_INFO  ="info";
  private static String KEY_USUARIO="usuario";
+ private ProgressDialog proDialog;
 	EditText edCodigo;
 	EditText edPassword;
 	TextView tvMensaje;
@@ -56,7 +58,8 @@ public class Login_Activity<Testing> extends Activity {
 						JSONObject oJson = oFun.login(sCod,sPas);//Envia los parametros.
 						
 						try{
-			    		
+							
+			    		/*Evalua las respuestas del servidor*/
 			    		if ((oJson.get(KEY_STATUS).toString()).equals("no login!")) {
 								sInfo = oJson.getString(KEY_INFO);
 								sStat = oJson.getString(KEY_STATUS);
@@ -91,6 +94,8 @@ public class Login_Activity<Testing> extends Activity {
 					}
 										
 					protected void onPostExecute(String result) {
+						proDialog.dismiss();
+						
 						System.out.println("REsultado onPost: "+result);
 						if(result.equals("no user!"))
 							Toast.makeText(getApplicationContext(), sInfo, Toast.LENGTH_SHORT).show();
@@ -103,8 +108,20 @@ public class Login_Activity<Testing> extends Activity {
 						}else
 						Toast.makeText(getApplicationContext(),"Error: "+sInfo, Toast.LENGTH_SHORT).show();
 			        }
+					
+					@Override
+					protected void onPreExecute() {
+						super.onPreExecute();
+						proDialog = new ProgressDialog(Login_Activity.this);
+						proDialog.setMessage("Ingresando...");
+						proDialog.setIndeterminate(false);
+						proDialog.setCancelable(false);
+						proDialog.show();
+					}
 
 				}
+			
+			
 
 		});
 		

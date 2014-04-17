@@ -27,8 +27,21 @@ private TextView tvUser;
 		return true;
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*ESTO ES PARA MAS ADELANTE*/
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		
 		switch (item.getItemId()) {
 		case R.id.mnu1:
 			// do something for menu 1
@@ -37,7 +50,6 @@ private TextView tvUser;
 			Intent itLogin = new Intent(getApplicationContext(),Login_Activity.class);
 			startActivity(itLogin);finish();
 			break;
-
 		}
 		return super.onOptionsItemSelected(item);
 	}

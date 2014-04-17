@@ -13,7 +13,8 @@ public class Funciones {
  private static String URL_LOGIN= "http://itlab.fis.ulima.edu.pe/Taller_Android_ServicioRest/api/login.php";
  private static String URL_NOTA= "http://itlab.fis.ulima.edu.pe/Taller_Android_ServicioRest/api/nota_rest.php";
  private static String URL_ALUMNO= "http://itlab.fis.ulima.edu.pe/Taller_Android_ServicioRest/api/alumno_rest.php";
- private static String ACCIONES[]= {"login,listar"};
+ private static String ACCIONES[]= {"login","listar"};
+ 
  
  /* ----------CONSTRUCTOR---------- */ 
 	public Funciones() {
@@ -23,6 +24,7 @@ public class Funciones {
  /* ----------LOGIN---------- */ 
 	public JSONObject login(String codigo , String clave)
 	{
+		System.out.println(ACCIONES[0]);
 		JSONObject json = null; 
 		//Construyendo los parametros.  NameValuePair encapsula (Attributo/Valor).
 		List<NameValuePair> parametros = new ArrayList<NameValuePair>();

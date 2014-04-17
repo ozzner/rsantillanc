@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight=".05"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:orientation="vertical" >
 
         <TextView
@@ -55,17 +55,22 @@
 
             <Button
                 android:id="@+id/button1"
-                android:layout_width="106dp"
-                android:layout_height="35dp"
-                android:textSize="13sp"
-                android:text="grabar" />
+                android:layout_width="100dp"
+                android:layout_height="25dp"
+                android:background="@drawable/button_shape"
+                android:fontFamily="tahoma"
+                android:text="grabar"
+                android:textSize="13sp" />
 
             <Button
                 android:id="@+id/button2"
-                android:layout_width="106dp"
-                android:layout_height="35dp"
-                android:textSize="13sp"
-                android:text="eliminar" />
+                android:layout_width="100dp"
+                android:layout_height="25dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/button_shape"
+                android:fontFamily="tahoma"
+                android:text="eliminar"
+                android:textSize="13sp" />
         </LinearLayout>
     </LinearLayout>
 

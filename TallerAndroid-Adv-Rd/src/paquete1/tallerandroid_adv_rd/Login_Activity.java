@@ -113,9 +113,9 @@ public class Login_Activity<Testing> extends Activity {
 					protected void onPreExecute() {
 						super.onPreExecute();
 						proDialog = new ProgressDialog(Login_Activity.this);
-						proDialog.setMessage("Ingresando...");
+						proDialog.setMessage("conectando...");
 						proDialog.setIndeterminate(false);
-						proDialog.setCancelable(false);
+						proDialog.setCancelable(true);
 						proDialog.show();
 					}
 

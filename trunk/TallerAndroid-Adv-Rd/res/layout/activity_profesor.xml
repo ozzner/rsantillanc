@@ -22,7 +22,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.01"
+        android:layout_weight="0.20"
         android:orientation="horizontal" >
 
         <LinearLayout
@@ -31,24 +31,34 @@
             android:gravity="center"
             android:orientation="vertical" >
 
+            <ListView
+                android:id="@+id/lsvCursos"
+                android:layout_width="match_parent"
+                android:layout_weight="0.4"
+                android:layout_height="20dp" >
+
+            </ListView>
+
             <Spinner
                 android:id="@+id/spinAlumNota"
-                android:layout_width="110sp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_width="match_parent"
+                android:layout_weight="0.4"
+                android:layout_height="20sp"
+                />
 
             <EditText
-                android:id="@+id/editText1"
+                android:id="@+id/edtNota"
                 android:layout_width="50sp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_height="20sp"
+                android:layout_weight="0.2"
                 android:ems="10"
+                android:layout_gravity="left"
                 android:inputType="number" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="119dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_gravity="right"
             android:gravity="center"
             android:orientation="vertical" >
@@ -96,6 +106,7 @@
                     android:id="@+id/tvPantalla"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:text="TextView" />
 
             </LinearLayout>

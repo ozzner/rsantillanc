@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Login_Activity<Testing> extends Activity {
+public class Login_Activity extends Activity {
 
  private static String KEY_STATUS="status";
  private static String KEY_INFO  ="info";

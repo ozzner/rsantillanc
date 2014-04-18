@@ -4,7 +4,7 @@
     <item
         android:showAsAction="ifRoom"
                android:id="@+id/mnu1"
-      android:icon="@drawable/refresh"
+      android:icon="@drawable/refresh3"
        />
     <item
         android:showAsAction="ifRoom"

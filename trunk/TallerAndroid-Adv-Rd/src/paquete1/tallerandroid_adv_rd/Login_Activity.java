@@ -77,11 +77,11 @@ public class Login_Activity<Testing> extends Activity {
 								
 								if((oJson.getString(KEY_USUARIO)).equals("alumno"))
 								{	Intent itAlum = new Intent(getApplicationContext(), Alumno_Activity.class);
-									itAlum.putExtra(KEY_USUARIO,(oJson.getString("nombre")));//Transfiero el usuario
+//									itAlum.putExtra(KEY_USUARIO,(oJson.getString("nombre")));//Transfiero el usuario
 									startActivity(itAlum);finish();}
 								else
 								{	Intent itPro = new Intent(getApplicationContext(), Profesor_Activity.class);
-									itPro.putExtra(KEY_USUARIO,(oJson.getString("nombre")));
+//									itPro.putExtra(KEY_USUARIO,(oJson.getString("nombre")));
 									startActivity(itPro);finish();}
 						}else{
 							sInfo = oJson.getString(KEY_INFO);

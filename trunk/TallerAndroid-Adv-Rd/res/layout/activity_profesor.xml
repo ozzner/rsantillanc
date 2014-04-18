@@ -54,25 +54,25 @@
             android:orientation="vertical" >
 
             <Button
-                android:id="@+id/button1"
+                android:id="@+id/btnGrabar"
                 android:layout_width="100dp"
                 android:layout_height="25dp"
-                android:background="@drawable/button_shape"
+                android:background="@drawable/button_shape_2"
                 android:fontFamily="tahoma"
-                android:text="grabar"
+                android:text="Grabar"
                 android:textColor="#ffffff"
-                android:textSize="13sp" />
+                android:textSize="12sp" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/btnEliminar"
                 android:layout_width="100dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/button_shape"
+                android:background="@drawable/button_shape_2"
                 android:fontFamily="tahoma"
-                android:text="eliminar"
+                android:text="Eliminar"
                 android:textColor="#ffffff"
-                android:textSize="13sp" />
+                android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
 

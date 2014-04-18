@@ -39,17 +39,16 @@ public class JSONParser {
     	// Creando peticion HTTP 
     	
     		/*Crea los objetos HttpClient y HttpPost para ejecutar la solicitud POST*/
-    		HttpPost httpPost = new HttpPost(url);	
-    		HttpParams httpParameters = new BasicHttpParams();
-    		HttpConnectionParams.setConnectionTimeout(httpParameters, 100);
-    		HttpConnectionParams.setSoTimeout(httpParameters, 100);
+    		DefaultHttpClient httpClient = new DefaultHttpClient();
+    		HttpParams httpParamentros = httpClient.getParams();
+    		HttpConnectionParams.setConnectionTimeout(httpParamentros, 10000);
+    		HttpConnectionParams.setSoTimeout(httpParamentros, 10000);
+    		HttpPost httpPost = new HttpPost(url);
     		
-    		DefaultHttpClient cliente_Http = new DefaultHttpClient();
-
     	try {					 
     		/* lanzada por httpPost.setEntity().*/
     		httpPost.setEntity(new UrlEncodedFormEntity(parametros));
-    		HttpResponse httpResponse = cliente_Http.execute(httpPost);
+    		HttpResponse httpResponse = httpClient.execute(httpPost);
     		/*Entidad que puede ser enviada o recibida con mensaje http*/
     		HttpEntity httpEntity = httpResponse.getEntity();
     		inStream = httpEntity.getContent();
@@ -79,7 +78,7 @@ public class JSONParser {
     	    }
     	    inStream.close();//Cerramos el string
     	    json = sBuider.toString();
-    	    Log.e("JSON", json);
+    	    Log.e("JSON-PARSER", json);
     	    
 		} catch (Exception e) {
 			Log.e("Error Buffer", "Error convirtiendo el resultado " + e.toString());

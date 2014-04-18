@@ -20,7 +20,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-public class Profesor_Activity extends Activity  {
+public class Profesor_Activity<AsyncTest> extends Activity  {
 	private TextView tvUser;
 	private Spinner spiAlumNotas;
 	private Button btnEliminar;
@@ -48,18 +48,20 @@ public class Profesor_Activity extends Activity  {
 			}
 
 			class AsyncTest extends AsyncTask<String, Void, String> {
-				
-				Funciones oFun = new Funciones();
-				JSONObject oJson = oFun.listarAlumnos();// Envia los parametros.
+			
 				String[] arrNombres;
+				
 
 				@Override
 				protected String doInBackground(String... params) {
+					Funciones oFun = new Funciones();
+					JSONObject oJson = oFun.listarAlumnos();// Envia los parametros.}
+					
 					Log.e("DOING-BG1", oFun+"");
 					int tamaño = oJson.length();
 					String sData;
 					arrNombres = new String[tamaño];
-					Log.e("DOING-BG2", oJson+"");
+					Log.e("DOING-BG2", oJson+"->>talla: "+tamaño);
 					for (int i = 0; i < tamaño; i++) {
 
 						try {
@@ -70,6 +72,7 @@ public class Profesor_Activity extends Activity  {
 						}
 					}
 
+					
 					return null;
 				}
 

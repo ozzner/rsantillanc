@@ -57,6 +57,8 @@ public class Login_Activity<Testing> extends Activity {
 				    	Funciones oFun = new Funciones();
 						JSONObject oJson = oFun.login(sCod,sPas);//Envia los parametros.
 						
+				if(oJson != null) {	
+					
 						try{
 							
 			    		/*Evalua las respuestas del servidor*/
@@ -77,11 +79,11 @@ public class Login_Activity<Testing> extends Activity {
 								
 								if((oJson.getString(KEY_USUARIO)).equals("alumno"))
 								{	Intent itAlum = new Intent(getApplicationContext(), Alumno_Activity.class);
-//									itAlum.putExtra(KEY_USUARIO,(oJson.getString("nombre")));//Transfiero el usuario
+									itAlum.putExtra(KEY_USUARIO,(oJson.getString("nombre")));//Transfiero el usuario
 									startActivity(itAlum);finish();}
 								else
 								{	Intent itPro = new Intent(getApplicationContext(), Profesor_Activity.class);
-//									itPro.putExtra(KEY_USUARIO,(oJson.getString("nombre")));
+									itPro.putExtra(KEY_USUARIO,(oJson.getString("nombre")));
 									startActivity(itPro);finish();}
 						}else{
 							sInfo = oJson.getString(KEY_INFO);
@@ -90,6 +92,10 @@ public class Login_Activity<Testing> extends Activity {
 				    	} catch (JSONException e) {
 							e.printStackTrace();
 						}
+				}else
+				{
+					sStat = "timeout";
+				}
 						return sStat;
 					}
 										
@@ -103,10 +109,12 @@ public class Login_Activity<Testing> extends Activity {
 							Toast.makeText(getApplicationContext(), sInfo, Toast.LENGTH_SHORT).show();
 						else if(result.equals("user!"))
 							Toast.makeText(getApplicationContext(), sInfo, Toast.LENGTH_SHORT).show();
-						else if(result.equals("ok!")){
+						else if(result.equals("ok!"))
 							Toast.makeText(getApplicationContext(), "Wellcome!", Toast.LENGTH_LONG).show();
-						}else
-						Toast.makeText(getApplicationContext(),"Error: "+sInfo, Toast.LENGTH_SHORT).show();
+						else if(result.equals("timeout"))
+						Toast.makeText(getApplicationContext(),"Timeout: el servidor no responde!", Toast.LENGTH_SHORT).show();
+						else
+							Toast.makeText(getApplicationContext(),"Error desconocido: "+sInfo, Toast.LENGTH_SHORT).show();
 			        }
 					
 					@Override

@@ -4,21 +4,12 @@
     <item
         android:showAsAction="ifRoom"
                android:id="@+id/mnu1"
-      android:icon="@drawable/icon3"
-        android:title="Gestionar"/>
+      android:icon="@drawable/refresh"
+       />
     <item
         android:showAsAction="ifRoom"
         android:id="@+id/mnu2"
-        android:title="Exit"/>
-	<item
-        android:showAsAction="ifRoom"
-        android:id="@+id/mnu3"
-        android:icon="@drawable/icon1"
-        android:title="Cursos"/>
-	<item
-        android:showAsAction="ifRoom"
-        android:id="@+id/mnu4"
-        android:icon="@drawable/icon4"
-        android:title="Notas"/>
+        android:icon="@drawable/logout"
+      />
     
 </menu>

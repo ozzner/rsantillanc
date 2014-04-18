@@ -87,7 +87,7 @@
                     android:layout_weight="0.2"
                     android:background="@drawable/button_shape"
                     android:fontFamily="tahoma"
-                    android:text="Iniciar sesion"
+                    android:text="Login"
                     android:textColor="#ffffff"
                     android:textSize="10sp" />
 

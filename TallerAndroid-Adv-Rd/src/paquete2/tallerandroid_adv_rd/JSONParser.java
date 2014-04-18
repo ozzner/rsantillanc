@@ -37,15 +37,18 @@ public class JSONParser {
     public JSONObject obtenerJSON_URL(String url, List<NameValuePair> parametros) {
     	
     	// Creando peticion HTTP 
-    	
+    		
+    	try {	
+    	   	
     		/*Crea los objetos HttpClient y HttpPost para ejecutar la solicitud POST*/
     		DefaultHttpClient httpClient = new DefaultHttpClient();
+    		/*Creamos el timeout*/
     		HttpParams httpParamentros = httpClient.getParams();
-    		HttpConnectionParams.setConnectionTimeout(httpParamentros, 10000);
-    		HttpConnectionParams.setSoTimeout(httpParamentros, 10000);
+    		HttpConnectionParams.setConnectionTimeout(httpParamentros, 6000);
+    		HttpConnectionParams.setSoTimeout(httpParamentros, 6000);
+    		/*Método de envio POST100*/
     		HttpPost httpPost = new HttpPost(url);
     		
-    	try {					 
     		/* lanzada por httpPost.setEntity().*/
     		httpPost.setEntity(new UrlEncodedFormEntity(parametros));
     		HttpResponse httpResponse = httpClient.execute(httpPost);
@@ -66,6 +69,8 @@ public class JSONParser {
         }
     	Log.e("TAG-INPUTSTREAM", inStream +"");
     	
+    	
+    if(inStream!=null)	{
     	/* Recibe la data, la almacena y la transforma a una cadena String*/
     	try {
     		/*Permite manejar el flujo de caracteres de entrada almacenado en búfer.*/
@@ -90,6 +95,10 @@ public class JSONParser {
 		} catch (Exception e) {
 			 Log.e("JSON Parser", "Error al analizar Data" + e.toString());
 		}
+    	
+    }else{
+    	oJson = null;
+    }
     	
     	return oJson; //devuelve el Objeto JSON
     	

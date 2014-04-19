@@ -50,7 +50,7 @@ public class Funciones {
 
 		List<NameValuePair> parametros = new ArrayList<NameValuePair>();
 		parametros.add( new BasicNameValuePair("accion", ACCIONES[1]));
-
+	
 		try {
 			json = jsonParser.obtenerJSON_URL(URL_ALUMNO, parametros);
 		} catch (Exception e) {
@@ -67,7 +67,7 @@ public class Funciones {
 	/* ----------INSERTAR NOTA---------- */ 
 	public JSONObject insertarNota(String curso , String nota, String alumno, String profesor)
 	{ 
-		System.out.println(ACCIONES[0]);
+		System.out.println(ACCIONES[2]);
 		JSONObject json = null; 
 		
 		List<NameValuePair> parametros = new ArrayList<NameValuePair>();
@@ -78,7 +78,7 @@ public class Funciones {
 		parametros.add( new BasicNameValuePair("profesor", profesor));
 
 		try {
-			json = jsonParser.obtenerJSON_URL(URL_LOGIN, parametros);
+			json = jsonParser.obtenerJSON_URL(URL_NOTA, parametros);
 		} catch (Exception e) {
 			Log.e("URL", e.getMessage());
 			}

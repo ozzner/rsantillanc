@@ -22,8 +22,6 @@ public class Login_Activity extends Activity {
  private static String KEY_INFO  ="info";
  private static String KEY_USUARIO="usuario";
  private ProgressDialog proDialog;
-	EditText edCodigo;
-	EditText edPassword;
 	TextView tvMensaje;
 	Button 	 bnLogin;
 
@@ -33,8 +31,10 @@ public class Login_Activity extends Activity {
 		setContentView(R.layout.activity_login);
 		
 		bnLogin = (Button)findViewById(R.id.btnLogin);
-		edCodigo  = (EditText)findViewById(R.id.etCodigo);
-		edPassword = (EditText)findViewById(R.id.etPassword);
+		
+		final EditText edCodigo  = (EditText)findViewById(R.id.edtCodigo);
+		final EditText edPassword = (EditText)findViewById(R.id.edtPassword);
+		
 		bnLogin.setOnClickListener(new OnClickListener() {
 			
 			public void onClick(View v) 

@@ -73,6 +73,7 @@
                 android:layout_width="50sp"
                 android:layout_height="wrap_content"
                 android:textAlignment="gravity"
+                android:maxLength="20"
                 android:hint="00"
                 android:ems="10"
                 android:layout_gravity="center_horizontal"
@@ -94,14 +95,14 @@
                 android:textSize="12sp" />
 
             <Button
-                android:id="@+id/btnEliminar"
+                android:id="@+id/btnClear"
                 android:layout_width="100dp"
                 android:layout_height="25dp"
                 android:layout_marginTop="5dp"
                 android:layout_gravity="center"
                 android:background="@drawable/button_shape_2"
                 android:fontFamily="tahoma"
-                android:text="Eliminar"
+                android:text="Clear log"
                 android:textColor="#ffffff"
                 android:textSize="12sp" />
 

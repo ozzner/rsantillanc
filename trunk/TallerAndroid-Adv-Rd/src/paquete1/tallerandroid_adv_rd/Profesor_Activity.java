@@ -36,7 +36,7 @@ public class Profesor_Activity extends Activity {
 	private TextView tvUser;
 	private ListView lsvCursos;
 	private Spinner spiAlumNotas;
-	private Button btnGrabar;
+	private Button btnGrabar,btnClearLog;
 	private EditText edtNota;
 	private String sAlumno,sCurso, sNota;
 	private String[] arrNombres;
@@ -58,6 +58,7 @@ public class Profesor_Activity extends Activity {
 		spiAlumNotas = (Spinner) findViewById(R.id.spinAlumNota);
 		tvLogCat = (TextView)findViewById(R.id.tvPantalla);
 		btnGrabar = (Button)findViewById(R.id.btnGrabar);
+		btnClearLog = (Button)findViewById(R.id.btnClear);
 		lsvCursos = (ListView)findViewById(R.id.lsvCursos);
 		edtNota = (EditText)findViewById(R.id.edtNota);
 		
@@ -80,7 +81,16 @@ public class Profesor_Activity extends Activity {
 							
 				
 					}
-		});//end Listener button
+		});//end Listener button Grabar
+		
+		btnClearLog.setOnClickListener( new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				tvLogCat.setText("");
+				Toast.makeText(getApplicationContext(), "Cleaned!", Toast.LENGTH_SHORT).show();
+					}
+		});//end Listener button ClearLog
 		
 		lsvCursos.setOnItemClickListener( new OnItemClickListener() {
 
@@ -128,21 +138,20 @@ public class Profesor_Activity extends Activity {
 				 if((oJson.getString(KEY_STATUS)).equals("ok!"))				
 				 { sInfo = oJson.getString(KEY_INFO);
 				   sStatus = oJson.getString(KEY_STATUS);
-					}											
+				 }else{sStatus = "error insert!";}											
 				 					 
 			}catch (JSONException e) {
 				Log.e("TAG", "Error con el servicio: " + e.getMessage());
 			}
 		
 		}else{
-			sStatus = "error"; }
+			sStatus = "error!"; }
 
 			return sStatus;
 			}
 	
 			@Override
 			protected void onPostExecute(String result) {
-				Log.e("TAG RESULT", result);
 				if(result.equals("ok!"))
 					Toast.makeText(getApplicationContext(), "Successful!", Toast.LENGTH_SHORT).show();
 				else
@@ -150,20 +159,16 @@ public class Profesor_Activity extends Activity {
 				
 				String sInput;
 				sInput="+------------------------------------+\n";
-				sInput +="Alumno: "+sAlumno+"\n";
-				sInput +="Curso : "+sCurso+"\n";
-				sInput +="Nota  : "+sNota+"\n";
-				sInput +="Status: "+sInfo+"\n";
+				sInput +="\bAlumno: "+sAlumno+"\n";
+				sInput +="\bCurso : "+sCurso+"\n";
+				sInput +="\bNota  : "+sNota+"\n";
+				sInput +="\bStatus: "+sInfo+"\n";
 				
 					tvLogCat.append(sInput);
 					tvLogCat.append("\n");
-			
-			
 			}
 		}
 
-		
-	
 	
 	/*----------LLENAR SPINNER----------*/
 	protected void  runBackroundSpinner() {
@@ -176,8 +181,8 @@ public class Profesor_Activity extends Activity {
 		@Override
 		protected String doInBackground(String... params) {
 			Funciones oFun = new Funciones();
-			JSONObject oJson = oFun.listarAlumnos();// Envia los
-													// parametros.}
+			JSONObject oJson = oFun.listarAlumnos();
+												
 			try {
 				JSONArray jsArrData = new JSONArray(oJson.getJSONArray("data").toString());
 				

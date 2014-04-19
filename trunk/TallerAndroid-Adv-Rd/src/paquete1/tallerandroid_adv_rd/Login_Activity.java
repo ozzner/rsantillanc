@@ -23,15 +23,14 @@ public class Login_Activity extends Activity {
  private static String KEY_USUARIO="usuario";
  private ProgressDialog proDialog;
 	TextView tvMensaje;
-	Button 	 bnLogin;
+	;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
-		bnLogin = (Button)findViewById(R.id.btnLogin);
-		
+		final Button bnLogin = (Button)findViewById(R.id.btLogin);
 		final EditText edCodigo  = (EditText)findViewById(R.id.edtCodigo);
 		final EditText edPassword = (EditText)findViewById(R.id.edtPassword);
 		

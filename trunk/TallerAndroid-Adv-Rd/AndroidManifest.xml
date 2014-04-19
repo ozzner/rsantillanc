@@ -18,7 +18,9 @@
 		<activity
             android:name="paquete1.tallerandroid_adv_rd.Login_Activity"
             android:uiOptions="splitActionBarWhenNarrow"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,12 +31,12 @@
         <!-- Alumno -->
         <activity 
             android:label="Alumno"
-           
+            android:windowSoftInputMode="stateHidden"
             android:name=".Alumno_Activity"></activity>
         <!-- Profesor -->
         <activity 
             android:label="Profesor"
-           
+            android:windowSoftInputMode="stateHidden"
             android:name=".Profesor_Activity"></activity>
     </application>
     

@@ -1,108 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/svContenedor"
-    android:fillViewport="true"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="#FFFFFF"
-     >
-<!--Contenedor-->
-    <RelativeLayout
+
+    <!-- Contenedor -->
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/RelativeLayout1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" 
-        android:gravity="center">
-<!--head-->
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:gravity="center" >
+
+        <!-- head -->
+
         <LinearLayout
             android:id="@+id/layHead"
-             android:background="@layout/repetir_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-
+            android:background="@layout/repetir_header"
+            android:orientation="horizontal" >
         </LinearLayout>
-<!--body-->
-        <LinearLayout
-            android:id="@+id/layBody"
-            android:layout_below="@+id/layHead"
-            android:layout_above="@+id/layItlab"
+
+        <!-- body -->
+
+        <ScrollView
+            android:id="@+id/scrollBody"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical" >
+       		android:layout_below="@+id/layHead"
+            android:layout_above="@+id/layItlab"
+            android:layout_height="wrap_content" >
 
             <LinearLayout
-                android:id="@+id/layLoginInput"
+                android:id="@+id/layControles"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="50dp"
-                 android:layout_marginLeft="50dp"
+                android:layout_gravity="center"
                 android:orientation="vertical" >
 
-                <TextView
-                    android:id="@+id/txtCodigo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Código:"
-                    android:textColor="#5FA4EE" />
-
-                <EditText
-                    android:id="@+id/edtCodigo"
+                <LinearLayout
+                    android:id="@+id/layLoginInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="number" >
-                    <requestFocus />
-                    
-                </EditText>
+                    android:layout_marginLeft="50dp"
+     				android:layout_marginRight="50dp"
+     				android:layout_marginTop="25dp"
+                    android:orientation="vertical" >
 
-                <TextView
-                    android:id="@+id/txtPasword"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="Password:"
-                    android:textColor="#5FA4EE" />
+                    <TextView
+                        android:id="@+id/txtCodigo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Código:"
+                        android:textColor="#5FA4EE" />
 
-                <EditText
-                    android:id="@+id/edtPassword"
+                    <EditText
+                        android:id="@+id/edtCodigo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="number" >
+
+                        <requestFocus />
+                    </EditText>
+
+                    <TextView
+                        android:id="@+id/txtPasword"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="Password:"
+                        android:textColor="#5FA4EE" />
+
+                    <EditText
+                        android:id="@+id/edtPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textPassword" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layLoginBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:inputType="textPassword" />
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+                    android:layout_marginBottom="25dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/txtStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:gravity="center"
+                        android:text="status"
+                        android:textColor="#ffffff"
+                        android:textSize="10sp" />
+
+                    <Button
+                        android:id="@+id/btLogin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="29dp"
+                        android:layout_weight="0.2"
+                        android:background="@drawable/button_shape"
+                        android:fontFamily="tahoma"
+                        android:text="Login"
+                        android:textColor="#ffffff"
+                        android:textSize="10sp" />
+                </LinearLayout>
             </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layLoginBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="50dp" >
-
-                <TextView
-                    android:id="@+id/txtStatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="status"
-                    android:textColor="#ffffff"
-                    android:textSize="10sp"
-                    android:layout_weight="0.8" />
-
-                <Button
-                    android:id="@+id/btnLogin"
-                    android:layout_width="wrap_content"
-                    android:layout_height="29dp"
-                    android:layout_weight="0.2"
-                    android:background="@drawable/button_shape"
-                    android:fontFamily="tahoma"
-                    android:text="Login"
-                    android:textColor="#ffffff"
-                    android:textSize="10sp" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-<!--footer-->
+        </ScrollView>
 
         <LinearLayout
             android:id="@+id/layItlab"
@@ -110,29 +116,23 @@
             android:layout_height="70dp"
             android:layout_alignParentBottom="true"
             android:orientation="vertical" >
-            
-         <ImageView
+
+            <ImageView
                 android:id="@+id/imageView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:layout_marginLeft="20dp"
                 android:src="@drawable/logoitilab" />
-
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/layFooter"
-            android:background="@layout/repetir_footer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:background="@layout/repetir_footer"
             android:orientation="horizontal" >
-
-            
-
         </LinearLayout>
-        
-    </RelativeLayout>
-    
-</ScrollView>
+
+</RelativeLayout>

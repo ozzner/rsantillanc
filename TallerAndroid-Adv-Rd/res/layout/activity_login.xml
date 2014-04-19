@@ -47,13 +47,13 @@
                     android:textColor="#5FA4EE" />
 
                 <EditText
-                    android:id="@+id/etCodigo"
+                    android:id="@+id/edtCodigo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="number" >
-
                     <requestFocus />
+                    
                 </EditText>
 
                 <TextView
@@ -65,7 +65,7 @@
                     android:textColor="#5FA4EE" />
 
                 <EditText
-                    android:id="@+id/etPassword"
+                    android:id="@+id/edtPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"

@@ -37,8 +37,10 @@ public class Profesor_Activity extends Activity {
 	private EditText edtNota;
 	private String sAlumno,sCurso, sNota;
 	private String[] arrNombres;
-	private String[] arrCursos;
 	private String[] arrCodigo;
+	private String[] arrCursos = { "CALCULO I", "TECNICAS DE PROGRAMACION", "PSICOLOGIA ORGANIZACIONAL", "LENGUAJE I", "PSICOLOGIA ORGANIZACIONAL",
+								"COMUNICACION DE DATOS", "SEGURIDAD DE REDES", "ARQUITECTURA DE SOFTWARE" , "SEGURIDAD DE REDES",
+								"SISTEMAS OPERATIVOS II", "CURSO GRATIS ANDROID","CURSO GRATIS ANDROID"};
 	private TextView tvLogCat;
 	private int cont = 1;
 	
@@ -66,25 +68,25 @@ public class Profesor_Activity extends Activity {
 				String sInput;
 				sNota = edtNota.getText().toString();
 				
-				sInput="+----------------------------+\n";
+				sInput="+------------------------------------+\n";
 				sInput +=" "+sAlumno+": "+sCurso+": "+sNota+"\n";
+				Log.e("TAG_STRINGS", sNota+"-("+sInput+")-"+sCurso+"-"+sAlumno);
 				
-				for (int i = 0; i < cont; i++) {
-					arrOutput[i] = sInput;	}
+					tvLogCat.append(sInput);
+					tvLogCat.append("\n");
 				
-				tvLogCat.setText(arrOutput.toString());
+				Log.e("TAG_output", arrOutput+"");
+	
 				cont++;	}
 		});//end Listener button
 		
-		lsvCursos.setOnItemSelectedListener(new OnItemSelectedListener() {
+		lsvCursos.setOnItemClickListener( new OnItemClickListener() {
 
 			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1,int arg2, long arg3) {
-				sCurso = arrCursos[arg2];}
-			
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {}
-		});//end Listener listView
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
+				sCurso = arrCursos[arg2];
+				Log.e("TAG_sCurso", sCurso+"-->"+arg2+"");	}
+		});	//end Listener listView
 		
 		
 		spiAlumNotas.setOnItemSelectedListener( new OnItemSelectedListener() {
@@ -144,16 +146,9 @@ public class Profesor_Activity extends Activity {
 				else
 					Toast.makeText(getApplicationContext(), "Error!", Toast.LENGTH_SHORT).show();
 			}
-
-	
 		}
 
 		
-	
-	
-
-	
-	
 	
 	
 	/*----------LLENAR SPINNER----------*/
@@ -190,9 +185,8 @@ public class Profesor_Activity extends Activity {
 
 		@Override
 		protected void onPostExecute(String result) {
-			
 			ArrayAdapter<String> arrAdapter1 = new ArrayAdapter<String>(
-					Profesor_Activity.this, android.R.layout.simple_list_item_1,R.array.arrCursos);
+					Profesor_Activity.this, android.R.layout.simple_list_item_1,arrCursos);
 			lsvCursos.setAdapter(arrAdapter1);
 					
 			ArrayAdapter<String> arrAdapter2 = new ArrayAdapter<String>(

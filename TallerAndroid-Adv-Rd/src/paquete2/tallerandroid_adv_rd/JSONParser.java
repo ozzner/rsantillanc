@@ -44,8 +44,8 @@ public class JSONParser {
     		DefaultHttpClient httpClient = new DefaultHttpClient();
     		/*Creamos el timeout*/
     		HttpParams httpParamentros = httpClient.getParams();
-    		HttpConnectionParams.setConnectionTimeout(httpParamentros, 6000);
-    		HttpConnectionParams.setSoTimeout(httpParamentros, 6000);
+    		HttpConnectionParams.setConnectionTimeout(httpParamentros, 8000);
+    		HttpConnectionParams.setSoTimeout(httpParamentros, 8000);
     		/*Método de envio POST100*/
     		HttpPost httpPost = new HttpPost(url);
     		

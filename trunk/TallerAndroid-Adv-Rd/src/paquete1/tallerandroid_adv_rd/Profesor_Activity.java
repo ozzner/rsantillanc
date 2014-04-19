@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +31,8 @@ import android.widget.Toast;
 public class Profesor_Activity extends Activity {
 	private static String KEY_STATUS="status";
 	private static String KEY_INFO  ="info";
+	private String sInfo="";
+	private TextView tvLogCat;
 	private TextView tvUser;
 	private ListView lsvCursos;
 	private Spinner spiAlumNotas;
@@ -37,12 +40,10 @@ public class Profesor_Activity extends Activity {
 	private EditText edtNota;
 	private String sAlumno,sCurso, sNota;
 	private String[] arrNombres;
-	private String[] arrCodigo;
-	private String[] arrCursos = { "CALCULO I", "TECNICAS DE PROGRAMACION", "PSICOLOGIA ORGANIZACIONAL", "LENGUAJE I", "PSICOLOGIA ORGANIZACIONAL",
-								"COMUNICACION DE DATOS", "SEGURIDAD DE REDES", "ARQUITECTURA DE SOFTWARE" , "SEGURIDAD DE REDES",
-								"SISTEMAS OPERATIVOS II", "CURSO GRATIS ANDROID","CURSO GRATIS ANDROID"};
-	private TextView tvLogCat;
-	private int cont = 1;
+	private String[] arrCursos = { "Calculo I", "Tecnicas de programacion", "Lenguaje I", "Psicologia organizacional",
+								"Comunicaciones de datos", "Seguridad de redes", "Arquitectua de software",
+								"Sistemas operativos II","Curso gratis android"};
+
 	
 	
 	/*----------CREATE----------*/	
@@ -64,20 +65,21 @@ public class Profesor_Activity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				String[] arrOutput = new String[cont];
-				String sInput;
 				sNota = edtNota.getText().toString();
+				Log.e("TAG-SNOTA", sNota);
+				if(sCurso==null)
+				{
+					Toast.makeText(getApplicationContext(), "Click en cursos antes de grabar!", Toast.LENGTH_SHORT).show();			
 				
-				sInput="+------------------------------------+\n";
-				sInput +=" "+sAlumno+": "+sCurso+": "+sNota+"\n";
-				Log.e("TAG_STRINGS", sNota+"-("+sInput+")-"+sCurso+"-"+sAlumno);
+				}else if(TextUtils.isEmpty(sNota)){
+					Toast.makeText(getApplicationContext(), "No olvide ingresar una nota!", Toast.LENGTH_SHORT).show();	
+				}else{
+					runBackroundInsertar();
+			
+					}
+							
 				
-					tvLogCat.append(sInput);
-					tvLogCat.append("\n");
-				
-				Log.e("TAG_output", arrOutput+"");
-	
-				cont++;	}
+					}
 		});//end Listener button
 		
 		lsvCursos.setOnItemClickListener( new OnItemClickListener() {
@@ -103,9 +105,6 @@ public class Profesor_Activity extends Activity {
 
 	
 	
-	
-	
-	
 	/*----------INSERTAR NOTAS----------*/
 	protected void runBackroundInsertar() {
 		AsyncTest2 backgrounTest = new AsyncTest2();
@@ -113,7 +112,7 @@ public class Profesor_Activity extends Activity {
 	}
 
 	class AsyncTest2 extends AsyncTask<String, Void, String> {
-		String sInfo="";
+
 		@Override
 		protected String doInBackground(String... params) {
 			String sStatus ="";
@@ -122,12 +121,14 @@ public class Profesor_Activity extends Activity {
 			
 			Funciones oFun = new Funciones();
 			JSONObject oJson = oFun.insertarNota(sCurso, sNota, sAlumno, sProfesor);
+			Log.e("json--",oJson+"");
 		if(oJson!=null){
 			try {
 				
-				 if(!(oJson.getString(KEY_STATUS)).equals("ok!"))				
+				 if((oJson.getString(KEY_STATUS)).equals("ok!"))				
 				 { sInfo = oJson.getString(KEY_INFO);
-				   sStatus = oJson.getString(KEY_STATUS);}											
+				   sStatus = oJson.getString(KEY_STATUS);
+					}											
 				 					 
 			}catch (JSONException e) {
 				Log.e("TAG", "Error con el servicio: " + e.getMessage());
@@ -135,16 +136,29 @@ public class Profesor_Activity extends Activity {
 		
 		}else{
 			sStatus = "error"; }
-		
+
 			return sStatus;
 			}
-		
+	
 			@Override
 			protected void onPostExecute(String result) {
-				if(result=="ok!")
+				Log.e("TAG RESULT", result);
+				if(result.equals("ok!"))
 					Toast.makeText(getApplicationContext(), "Successful!", Toast.LENGTH_SHORT).show();
 				else
 					Toast.makeText(getApplicationContext(), "Error!", Toast.LENGTH_SHORT).show();
+				
+				String sInput;
+				sInput="+------------------------------------+\n";
+				sInput +="Alumno: "+sAlumno+"\n";
+				sInput +="Curso : "+sCurso+"\n";
+				sInput +="Nota  : "+sNota+"\n";
+				sInput +="Status: "+sInfo+"\n";
+				
+					tvLogCat.append(sInput);
+					tvLogCat.append("\n");
+			
+			
 			}
 		}
 
@@ -169,12 +183,10 @@ public class Profesor_Activity extends Activity {
 				
 				int tamaño = jsArrData.length();
 				arrNombres = new String[tamaño];
-				arrCodigo = new String[tamaño];
 
 				for (int i = 0; i <= jsArrData.length(); i++) {
 					JSONObject data = jsArrData.getJSONObject(i);
 					arrNombres[i] = data.getString("nombre");
-					 arrCodigo[i] = data.getString("codigo");
 				}
 			} catch (JSONException e) {
 				Log.e("TAG", "Problemas con array: " + e.getMessage());

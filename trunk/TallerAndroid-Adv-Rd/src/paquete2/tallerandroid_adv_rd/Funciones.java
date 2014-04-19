@@ -11,9 +11,9 @@ public class Funciones {
 	//http://itlab.fis.ulima.edu.pe
 	//ozzner-pc
  private JSONParser jsonParser;
- private static String URL_LOGIN= "http://ozzner-pc/Taller_Android_ServicioRest/api/login.php";
- private static String URL_NOTA= "http://ozzner-pc/Taller_Android_ServicioRest/api/nota_rest.php";
- private static String URL_ALUMNO= "http://ozzner-pc/Taller_Android_ServicioRest/api/alumno_rest.php";
+ private static String URL_LOGIN= "http://192.168.1.34/Taller_Android_ServicioRest/api/login.php";
+ private static String URL_NOTA= "http://192.168.1.34/Taller_Android_ServicioRest/api/nota_rest.php";
+ private static String URL_ALUMNO= "http://192.168.1.34/Taller_Android_ServicioRest/api/alumno_rest.php";
  private static String ACCIONES[]= {"login","listar","insertar"};
  
  

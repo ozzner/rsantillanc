@@ -39,7 +39,7 @@ String[] arrCurso,arrNotas,arrProfe;
 		
 		tvUser = (TextView)findViewById(R.id.tvWellcomeAlumno);
 		Bundle oBundle = getIntent().getExtras();
-		tvUser.setText("Bienvenido alumno, "+oBundle.getString("usuario"));
+		tvUser.setText("Bienvenid@, "+oBundle.getString("usuario"));
 		btnObtener = (Button)findViewById(R.id.btnObtener);
 		
 		btnObtener.setOnClickListener(new OnClickListener() {

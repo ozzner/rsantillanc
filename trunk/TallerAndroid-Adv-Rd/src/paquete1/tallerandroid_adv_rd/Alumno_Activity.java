@@ -132,12 +132,12 @@ String[] arrCurso,arrNotas,arrProfe;
         tbrow0.addView(tv0);
         
         TextView tv1 = new TextView(this);
-        tv1.setText("\tNOMBRE_DEL_CURSO");
+        tv1.setText("\n\tNOMBRE_DEL_CURSO");
         tv1.setTextColor(Color.GRAY);
         tbrow0.addView(tv1);
         
         TextView tv2 = new TextView(this);
-        tv2.setText("\tPROFESOR_A_CARGO\t");
+        tv2.setText("\n\tPROFESOR_A_CARGO\t");
         tv2.setTextColor(Color.GRAY);
         tbrow0.addView(tv2);
         

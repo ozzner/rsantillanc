@@ -34,7 +34,8 @@
         android:id="@+id/layControles"
         android:layout_below="@+id/layBienvProf"
         android:layout_width="match_parent"
-        android:layout_height="135dp"
+        android:padding="10dp"
+        android:layout_height="200dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal" >
 

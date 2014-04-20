@@ -23,7 +23,7 @@ public class Login_Activity extends Activity {
  private static String KEY_USUARIO="usuario";
  private ProgressDialog proDialog;
 	TextView tvMensaje;
-	;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +110,7 @@ public class Login_Activity extends Activity {
 						else if(result.equals("ok!"))
 							Toast.makeText(getApplicationContext(), "Wellcome!", Toast.LENGTH_LONG).show();
 						else if(result.equals("timeout"))
-						Toast.makeText(getApplicationContext(),"Timeout: el servidor no responde!", Toast.LENGTH_SHORT).show();
+						Toast.makeText(getApplicationContext(),"Timeout: El servidor no responde!", Toast.LENGTH_SHORT).show();
 						else
 							Toast.makeText(getApplicationContext(),"Error desconocido: "+sInfo, Toast.LENGTH_SHORT).show();
 			        }

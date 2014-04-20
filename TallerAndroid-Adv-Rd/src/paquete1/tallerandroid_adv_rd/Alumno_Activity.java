@@ -1,19 +1,35 @@
 package paquete1.tallerandroid_adv_rd;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import paquete2.tallerandroid_adv_rd.Funciones;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Alumno_Activity extends Activity {
 	
 private TextView tvUser;
+private Button btnObtener;
+private ProgressDialog proDialog;
+String[] arrCurso,arrNotas,arrProfe; 
+
 
 
 	@Override
@@ -24,71 +40,138 @@ private TextView tvUser;
 		tvUser = (TextView)findViewById(R.id.tvWellcomeAlumno);
 		Bundle oBundle = getIntent().getExtras();
 		tvUser.setText("Bienvenido alumno, "+oBundle.getString("usuario"));
-		init();
+		btnObtener = (Button)findViewById(R.id.btnObtener);
+		
+		btnObtener.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				 runBackroundData();		
+			}
+		});
 	}
 
+	
+	protected void  runBackroundData() {
+		AsyncTest backgrounTest = new AsyncTest();
+		backgrounTest.execute();
+	}
+
+	class AsyncTest extends AsyncTask<String, Void, String> {
+		@Override
+		protected void onPreExecute() {
+			proDialog =  new ProgressDialog(Alumno_Activity.this);
+			proDialog.setMessage("procesando...");
+			proDialog.setIndeterminate(false);
+			proDialog.setCancelable(true);
+			proDialog.show();
+			super.onPreExecute();
+		}
+
+		JSONArray jsArrData;
+		String sTemp; 	
+		Bundle oBundle = getIntent().getExtras();
+		@Override
+		protected String doInBackground(String... params) {
+			Funciones oFun = new Funciones();
+			JSONObject oJson = oFun.obtnerNotas(oBundle.getString("usuario"));
+			
+			try {
+				 jsArrData = new JSONArray(oJson.getJSONArray("data").toString());
+				Log.e("ARRAYDATA", jsArrData+"");
+				
+				int tamaño = jsArrData.length();
+				arrCurso = new String[tamaño];
+				arrNotas = new String[tamaño];
+				arrProfe = new String[tamaño];
+				
+				for (int i = 0; i <= tamaño; i++) {
+								
+					JSONObject data = jsArrData.getJSONObject(i);
+					sTemp = data.getString("idAlumno");
+					Log.e("sTEmp", sTemp);
+					Log.e("bundle", oBundle.getString("usuario"));
+					
+					if (sTemp.equals(oBundle.getString("usuario"))) {
+										
+						sTemp = data.getString("idCurso");
+						arrCurso[i]=sTemp;
+						
+						sTemp = data.getString("idProfesor");
+						arrProfe[i]=sTemp;
+						
+						sTemp = data.getString("nota");
+						arrNotas[i]=sTemp;
+					}
+				}
+				
+			} catch (JSONException e) {
+				Log.e("TAG", "Problemas con array: " + e.getMessage());
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			proDialog.dismiss();
+			init();
+		}
+
+	}
 	
 	
 	public void init() {
         TableLayout stk = (TableLayout) findViewById(R.id.table_main);
         TableRow tbrow0 = new TableRow(this);
+
         
         TextView tv0 = new TextView(this);
-        tv0.setText(" Sl.No ");
+        tv0.setText("\tNOTA");
         tv0.setTextColor(Color.GRAY);
         tbrow0.addView(tv0);
         
         TextView tv1 = new TextView(this);
-        tv1.setText(" Product ");
+        tv1.setText("\tNOMBRE_DEL_CURSO");
         tv1.setTextColor(Color.GRAY);
         tbrow0.addView(tv1);
         
         TextView tv2 = new TextView(this);
-        tv2.setText(" Unit Price ");
+        tv2.setText("\tPROFESOR_A_CARGO\t");
         tv2.setTextColor(Color.GRAY);
         tbrow0.addView(tv2);
         
-        TextView tv3 = new TextView(this);
-        tv3.setText(" Stock Remaining ");
-        tv3.setTextColor(Color.GRAY);
-        tbrow0.addView(tv3);
-        
         stk.addView(tbrow0);
         
-        for (int i = 0; i < 25; i++) {
+        for (int i = 0; i < arrCurso.length; i++) {
+        	
             TableRow tbrow = new TableRow(this);
-            TextView t1v = new TextView(this);
+        	TextView t1v = new TextView(this);
             TextView t2v = new TextView(this);
-            TextView t3v = new TextView(this);
-            TextView t4v = new TextView(this);
-            
-            t1v.setText("" + i);
+        	TextView t3v = new TextView(this);
+        	
+            t1v.setText("\t"+arrNotas[i]);
             t1v.setTextColor(Color.GRAY);
             t1v.setGravity(Gravity.CENTER);
             tbrow.addView(t1v);
 
-            t2v.setText("Product " + i);
+     
+            t2v.setText("\t"+arrCurso[i]);
             t2v.setTextColor(Color.GRAY);
-            t2v.setGravity(Gravity.CENTER);
+            t2v.setGravity(Gravity.LEFT);
             tbrow.addView(t2v);
-            
-            t3v.setText("Rs." + i);
+
+          
+            t3v.setText("\t"+arrProfe[i]+"\t");
             t3v.setTextColor(Color.GRAY);
-            t3v.setGravity(Gravity.CENTER);
+            t3v.setGravity(Gravity.LEFT);
+            
             tbrow.addView(t3v);
             
-            t4v.setText("" + i * 15 / 32 * 10);
-            t4v.setTextColor(Color.GRAY);
-            t4v.setGravity(Gravity.CENTER);
-            tbrow.addView(t4v);
-            
             stk.addView(tbrow);
-        }
-
-    }
-	
-	
-	
+		}
+       Toast.makeText(getApplicationContext(), "Datos cargados!", Toast.LENGTH_SHORT).show();
+}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -102,7 +185,7 @@ private TextView tvUser;
 		switch (item.getItemId()) {
 		
 		case R.id.mnu1:
-			// do something for menu 2
+			 Toast.makeText(getApplicationContext(), "proximamente!", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.mnu2:
 			Intent itLogin = new Intent(getApplicationContext(),Login_Activity.class);

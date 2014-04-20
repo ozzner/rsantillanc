@@ -127,7 +127,7 @@ String[] arrCurso,arrNotas,arrProfe;
 
         
         TextView tv0 = new TextView(this);
-        tv0.setText("\tNOTA");
+        tv0.setText("\n\tNOTA");
         tv0.setTextColor(Color.GRAY);
         tbrow0.addView(tv0);
         

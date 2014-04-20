@@ -51,10 +51,10 @@ public class Profesor_Activity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_profesor);
-
-		tvUser = (TextView) findViewById(R.id.tvWellcomeProfesor);
 		Bundle oBundle = getIntent().getExtras();
-		tvUser.setText("Bienvenido profesor, " + oBundle.getString("usuario"));
+		
+		tvUser = (TextView) findViewById(R.id.tvWellcomeProfesor);
+		tvUser.setText("Bienvenid@, " + oBundle.getString("usuario"));
 		spiAlumNotas = (Spinner) findViewById(R.id.spinAlumNota);
 		tvLogCat = (TextView)findViewById(R.id.tvPantalla);
 		btnGrabar = (Button)findViewById(R.id.btnGrabar);
@@ -67,7 +67,7 @@ public class Profesor_Activity extends Activity {
 			@Override
 			public void onClick(View v) {
 				sNota = edtNota.getText().toString();
-				Log.e("TAG-SNOTA", sNota);
+				
 				if(sCurso==null)
 				{
 					Toast.makeText(getApplicationContext(), "Click en cursos antes de grabar!", Toast.LENGTH_SHORT).show();			

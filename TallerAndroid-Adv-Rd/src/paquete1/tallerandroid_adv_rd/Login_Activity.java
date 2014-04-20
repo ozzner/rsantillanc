@@ -114,7 +114,7 @@ public class Login_Activity extends Activity {
 			protected void onPostExecute(String result) {
 				proDialog.dismiss();
 				
-				System.out.println("REsultado onPost: "+result);
+				System.out.println("Resultado onPost: "+result);
 				if(result.equals("no user!"))
 					Toast.makeText(getApplicationContext(), sInfo, Toast.LENGTH_SHORT).show();
 				else if(result.equals("no login!"))

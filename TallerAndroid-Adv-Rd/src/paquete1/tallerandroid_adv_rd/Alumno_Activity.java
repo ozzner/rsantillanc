@@ -46,13 +46,13 @@ String[] arrCurso,arrNotas,arrProfe;
 			
 			@Override
 			public void onClick(View v) {
-				 runBackroundData();		
+				 runBackgroundData();		
 			}
 		});
 	}
 
 	
-	protected void  runBackroundData() {
+	protected void  runBackgroundData() {
 		AsyncTest backgrounTest = new AsyncTest();
 		backgrounTest.execute();
 	}
@@ -167,7 +167,6 @@ String[] arrCurso,arrNotas,arrProfe;
             t3v.setGravity(Gravity.LEFT);
             
             tbrow.addView(t3v);
-            
             stk.addView(tbrow);
 		}
        Toast.makeText(getApplicationContext(), "Datos cargados!", Toast.LENGTH_SHORT).show();
@@ -176,7 +175,7 @@ String[] arrCurso,arrNotas,arrProfe;
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menu, menu);
+		getMenuInflater().inflate(R.menu.menu_alumno, menu);
 		return true;
 	}
 

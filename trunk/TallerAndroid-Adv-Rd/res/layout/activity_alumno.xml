@@ -14,19 +14,18 @@
         
         <TextView
             android:id="@+id/tvWellcomeAlumno"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:textColor="#99CCFF"
             android:fontFamily="consolas"
             android:textSize="13sp"
             android:gravity="center"
             android:layout_weight=".5"
-            android:text="Bienvenido alumno" />
+            android:text="Bienvenido, " />
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.0025"
             android:gravity="right"
             android:src="@drawable/sol_lite" />
 
@@ -42,69 +41,21 @@
         android:orientation="horizontal" >
 
         <LinearLayout
-            android:layout_width="184dp"
-            android:padding="10dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical" >
 
-            <ListView
-                android:id="@+id/lsvCursos"
-                android:layout_width="match_parent"
-                android:layout_weight="0.3"
-                android:layout_height="20dp" >
-
-            </ListView>
-
-            <Spinner
-                android:id="@+id/spinAlumNota"
-                android:layout_width="match_parent"
-                android:layout_weight="0.3"
-                android:layout_height="20sp"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="119dp"
-            android:padding="10dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >
-
-            <EditText
-                android:id="@+id/edtNota"
-                android:layout_width="50sp"
-                android:layout_height="wrap_content"
-                android:textAlignment="gravity"
-                android:maxLength="20"
-                android:hint="00"
-                android:ems="10"
-                android:layout_gravity="center_horizontal"
-                android:inputType="number" >
-
-                <requestFocus />
-            </EditText>
-
             <Button
-                android:id="@+id/btnGrabar"
+                android:id="@+id/btnObtener"
                 android:layout_gravity="center"
-                android:layout_width="100dp"
+                android:layout_width="match_parent"
                 android:layout_height="25dp"
-                android:layout_marginTop="20dp"
                 android:background="@drawable/button_shape_2"
                 android:fontFamily="tahoma"
-                android:text="Ingresar"
-                android:textColor="#ffffff"
-                android:textSize="12sp" />
-
-            <Button
-                android:id="@+id/btnClear"
-                android:layout_width="100dp"
-                android:layout_height="25dp"
-                android:layout_marginTop="5dp"
-                android:layout_gravity="center"
-                android:background="@drawable/button_shape_2"
-                android:fontFamily="tahoma"
-                android:text="Clear log"
+                android:layout_marginLeft="25dp"
+                android:layout_marginRight="25dp"
+                android:text="Obtener notas"
                 android:textColor="#ffffff"
                 android:textSize="12sp" />
 
@@ -127,7 +78,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff"
-        android:layout_alignParentLeft="true" >
+         >
 
         <HorizontalScrollView
             android:id="@+id/hscrll1"
@@ -136,16 +87,15 @@
 
             <RelativeLayout
                 android:id="@+id/RelativeLayout1"
-                android:layout_width="fill_parent"
-                android:layout_gravity="center"
-                android:layout_height="fill_parent"
-                android:orientation="vertical" >
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
 
                 <TableLayout
                     android:id="@+id/table_main"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true" >
+                    android:gravity="center_horizontal" >
                 </TableLayout>
                 
             </RelativeLayout>

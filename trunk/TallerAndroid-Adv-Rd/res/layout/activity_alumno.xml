@@ -75,6 +75,7 @@
 
         <ScrollView
         android:id="@+id/scrollView1"
+         android:layout_gravity="center_horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#ffffff"
@@ -82,11 +83,13 @@
 
         <HorizontalScrollView
             android:id="@+id/hscrll1"
+            android:gravity="center_horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" >
 
             <RelativeLayout
                 android:id="@+id/RelativeLayout1"
+                android:gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 >

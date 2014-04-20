@@ -2,12 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     android:orientation="vertical" >
 
     <LinearLayout
         android:id="@+id/layBienvProf"
         android:layout_width="match_parent"
         android:layout_height="25dp"
+        android:background="#ffffff"
         android:gravity="center_horizontal"
         android:orientation="horizontal" >
         
@@ -35,6 +37,7 @@
         android:layout_below="@+id/layBienvProf"
         android:layout_width="match_parent"
         android:padding="10dp"
+         android:background="#ffffff"
         android:layout_height="200dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal" >
@@ -50,7 +53,7 @@
                 android:id="@+id/lsvCursos"
                 android:layout_width="match_parent"
                 android:layout_weight="0.3"
-                android:layout_height="20dp" >
+                android:layout_height="10dp" >
 
             </ListView>
 
@@ -114,6 +117,7 @@
         android:id="@+id/layOutput"
         android:layout_below="@+id/layControles"
         android:gravity="center"
+        android:background="#ffffff"
         android:layout_above="@+id/layPiso"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"

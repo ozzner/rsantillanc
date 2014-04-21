@@ -110,7 +110,8 @@
                 </LinearLayout>
             </LinearLayout>
         </ScrollView>
-
+        
+      <!-- Logo -->
         <LinearLayout
             android:id="@+id/layItlab"
             android:layout_width="match_parent"
@@ -126,7 +127,7 @@
                 android:layout_marginLeft="20dp"
                 android:src="@drawable/logoitilab" />
         </LinearLayout>
-
+      <!-- footer -->
         <LinearLayout
             android:id="@+id/layFooter"
             android:layout_width="match_parent"

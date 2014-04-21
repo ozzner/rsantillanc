@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,6 +44,14 @@ public class Login_Activity extends Activity {
 			
 			public void onClick(View v) 
 			{
+				String sCodigo = edCodigo.getText().toString();
+				String sPassword= edPassword.getText().toString();
+				
+				if(TextUtils.isEmpty(sCodigo))
+					Toast.makeText(getApplicationContext(), "Código obligatorio", Toast.LENGTH_SHORT).show();	
+				else if(TextUtils.isEmpty(sPassword))
+					Toast.makeText(getApplicationContext(), "Password obligatorio", Toast.LENGTH_SHORT).show();			
+				else
 				 runTesting();
 			}
 		});

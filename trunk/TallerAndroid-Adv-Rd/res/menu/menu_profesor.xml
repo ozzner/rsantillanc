@@ -4,7 +4,7 @@
     <item
         android:showAsAction="ifRoom"
         android:id="@+id/mnu1"
-      android:icon="@drawable/dowload"
+      android:icon="@drawable/download"
        />
     <item
         android:showAsAction="ifRoom"

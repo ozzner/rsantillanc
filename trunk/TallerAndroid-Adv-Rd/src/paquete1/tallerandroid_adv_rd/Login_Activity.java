@@ -44,20 +44,24 @@ public class Login_Activity extends Activity {
 			
 			public void onClick(View v) 
 			{
-				String sCodigo = edCodigo.getText().toString();
-				String sPassword= edPassword.getText().toString();
-				
-				if(TextUtils.isEmpty(sCodigo))
-					Toast.makeText(getApplicationContext(), "Código obligatorio", Toast.LENGTH_SHORT).show();	
-				else if(TextUtils.isEmpty(sPassword))
-					Toast.makeText(getApplicationContext(), "Password obligatorio", Toast.LENGTH_SHORT).show();			
-				else
-				 runTesting();
+				 checkEmpty();
 			}
 		});
 		
 	} 
 	
+	protected void checkEmpty()
+	{
+		String sCodigo = edCodigo.getText().toString();
+		String sPassword= edPassword.getText().toString();
+		
+		if(TextUtils.isEmpty(sCodigo))
+			Toast.makeText(getApplicationContext(), "Código obligatorio", Toast.LENGTH_SHORT).show();	
+		else if(TextUtils.isEmpty(sPassword))
+			Toast.makeText(getApplicationContext(), "Password obligatorio", Toast.LENGTH_SHORT).show();			
+		else
+		 runTesting();
+	}
 	
 	protected void runTesting() {
 		Testing task =  new Testing();
@@ -162,7 +166,7 @@ public class Login_Activity extends Activity {
 		switch (item.getItemId()) {
 		
 		case R.id.mnu1:
-			 runTesting();
+			checkEmpty();
 			break;
 		case R.id.mnu2:
 			Intent itLogin = new Intent(getApplicationContext(),Login_Activity.class);

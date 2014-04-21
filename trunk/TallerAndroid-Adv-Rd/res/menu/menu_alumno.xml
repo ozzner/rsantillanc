@@ -10,6 +10,5 @@
         android:showAsAction="ifRoom"
         android:id="@+id/mnu2"
         android:icon="@drawable/logout"
-      />
-    
+      />    
 </menu>

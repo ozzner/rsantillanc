@@ -76,13 +76,11 @@
                 android:layout_width="50sp"
                 android:layout_height="wrap_content"
                 android:textAlignment="gravity"
-                android:maxLength="20"
                 android:hint="00"
                 android:ems="10"
+                android:maxLength="2"
                 android:layout_gravity="center_horizontal"
-                android:inputType="number" >
-
-                <requestFocus />
+                android:inputType="number" >                               
             </EditText>
 
             <Button

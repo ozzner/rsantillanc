@@ -62,24 +62,26 @@ public class Profesor_Activity extends Activity {
 		lsvCursos = (ListView)findViewById(R.id.lsvCursos);
 		edtNota = (EditText)findViewById(R.id.edtNota);
 		
+		runBackroundSpinner();
+		
 		btnGrabar.setOnClickListener( new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				sNota = edtNota.getText().toString();
 				
-				if(sCurso==null)
-				{
-					Toast.makeText(getApplicationContext(), "Click en cursos antes de grabar!", Toast.LENGTH_SHORT).show();			
-				
-				}else if(TextUtils.isEmpty(sNota)){
+				if(sCurso==null)				
+					Toast.makeText(getApplicationContext(), "Click en cursos antes de grabar!", Toast.LENGTH_SHORT).show();							
+				else if(TextUtils.isEmpty(sNota))
 					Toast.makeText(getApplicationContext(), "No olvide ingresar una nota!", Toast.LENGTH_SHORT).show();	
-				}else{
+				else if(!TextUtils.isEmpty(sNota))
+				{ int iNota=Integer.parseInt(sNota);
+					if(iNota>20)
+						Toast.makeText(getApplicationContext(), "La calificación debe ser vigesimal!", Toast.LENGTH_SHORT).show();
+					else
+						runBackroundInsertar();
+				}else
 					runBackroundInsertar();
-			
-					}
-							
-				
 					}
 		});//end Listener button Grabar
 		
@@ -97,7 +99,7 @@ public class Profesor_Activity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
 				sCurso = arrCursos[arg2];
-				Log.e("TAG_sCurso", sCurso+"-->"+arg2+"");	}
+				Toast.makeText(getApplicationContext(), "Curso: "+sCurso, Toast.LENGTH_SHORT).show();	}
 		});	//end Listener listView
 		
 		

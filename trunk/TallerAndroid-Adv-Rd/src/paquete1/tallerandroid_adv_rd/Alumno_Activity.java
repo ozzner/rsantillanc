@@ -18,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -117,14 +118,14 @@ String[] arrCurso,arrNotas,arrProfe;
 			proDialog.dismiss();
 			init();
 		}
-
 	}
+	
 	
 	
 	public void init() {
         TableLayout stk = (TableLayout) findViewById(R.id.table_main);
+        stk.removeAllViews();//clean        
         TableRow tbrow0 = new TableRow(this);
-
         
         TextView tv0 = new TextView(this);
         tv0.setText("\n\tNOTA");
@@ -149,19 +150,16 @@ String[] arrCurso,arrNotas,arrProfe;
         	TextView t1v = new TextView(this);
             TextView t2v = new TextView(this);
         	TextView t3v = new TextView(this);
-        	
             t1v.setText("\t"+arrNotas[i]);
             t1v.setTextColor(Color.GRAY);
             t1v.setGravity(Gravity.CENTER);
             tbrow.addView(t1v);
 
-     
             t2v.setText("\t"+arrCurso[i]);
             t2v.setTextColor(Color.GRAY);
             t2v.setGravity(Gravity.LEFT);
             tbrow.addView(t2v);
 
-          
             t3v.setText("\t"+arrProfe[i]+"\t");
             t3v.setTextColor(Color.GRAY);
             t3v.setGravity(Gravity.LEFT);

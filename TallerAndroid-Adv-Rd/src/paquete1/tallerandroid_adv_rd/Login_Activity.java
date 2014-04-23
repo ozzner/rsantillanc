@@ -46,9 +46,9 @@ public class Login_Activity extends Activity {
 			{
 				 checkEmpty();
 			}
-		});
-		
-	} 
+		});	
+	} //End Create
+	
 	
 	protected void checkEmpty()
 	{
@@ -159,7 +159,7 @@ public class Login_Activity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.menu_login, menu);
 		return true;
-	}
+}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

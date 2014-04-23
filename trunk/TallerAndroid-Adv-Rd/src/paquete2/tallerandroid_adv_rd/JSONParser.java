@@ -89,6 +89,7 @@ public class JSONParser {
 			Log.e("Error Buffer", "Error convirtiendo el resultado " + e.toString());
 		}
     	
+    	
     	/* El analizador de String tranforma a Objeto JSON */
     	try {
 			oJson = new JSONObject(json);
@@ -97,7 +98,7 @@ public class JSONParser {
 		}
     	
     }else{
-    	oJson = null;
+    	return oJson;
     }
     	
     	return oJson; //devuelve el Objeto JSON

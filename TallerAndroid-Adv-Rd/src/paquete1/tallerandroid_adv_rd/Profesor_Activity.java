@@ -245,5 +245,4 @@ public class Profesor_Activity extends Activity {
 	}
 
 
-
-}
+}//End Activity

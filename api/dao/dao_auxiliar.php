@@ -11,7 +11,7 @@ class funciones {
         return sha1(self::$inicio."$codificado".self::$final);
     }
     
-    public function generateApiKey() {
+    public function genApiKey() {
         return md5(uniqid(rand(), true));
     }
     

@@ -6,8 +6,7 @@ class conexion
 
     public function __construct()
     {
-      include_once(dirname(__FILE__).'/db_server.php');
-      $this->getConexion();
+        include_once('/db_server.php');
     }
 
     public function getConexion() {

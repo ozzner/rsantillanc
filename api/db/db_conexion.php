@@ -1,7 +1,25 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+class conexion
+{
+    private $conn;
+
+    public function __construct()
+    {
+      include_once(dirname(__FILE__).'/db_server.php');
+      $this->getConn();
+    }
+
+    public function getConexion($param) {
+     $this->conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME) OR
+     die ('Error al establecer conexion db: '.mysqli_connect_error());          
+     
+     return $this->conn;
+    }
+    
+
+}
+
+
+
 ?>

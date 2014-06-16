@@ -49,7 +49,7 @@ class usuario{
          *  función mysqli_stmt_fetch().
          */
                   
-    }
+    }#End registrar
 
     
 }

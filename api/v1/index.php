@@ -1,19 +1,22 @@
 <?php
 
-
 #Includes
-include_once '/';
+include_once '../sos../sos_helper.php';
+include_once '../dao../dao_usuario.php';
 
+#Variables Globales
 $method = $_SERVER['REQUEST_METHOD'];
-
+$entity;
+$arrEcho = array();
 
 switch ($method) {
+    
   case 'PUT':
     echo($method);
     break;
   case 'POST':
-       echo($method);
-    break;
+  
+      break;
   case 'GET':
       echo($method);
     break;

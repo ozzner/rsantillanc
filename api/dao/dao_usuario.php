@@ -7,7 +7,7 @@ class usuario{
     function __construct() {
         
         require_once '../db../db_conexion.php';
-        require_once '/dao_auxiliar.php';
+        require_once '../sos../sos_helper.php';
               
         $db = new conexion();
         $this->link = $db->getConexion();        
@@ -32,13 +32,14 @@ class usuario{
          $rpta = mysqli_stmt_execute($stmt);
             
         if($rpta) 
-            return "Succsess!";
-        else 
-            return "Error!";
-        }else {
+            return "Success!";
+        else  
+        return mysqli_error($this->link); 
+        
+        }else{
             die(mysqli_error($this->link));
-        }
-               
+        }                
+        
         mysqli_stmt_close();
         mysqli_close($this->link);
         
@@ -50,6 +51,36 @@ class usuario{
          */
                   
     }#End registrar
+    
+    public function listarByIdApiKey($email,$Api_key) {
+        $sql= "SELECT * FROM tb_usuario WHERE(usu_mail = $email AND usu_uid = $Api_key)";  
+         
+        $stmt = mysqli_prepare($this->link, $sql);
+        
+        if ($stmt) {
+         mysqli_stmt_bind_param($stmt,"ss",$email,$Api_key);
+         $rpta = mysqli_stmt_execute($stmt);
+                                      
+        if($rpta) {
+            mysqli_stmt_bind_result($stmt,$var1,$var2,$var3,$var4,$var5,$var6,$var7,$var8,$var9);
+            while (mysqli_stmt_fetch($stmt)) {
+                $arData[] = array('usu_mail'=>$var1,
+                                  'usu_sex' =>$var2,
+                                  'usu_nom' =>$var3,    
+                                  'usu_fec_nac' =>$var4,
+                                  'usu_ap1' =>$var5,
+                                  'usu_ap2' =>$var6,
+                                  'usu_rate'=>$var7,
+                                  'ran_id' =>$var8,
+                                  'usu_uid'=>$var9); 
+            }
+        }
+        }else  
+        return mysqli_error($this->link); 
+        
+        mysqli_stmt_close();
+        mysqli_close($this->link);
+    }
 
     
 }

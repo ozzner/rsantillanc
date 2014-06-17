@@ -7,7 +7,7 @@ class funciones {
     
     public function setHash($pass) {    
         $codificado = base64_decode($pass);
-        return sha1(self::$inicio."$codificado".self::$final);
+        return sha1(self::$inicio.$codificado.self::$final);
     }
     
     public function genApiKey() {
@@ -16,26 +16,30 @@ class funciones {
     
     public function chkParmeters($array) {  
         $arrJson = array();
-        foreach ($array as $value) {
-            if(isset($value)){
+
+        foreach ($array as $clave=>$valor) {
+            if($valor==NULL || empty($valor)){
               $error = TRUE;
-              $campos .= $value .", ";
+              $campos .= $clave .", ";
             }
          }
          if ($error) {
-              $arrJson['error']   = TRUE;
+              $arrJson['error']   = 1;
               $arrJson['message'] = "Campo(s) requeridos!";
-              $arrJson['campos'] = $campos;
-              jsonMessage($arrJson,404);
+              $arrJson['values']  = substr($campos, 0, strlen($campos)-2);
+              return $arrJson;
+         }else{
+             return 'ok';
          }
     }
     
-    public function jsonMessage($array,$httpCode) {
+  function setJsonResponse($array,$httpCode,$status) {
         header('Content-Type: application/json'); 
         $arrJson = array();
-        
+
         $arrJson['httpCode']=$httpCode;
-        $arrJson['data']=$arrJson;
+        $arrJson['error_status']=$status;
+        $arrJson['data']=$array;
         
         echo (json_encode($arrJson));
 

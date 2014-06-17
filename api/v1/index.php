@@ -6,17 +6,27 @@ include_once '../dao../dao_usuario.php';
 
 #Variables Globales
 $method = $_SERVER['REQUEST_METHOD'];
-$entity;
-$arrEcho = array();
+
 
 switch ($method) {
     
   case 'PUT':
     echo($method);
     break;
+
   case 'POST':
-  
+      $accion   = $_POST['tag'];            
+      $entidad  = $_POST['ett']; 
+      
+      if (isset($entidad)) {
+         
+      } else
+      {
+          
+      }
+      
       break;
+  
   case 'GET':
       echo($method);
     break;

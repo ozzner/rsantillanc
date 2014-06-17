@@ -14,7 +14,32 @@ class funciones {
         return md5(uniqid(rand(), true));
     }
     
+    public function chkParmeters($array) {  
+        $arrJson = array();
+        foreach ($array as $value) {
+            if(isset($value)){
+              $error = TRUE;
+              $campos .= $value .", ";
+            }
+         }
+         if ($error) {
+              $arrJson['error']   = TRUE;
+              $arrJson['message'] = "Campo(s) requeridos!";
+              $arrJson['campos'] = $campos;
+              jsonMessage($arrJson,404);
+         }
+    }
+    
+    public function jsonMessage($array,$httpCode) {
+        header('Content-Type: application/json'); 
+        $arrJson = array();
+        
+        $arrJson['httpCode']=$httpCode;
+        $arrJson['data']=$arrJson;
+        
+        echo (json_encode($arrJson));
 
+    }
     
 }
 

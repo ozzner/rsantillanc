@@ -18,6 +18,7 @@ class usuario {
         $this->time = $aux->genDataTime();
         $this->uid = $aux->genApiKey();
         $this->passHash= $aux->setHash($pass);
+        $conexion = $this->dbc->getConexion();
         
             $sql= "INSERT INTO tb_usuario 
                (usu_mail,usu_sex,usu_nom,usu_fec_nac,usu_ap1,usu_ap2,usu_rate,ran_id,usu_uid,usu_fec_ing,usu_pass)
@@ -26,7 +27,7 @@ class usuario {
              $rate = 0;
              $ranid= 1;
 
-             $stmt = mysqli_prepare($this->link, $sql);
+             $stmt = mysqli_prepare($conexion, $sql);
           
              mysqli_stmt_bind_param($stmt,"ssssssiisss",
              $mail,$sex,$nom,$feh,$app,$apm,$rate,$ranid,$this->uid,$this->time,$this->passHash);
@@ -35,7 +36,7 @@ class usuario {
              if ($res) {
                    return "ok!";
              }  else{               
-                 switch (mysqli_errno($this->link)) {
+                 switch (mysqli_errno($conexion)) {
                      case 1062:
                         $arData['error_cod']=11.1;
                         $arData['message']='Error SQL - Entrada duplicada';
@@ -46,26 +47,21 @@ class usuario {
                      case 1022:
                         $arData['error_cod']=11.2;
                         $arData['message']='Error SQL - No puede escribir';
-                        $arData['info']=mysqli_error($this->link);  
+                        $arData['info']=mysqli_error($conexion);  
                         return $arData;
                      break;
                      default:
                         $arData['error_cod']=11.3;
                         $arData['message']='Error SQL - Desconocido';
-                        $arData['info']=mysqli_error($this->link);  
+                        $arData['info']=mysqli_error($conexion);  
                         return $arData;
                      break;
                  }
              }
              
              mysqli_stmt_close();
-             mysqli_close($this->link);                     
-    
-        /*  $pre = mysqli_affected_rows($link)
-         *  mysqli_stmt_affected_rows().
-         *  Asimismo, si la consulta produce un conjunto de resultados se usa la 
-         *  función mysqli_stmt_fetch().
-         */
+             mysqli_close($conexion);                     
+ 
                   
     }#End registrar
     
@@ -75,54 +71,28 @@ class usuario {
         
         if (!is_array($conexion)) {
             
-            $query= " SELECT * FROM db_apprade.tb_usuario u
-            INNER JOIN tb_ranking r ON u.ran_id=r.ran_id
-            WHERE(usu_mail = '$email' AND usu_pass = '$pass')";
+                $query= " SELECT * FROM db_apprade.tb_usuario u
+                INNER JOIN tb_ranking r ON u.ran_id=r.ran_id
+                WHERE(usu_mail = '$email' AND usu_pass = '$pass')";
 
-            $result = $conexion->query($query);
+                $result = $conexion->query($query);
 
-            $c = 0;
-            while ($row = $result->fetch_assoc()){
-            $c++;
-            $aData[] = array('User'.$c=>$row);               
-            }
-               $conexion->close();
-               
-               if ($aData == NULL)                                        
-                   return NULL;
-               else
-                   return $aData;
-               
-        }else
-            {
-            return $conexion;
-            }
-        
-          
+                $c = 0;
+                while ($row = $result->fetch_assoc()){
+                    $c++;
+                    $aData[] = array('User'.$c=>$row); }
                     
-             
-        
-           //$sql= "SELECT usu_mail, usu_pass,usu_nom FROM tb_usuario WHERE(usu_mail = ? AND usu_pass = ?)";                 
-     
-        
+                $conexion->close();
+
+                if ($aData == NULL)                                        
+                    return NULL;
+                else
+                    return $aData;
+               
+        }else            
+            return $conexion;
             
-            if ($rpta) {                
-                // mysqli_stmt_bind_result($stmt, $mail,$pwd,$nom);            
-                 while (mysqli_stmt_fetch($stmt)) {
-                 $arData = array('email'=>$mail,'pass'=>$pwd,'nombre'=>$nom); 
-                 return $arData;         }                 
-            }else{                                
-                switch (mysqli_errno($this->link)) {      
-                     default:
-                        $arData['error_cod']=12.1;
-                        $arData['message']='Error SQL - Desconocido';
-                        $arData['info']=mysqli_error($this->link);  
-                        return $arData;
-                     break;
-                 }
-            }
-              
-         
+
  
     } #End Listar_By_ID-API
 

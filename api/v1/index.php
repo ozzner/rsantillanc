@@ -17,38 +17,63 @@ switch ($entity) {
   case 'usuario':
       
       switch ($_SERVER['REQUEST_METHOD']) {
+      
       #Metodo POST - Usuario
           case 'POST':
-              $arrParam = array('email'=>$_POST['email'],'sexo'=>$_POST['sexo'],'nombre'=>$_POST['nombre'],
-                                'fecha'=>$_POST['fecha'],'apellido1'=>$_POST['apellido1'],'apellido2'=>$_POST['apellido2']);
-              $estado = $funcion->chkParmeters($arrParam);
+              $aKeys = array(
+                  'email'=>$_POST['email'],'sexo'=>$_POST['sexo'],'nombre'=>$_POST['nombre'],'password'=>$_POST['password'],
+                  'fecha'=>$_POST['fecha'],'apellido1'=>$_POST['apellido1'],'apellido2'=>$_POST['apellido2']);
+              
+              $estado = $funcion->chkParmeters($aKeys);
               
               if($estado!='ok'){
-                  $funcion->setJsonResponse($estado, 400, 1);
-              }else{
+                  $funcion->setJsonResponse($estado, 400, TRUE);
+              }else{                                    
                    $insert =  $daoUser->registrar
-                   ($arrParam['email'],$arrParam['sexo'], $arrParam['nombre'], $arrParam['fecha'], $arrParam['apellido1'], $arrParam['apellido2']);
-                 
-                    if ($insert=="Success!") {
-                        $arrJSON["message"]="Usuario creado!";
-                        $funcion->setJsonResponse($arrJSON, 201, FALSE);
-                    }else{
-                        $arrJSON["error"]=2;
-                        $arrJSON["message"]="Error al registar!";
-                        $arrJSON["info"]=$insert;
-                        $funcion->setJsonResponse($arrJSON, 200, TRUE);
-                        }
+                   ($aKeys['email'],$aKeys['sexo'], $aKeys['nombre'], $aKeys['fecha'], $aKeys['apellido1'], $aKeys['apellido2'],$aKeys['password']);
+                   
+                        switch ($insert['error_cod']) {
+                            
+                             case 11.1:                                
+                                $funcion->setJsonResponse($insert, 500, TRUE);
+                                break;
+                             case 11.2:
+                                $funcion->setJsonResponse($insert, 500, TRUE);
+                                break;
+                             case 11.3:
+                                $funcion->setJsonResponse($insert, 500, TRUE);
+                                break;
+                             default:
+                                $arrJSON["message"]="Usuario creado!";
+                                $funcion->setJsonResponse($arrJSON, 201, FALSE);
+                                break;
+                                          }
               }
               break;            
               
+          
       #Metodo GET - Usuario    
           case 'GET':
-//              $arrParam2 = array('Id'=>$_GET['id']);
-//              $estado = $funcion->chkParmeters($arrParam2);
-//              
-//                if($estado!='ok'){
-//                  $funcion->setJsonResponse($estado, 400, 1);}
-//       
+              $arrParam2 = array('email'=>$_GET['email'],'pass'=>$_GET['password']);
+              $estado = $funcion->chkParmeters($arrParam2);
+              
+                if($estado!='ok'){
+                  $funcion->setJsonResponse($estado, 400, 1);}
+                else {
+                    
+                    $arrJSON = $daoUser->listarByIdApiKey($email=$_GET['email'], $Api_key=$_GET['password']); 
+                    if ($arrJSON['email']==NULL) {
+                        $arrJSON['message']='Invalido';
+                        $arrJSON['info']='Dato inexistente!';
+                        
+                        $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                    }else
+                    {
+                        $funcion->setJsonResponse($arrJSON, 200, FALSE);
+                    }
+                   
+                }
+       
                   
               break;
               

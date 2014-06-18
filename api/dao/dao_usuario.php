@@ -1,8 +1,8 @@
 <?php
-
-class usuario{
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+class usuario {
     
-    private $link,$uid;
+    private $link,$uid,$time,$passHash;
     
     function __construct() {
         
@@ -10,40 +10,58 @@ class usuario{
         require_once '../sos../sos_helper.php';
               
         $db = new conexion();
-        $this->link = $db->getConexion();        
+        $this->link = $db->getConexion(); 
+     
     }
     
-    public function registrar($mail,$sex,$nom,$feh,$app,$apm) {
+    public function registrar($mail,$sex,$nom,$feh,$app,$apm,$pass) {
         $aux = new funciones();  
-        
+        $this->time = $aux->genDataTime();
         $this->uid = $aux->genApiKey();
-              
-        $sql= "INSERT INTO tb_usuario 
-               (usu_mail,usu_sex,usu_nom,usu_fec_nac,usu_ap1,usu_ap2,usu_rate,ran_id,usu_uid)
-               VALUES(?,?,?,?,?,?,?,?,?)";  
+        $this->passHash= $aux->setHash($pass);
         
-         $rate = 10;
-         $ranid= 1;
+            $sql= "INSERT INTO tb_usuario 
+               (usu_mail,usu_sex,usu_nom,usu_fec_nac,usu_ap1,usu_ap2,usu_rate,ran_id,usu_uid,usu_fec_ing,usu_pass)
+               VALUES(?,?,?,?,?,?,?,?,?,?,?)";  
+
+             $rate = 0;
+             $ranid= 1;
+
+             $stmt = mysqli_prepare($this->link, $sql);
+          
+             mysqli_stmt_bind_param($stmt,"ssssssiisss",
+             $mail,$sex,$nom,$feh,$app,$apm,$rate,$ranid,$this->uid,$this->time,$this->passHash);
+             $res = mysqli_stmt_execute($stmt);  //True - False
              
-        $stmt = mysqli_prepare($this->link, $sql);
-        
-        if ($stmt) {
-         mysqli_stmt_bind_param($stmt,"ssssssiis",$mail,$sex,$nom,$feh,$app,$apm,$rate,$ranid,$this->uid);
-         $rpta = mysqli_stmt_execute($stmt);
-            
-        if($rpta) 
-            return "Success!";
-        else  
-        return mysqli_error($this->link); 
-        
-        }else{
-            die(mysqli_error($this->link));
-        }                
-        
-        mysqli_stmt_close();
-        mysqli_close($this->link);
-        
-        
+             if ($res) {
+                   return "ok!";
+             }  else{               
+                 switch (mysqli_errno($this->link)) {
+                     case 1062:
+                        $arData['error_cod']=11.1;
+                        $arData['message']='Error SQL - Entrada duplicada';
+                        $arData['info']= 'El correo: '.$mail. " ya fue registrado!";
+                        return $arData;
+                     break;
+
+                     case 1022:
+                        $arData['error_cod']=11.2;
+                        $arData['message']='Error SQL - No puede escribir';
+                        $arData['info']=mysqli_error($this->link);  
+                        return $arData;
+                     break;
+                     default:
+                        $arData['error_cod']=11.3;
+                        $arData['message']='Error SQL - Desconocido';
+                        $arData['info']=mysqli_error($this->link);  
+                        return $arData;
+                     break;
+                 }
+             }
+             
+             mysqli_stmt_close();
+             mysqli_close($this->link);                     
+    
         /*  $pre = mysqli_affected_rows($link)
          *  mysqli_stmt_affected_rows().
          *  Asimismo, si la consulta produce un conjunto de resultados se usa la 
@@ -52,35 +70,37 @@ class usuario{
                   
     }#End registrar
     
-    public function listarByIdApiKey($email,$Api_key) {
-        $sql= "SELECT * FROM tb_usuario WHERE(usu_mail = $email AND usu_uid = $Api_key)";  
+    public function listarByIdApiKey($email,$pass) {
+         $arData[] = array();
          
-        $stmt = mysqli_prepare($this->link, $sql);
-        
-        if ($stmt) {
-         mysqli_stmt_bind_param($stmt,"ss",$email,$Api_key);
-         $rpta = mysqli_stmt_execute($stmt);
-                                      
-        if($rpta) {
-            mysqli_stmt_bind_result($stmt,$var1,$var2,$var3,$var4,$var5,$var6,$var7,$var8,$var9);
-            while (mysqli_stmt_fetch($stmt)) {
-                $arData[] = array('usu_mail'=>$var1,
-                                  'usu_sex' =>$var2,
-                                  'usu_nom' =>$var3,    
-                                  'usu_fec_nac' =>$var4,
-                                  'usu_ap1' =>$var5,
-                                  'usu_ap2' =>$var6,
-                                  'usu_rate'=>$var7,
-                                  'ran_id' =>$var8,
-                                  'usu_uid'=>$var9); 
+       
+            $sql= "SELECT * FROM tb_usuario WHERE(usu_mail = ? AND usu_pass = ?)";  
+
+            $stmt = mysqli_prepare($this->link, $sql);
+
+            mysqli_stmt_bind_param($stmt,"ss",$email,$pass);
+            $rpta = mysqli_stmt_execute($stmt);
+            
+            if ($rpta) {
+                
+                 mysqli_stmt_bind_result($stmt, $mail,$pwd,$nom);            
+                 while (mysqli_stmt_fetch($stmt)) {
+                 $arData = array('email'=>$mail,'pass'=>$pwd,'nombre'=>$nom); 
+                 return $arData;         }                 
+            }else{                                
+                switch (mysqli_errno($this->link)) {      
+                     default:
+                        $arData['error_cod']=12.1;
+                        $arData['message']='Error SQL - Desconocido';
+                        $arData['info']=mysqli_error($this->link);  
+                        return $arData;
+                     break;
+                 }
             }
-        }
-        }else  
-        return mysqli_error($this->link); 
-        
-        mysqli_stmt_close();
-        mysqli_close($this->link);
-    }
+  
+            mysqli_close($this->link);
+ 
+    } #End Listar_By_ID-API
 
     
 }

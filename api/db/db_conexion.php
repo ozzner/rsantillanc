@@ -2,7 +2,6 @@
 
 class conexion
 {
-    private $conn;
 
     public function __construct()
     {
@@ -10,10 +9,17 @@ class conexion
     }
 
     public function getConexion() {
-     $this->conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME) OR
-     die ('Error al establecer conexion db: '.mysqli_connect_error());          
-     
-     return $this->conn;
+        
+       $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME); 
+       
+       if ($conn->connect_errno) {
+           $aJson['message']="Error conexion";
+           $aJson['info'] = 'No se establecio conexion con el servidor';
+           return $aJson;
+       }else{
+            return $conn;  
+       }
+
     }
     
 

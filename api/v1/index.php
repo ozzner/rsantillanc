@@ -59,32 +59,38 @@ switch ($entity) {
               
                 if($estado!='ok'){
                   $funcion->setJsonResponse($estado, 400, 1);}
-                else {
+                else {                    
+                    $arrJSON = $daoUser->listarByIdApiKey($_GET['email'],$_GET['password']);  
                     
-                    $arrJSON = $daoUser->listarByIdApiKey($email=$_GET['email'], $Api_key=$_GET['password']); 
-                    if ($arrJSON['email']==NULL) {
-                        $arrJSON['message']='Invalido';
-                        $arrJSON['info']='Dato inexistente!';
-                        
-                        $funcion->setJsonResponse($arrJSON, 200, TRUE);
-                    }else
-                    {
-                        $funcion->setJsonResponse($arrJSON, 200, FALSE);
-                    }
-                   
-                }
-       
-                  
+                    if($arrJSON)
+                        {                            
+                            $funcion->setJsonResponse($arrJSON, 500, 1);
+                        }else
+                            {
+                                if ($arrJSON['email']==NULL) {
+                                    $arrJSON['message']='Invalido';
+                                    $arrJSON['info']='Dato inexistente!';
+
+                                    $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                                }else
+                                {
+                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);
+                                }
+                            }                                                         
+                }                        
               break;
               
           default:
+              $aJSON['message']='Acceso denegado!';
+              $aJSON['info']='No se permiten otras peticiones';
+              $funcion->setJsonResponse($aJSON, 403, 1);
               break;
       }#End Usuario
    
      break;
 
  default :
-    echo 'acceso denegado!';
+    echo 'Acceso denegado!';
 
 }
 

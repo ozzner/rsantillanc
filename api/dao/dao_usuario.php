@@ -1,17 +1,16 @@
 <?php
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
+
 class usuario {
     
-    private $link,$uid,$time,$passHash;
+    private $dbc,$uid,$time,$passHash;
     
     function __construct() {
         
         require_once '../db../db_conexion.php';
         require_once '../sos../sos_helper.php';
               
-        $db = new conexion();
-        $this->link = $db->getConexion(); 
-     
+        $this->dbc = new conexion();       
     }
     
     public function registrar($mail,$sex,$nom,$feh,$app,$apm,$pass) {
@@ -71,34 +70,55 @@ class usuario {
     }#End registrar
     
     public function listarByIdApiKey($email,$pass) {
-         $arData[] = array();
-         
        
-            $sql= "SELECT * FROM tb_usuario WHERE(usu_mail = ? AND usu_pass = ?)";  
-
-            $stmt = mysqli_prepare($this->link, $sql);
-
-            mysqli_stmt_bind_param($stmt,"ss",$email,$pass);
-            $rpta = mysqli_stmt_execute($stmt);
+        $conexion = $this->dbc->getConexion();
+        
+        if (is_array($conexion)) {
             
-            if ($rpta) {
-                
-                 mysqli_stmt_bind_result($stmt, $mail,$pwd,$nom);            
-                 while (mysqli_stmt_fetch($stmt)) {
-                 $arData = array('email'=>$mail,'pass'=>$pwd,'nombre'=>$nom); 
-                 return $arData;         }                 
-            }else{                                
-                switch (mysqli_errno($this->link)) {      
-                     default:
-                        $arData['error_cod']=12.1;
-                        $arData['message']='Error SQL - Desconocido';
-                        $arData['info']=mysqli_error($this->link);  
-                        return $arData;
-                     break;
-                 }
+            $query= " SELECT * FROM db_apprade.tb_usuario u
+            INNER JOIN tb_ranking r ON u.ran_id=r.ran_id
+            WHERE(usu_mail = '$email' AND usu_pass = '$pass')";
+
+            $result = $conexion->query($query);
+
+            $c = 0;
+            while ($row = $result->fetch_assoc()) {
+                $c++;
+            $aData[] = array('User'.$c=>$row);               
             }
-  
-            mysqli_close($this->link);
+
+                 $conexion->close();
+               return $aData;
+        }
+        
+          
+                    
+             
+        
+           //$sql= "SELECT usu_mail, usu_pass,usu_nom FROM tb_usuario WHERE(usu_mail = ? AND usu_pass = ?)";                 
+//     
+//            $stmt = mysqli_prepare($this->link, $sql);
+//
+//            mysqli_stmt_bind_param("ss",$email,$pass);
+//            $rpta = mysqli_stmt_execute($stmt);
+//            
+//            if ($rpta) {                
+//                // mysqli_stmt_bind_result($stmt, $mail,$pwd,$nom);            
+//                 while (mysqli_stmt_fetch($stmt)) {
+//                 $arData = array('email'=>$mail,'pass'=>$pwd,'nombre'=>$nom); 
+//                 return $arData;         }                 
+//            }else{                                
+//                switch (mysqli_errno($this->link)) {      
+//                     default:
+//                        $arData['error_cod']=12.1;
+//                        $arData['message']='Error SQL - Desconocido';
+//                        $arData['info']=mysqli_error($this->link);  
+//                        return $arData;
+//                     break;
+//                 }
+//            }
+              
+         
  
     } #End Listar_By_ID-API
 

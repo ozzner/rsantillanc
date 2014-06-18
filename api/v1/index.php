@@ -67,7 +67,7 @@ switch ($entity) {
                             $funcion->setJsonResponse($arrJSON, 500, 1);
                         }else
                             {
-                                if ($arrJSON==NULL) {
+                                if ($arrJSON == NULL) {
                                     $arrJSON['message']='Invalido';
                                     $arrJSON['info']='Dato inexistente!';
 

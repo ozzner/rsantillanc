@@ -1,6 +1,7 @@
 <?php
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 
+
 class usuario {
     
     private $dbc,$uid,$time,$passHash;
@@ -10,7 +11,7 @@ class usuario {
         require_once '../db../db_conexion.php';
         require_once '../sos../sos_helper.php';
               
-        $this->dbc = new conexion();       
+        $this->dbc = new conexion(); //General connection      
     }
     
     public function registrar($mail,$sex,$nom,$feh,$app,$apm,$pass) {
@@ -61,19 +62,20 @@ class usuario {
              
              mysqli_stmt_close();
              mysqli_close($conexion);                     
- 
                   
     }#End registrar
     
+    
     public function listarByIdApiKey($email,$pass) {
-       
+        $aData = array();
         $conexion = $this->dbc->getConexion();
+        $aux = new funciones(); 
         
         if (!is_array($conexion)) {
-            
+                $passHash = $aux->setHash($pass);
                 $query= " SELECT * FROM db_apprade.tb_usuario u
                 INNER JOIN tb_ranking r ON u.ran_id=r.ran_id
-                WHERE(usu_mail = '$email' AND usu_pass = '$pass')";
+                WHERE(usu_mail = '$email' AND usu_pass = '$passHash')";
 
                 $result = $conexion->query($query);
 
@@ -83,17 +85,15 @@ class usuario {
                     $aData[] = array('User'.$c=>$row); }
                     
                 $conexion->close();
-
-                if ($aData == NULL)                                        
-                    return NULL;
+                
+                if ($aData == NULL)  
+                    return $aData;
                 else
                     return $aData;
                
         }else            
             return $conexion;
             
-
- 
     } #End Listar_By_ID-API
 
     

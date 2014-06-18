@@ -53,7 +53,7 @@ class usuario {
                      break;
                      default:
                         $arData['error_cod']=11.3;
-                        $arData['message']='Error SQL - Desconocido';
+                        $arData['message']='Error de conexion';
                         $arData['info']=mysqli_error($conexion);  
                         return $arData;
                      break;
@@ -66,7 +66,7 @@ class usuario {
     }#End registrar
     
     
-    public function listarByIdApiKey($email,$pass) {
+    public function listarById($email,$pass) {
         $aData = array();
         $conexion = $this->dbc->getConexion();
         $aux = new funciones(); 
@@ -94,7 +94,7 @@ class usuario {
         }else            
             return $conexion;
             
-    } #End Listar_By_ID-API
+    } #End Listar_By_ID
 
     
 }

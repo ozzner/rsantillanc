@@ -54,13 +54,13 @@ switch ($entity) {
           
       #Metodo GET - Usuario    
           case 'GET':
-              $arrParam2 = array('email'=>$_GET['email'],'pass'=>$_GET['password']);
+              $arrParam2 = array('email'=>$_GET['email'],'password'=>$_GET['password']);
               $estado = $funcion->chkParmeters($arrParam2);
               
                 if($estado!='ok'){
                   $funcion->setJsonResponse($estado, 400, 1);}
                 else {                    
-                    $arrJSON = $daoUser->listarByIdApiKey($_GET['email'],$_GET['password']);  
+                    $arrJSON = $daoUser->listarById($_GET['email'],$_GET['password']);  
                    
                     if(!is_array($arrJSON))
                         {                            

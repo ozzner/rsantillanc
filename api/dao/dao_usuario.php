@@ -73,7 +73,7 @@ class usuario {
        
         $conexion = $this->dbc->getConexion();
         
-        if (is_array($conexion)) {
+        if (!is_array($conexion)) {
             
             $query= " SELECT * FROM db_apprade.tb_usuario u
             INNER JOIN tb_ranking r ON u.ran_id=r.ran_id
@@ -82,41 +82,45 @@ class usuario {
             $result = $conexion->query($query);
 
             $c = 0;
-            while ($row = $result->fetch_assoc()) {
-                $c++;
+            while ($row = $result->fetch_assoc()){
+            $c++;
             $aData[] = array('User'.$c=>$row);               
             }
-
-                 $conexion->close();
-               return $aData;
-        }
+               $conexion->close();
+               
+               if ($aData == NULL)                                        
+                   return NULL;
+               else
+                   return $aData;
+               
+        }else
+            {
+            return $conexion;
+            }
         
           
                     
              
         
            //$sql= "SELECT usu_mail, usu_pass,usu_nom FROM tb_usuario WHERE(usu_mail = ? AND usu_pass = ?)";                 
-//     
-//            $stmt = mysqli_prepare($this->link, $sql);
-//
-//            mysqli_stmt_bind_param("ss",$email,$pass);
-//            $rpta = mysqli_stmt_execute($stmt);
-//            
-//            if ($rpta) {                
-//                // mysqli_stmt_bind_result($stmt, $mail,$pwd,$nom);            
-//                 while (mysqli_stmt_fetch($stmt)) {
-//                 $arData = array('email'=>$mail,'pass'=>$pwd,'nombre'=>$nom); 
-//                 return $arData;         }                 
-//            }else{                                
-//                switch (mysqli_errno($this->link)) {      
-//                     default:
-//                        $arData['error_cod']=12.1;
-//                        $arData['message']='Error SQL - Desconocido';
-//                        $arData['info']=mysqli_error($this->link);  
-//                        return $arData;
-//                     break;
-//                 }
-//            }
+     
+        
+            
+            if ($rpta) {                
+                // mysqli_stmt_bind_result($stmt, $mail,$pwd,$nom);            
+                 while (mysqli_stmt_fetch($stmt)) {
+                 $arData = array('email'=>$mail,'pass'=>$pwd,'nombre'=>$nom); 
+                 return $arData;         }                 
+            }else{                                
+                switch (mysqli_errno($this->link)) {      
+                     default:
+                        $arData['error_cod']=12.1;
+                        $arData['message']='Error SQL - Desconocido';
+                        $arData['info']=mysqli_error($this->link);  
+                        return $arData;
+                     break;
+                 }
+            }
               
          
  

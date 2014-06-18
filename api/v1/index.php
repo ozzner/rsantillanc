@@ -61,13 +61,13 @@ switch ($entity) {
                   $funcion->setJsonResponse($estado, 400, 1);}
                 else {                    
                     $arrJSON = $daoUser->listarByIdApiKey($_GET['email'],$_GET['password']);  
-                    
-                    if($arrJSON)
+                   
+                    if(!is_array($arrJSON))
                         {                            
                             $funcion->setJsonResponse($arrJSON, 500, 1);
                         }else
                             {
-                                if ($arrJSON['email']==NULL) {
+                                if ($arrJSON==NULL) {
                                     $arrJSON['message']='Invalido';
                                     $arrJSON['info']='Dato inexistente!';
 

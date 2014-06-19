@@ -16,7 +16,7 @@ class usuario {
     
     public function registrarUsuario($mail,$sex,$nom,$feh,$app,$apm,$pass) {
         $aux = new funciones();  
-        $this->time = $aux->genDataTime();
+        $this->time = $aux->genDataTime('Y.m.d H:i:s');
         $this->uid = $aux->genApiKey();
         $this->passHash= $aux->setHash($pass);
         $conexion = $this->dbc->getConexion();

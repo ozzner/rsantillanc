@@ -25,10 +25,10 @@ class funciones {
         return md5(uniqid(rand(), true));
     }
     
-    public function genDataTime() {        
+    public function genDataTime($format) {        
         date_default_timezone_set('America/Bogota');
         $time = new DateTime();
-        $date= $time->format('Y.m.d H:i:s');
+        $date= $time->format($format);
         
         return $date;
     }

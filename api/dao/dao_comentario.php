@@ -14,9 +14,9 @@ class comentario {
         $this->dbc = new conexion(); //General connection      
     }
     
-    public function registrarComentario($mensaje,$userID,$estID) {
+    public function insertarComentario($mensaje,$userID,$estID) {
         $aux = new funciones();  
-        $this->time = $aux->genDataTime();
+        $this->time = $aux->genDataTime('Y.m.d H:i:s');
         $conexion = $this->dbc->getConexion();
         
             $sql= "INSERT INTO tb_comentario (com_sms,com_fec,usu_id,est_id)
@@ -50,7 +50,7 @@ class comentario {
                   
     }#End registrar
     
-    public function listarComentarioByID($userID) {
+    public function listarComentarioByUserID($userID) {
         $aData = array();
         $conexion = $this->dbc->getConexion();
         

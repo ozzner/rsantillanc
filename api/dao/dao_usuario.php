@@ -14,7 +14,7 @@ class usuario {
         $this->dbc = new conexion(); //General connection      
     }
     
-    public function registrar($mail,$sex,$nom,$feh,$app,$apm,$pass) {
+    public function registrarUsuario($mail,$sex,$nom,$feh,$app,$apm,$pass) {
         $aux = new funciones();  
         $this->time = $aux->genDataTime();
         $this->uid = $aux->genApiKey();
@@ -66,7 +66,7 @@ class usuario {
     }#End registrar
     
     
-    public function listarById($email,$pass) {
+    public function listarUsuarioById($email,$pass) {
         $aData = array();
         $conexion = $this->dbc->getConexion();
         $aux = new funciones(); 

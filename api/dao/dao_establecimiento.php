@@ -1,7 +1,44 @@
 <?php
+error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+class establecimiento{
+        
+        function __construct() {
+        
+        require_once '../db../db_conexion.php';
+        require_once '../sos../sos_helper.php';
+              
+        $this->dbc = new conexion(); //General connection      
+    }
+    
+        public function listarEstablecimientoByID($establecimientoID) {
+        $aData = array();
+        $conexion = $this->dbc->getConexion();
+        
+        if (!is_array($conexion)) {
+                $query= " SELECT * FROM tb_establecimiento WHERE est_id = '$establecimientoID' ORDER BY dis_id ASC";
+                $result = $conexion->query($query);
+
+                $c = 0;
+                while ($row = $result->fetch_assoc()){
+                    $c++;
+                    $aData["establishment".$c]["establishmentID"]=$row['est_id'];
+                    $aData["establishment".$c]["address"]        =$row['est_nom'];                                    
+                    $aData["establishment".$c]["name"]           =$row['est_name'];  
+                    $aData["establishment".$c]["ruc"]            =$row['est_ruc'];
+                    $aData["establishment".$c]["categoryID"]     =$row['est_nom'];                                    
+                    $aData["establishment".$c]["districtID"]     =$row['est_cod']; 
+                    $aData["establishment".$c]["coordinatesID"]  =$row['est_cod']; 
+                }                                    
+                    $conexion->close();
+                    
+                if ($aData == NULL)  
+                    return $aData;
+                else
+                    return $aData;               
+        }else            
+            return $conexion;
+            
+    } #End Listar_By_ID
+}
 ?>

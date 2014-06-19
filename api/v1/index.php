@@ -239,7 +239,7 @@ switch ($entity) {
       $dao = new categoria();
       switch ($_SERVER['REQUEST_METHOD']) {
                             
-      #Metodo GET - Calificacion    
+      #Metodo GET - Categoria    
           case 'GET':
               $param = array('categoriaID'=>$_GET['categoriaID']);
               $estado = $funcion->chkParmeters($param);
@@ -276,12 +276,12 @@ switch ($entity) {
    
      break;
   
-  case 'categoria':
+  case 'ranking':
       
       $dao = new ranking();
       switch ($_SERVER['REQUEST_METHOD']) {
                             
-      #Metodo GET - Calificacion    
+      #Metodo GET - Ranking    
           case 'GET':
               $param = array('rankingID'=>$_GET['rankingID']);
               $estado = $funcion->chkParmeters($param);
@@ -289,7 +289,7 @@ switch ($entity) {
                 if($estado!='ok'){
                   $funcion->setJsonResponse($estado, 400, 1);}
                 else {                    
-                    $arrJSON = $dao->listarCategoriaByID($_GET['rankingID']);
+                    $arrJSON = $dao->listarRankingByID($_GET['rankingID']);
                    
                     if(!is_array($arrJSON))
                         {                            
@@ -314,12 +314,137 @@ switch ($entity) {
               $aJSON['info']='No se permiten otras peticiones';
               $funcion->setJsonResponse($aJSON, 403, 1);
               break;
-     }#End Categoria
+     }#End Ranking
+     break;
+  
+  case 'coordenadas':
+      
+      $dao = new coordenadas();
+      switch ($_SERVER['REQUEST_METHOD']) {
+                            
+      #Metodo GET - Coordenadas    
+          case 'GET':
+              $param = array('coordenadasID'=>$_GET['coordenadasID']);
+              $estado = $funcion->chkParmeters($param);
+              
+                if($estado!='ok'){
+                  $funcion->setJsonResponse($estado, 400, 1);}
+                else {                    
+                    $arrJSON = $dao->listarcoordendasByID($_GET['coordenadasID']);
+                   
+                    if(!is_array($arrJSON))
+                        {                            
+                            $funcion->setJsonResponse($arrJSON, 500, 1);
+                        }else
+                            {
+                                if ($arrJSON == NULL) {
+                                    $arrJSON['message']='Oops!';
+                                    $arrJSON['info']='No se encontro las coordenadas con ese ID!';
+
+                                    $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                                }else
+                                {
+                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);
+                                }
+                            }                                                         
+                }                        
+              break;
+              
+          default:
+              $aJSON['message']='Acceso denegado!';
+              $aJSON['info']='No se permiten otras peticiones';
+              $funcion->setJsonResponse($aJSON, 403, 1);
+              break;
+     }#End Coordenadas
      break;
      
-  default :
-  echo 'Acceso denegado!';
+  case 'distrito':
+      
+      $dao = new distrito();
+      switch ($_SERVER['REQUEST_METHOD']) {
+                            
+      #Metodo GET - Distrito    
+          case 'GET':
+              $param = array('distritoID'=>$_GET['distritoID']);
+              $estado = $funcion->chkParmeters($param);
+              
+                if($estado!='ok'){
+                  $funcion->setJsonResponse($estado, 400, 1);}
+                else {                    
+                    $arrJSON = $dao->listarDistritoByID($_GET['distritoID']);
+                   
+                    if(!is_array($arrJSON))
+                        {                            
+                            $funcion->setJsonResponse($arrJSON, 500, 1);
+                        }else
+                            {
+                                if ($arrJSON == NULL) {
+                                    $arrJSON['message']='Oops!';
+                                    $arrJSON['info']='No se encontro distrito, verificar valores!';
 
+                                    $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                                }else
+                                {
+                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);
+                                }
+                            }                                                         
+                }                        
+              break;
+              
+          default:
+              $aJSON['message']='Acceso denegado!';
+              $aJSON['info']='No se permiten otras peticiones';
+              $funcion->setJsonResponse($aJSON, 403, 1);
+              break;
+     }#End Distrito
+     break;
+     
+  case 'establecimiento':
+      
+      $dao = new establecimiento();
+      switch ($_SERVER['REQUEST_METHOD']) {
+                            
+      #Metodo GET - Establecimiento    
+          case 'GET':
+              $param = array('establecimientoID'=>$_GET['establecimientoID']);
+              $estado = $funcion->chkParmeters($param);
+              
+                if($estado!='ok'){
+                  $funcion->setJsonResponse($estado, 400, 1);}
+                else {                    
+                    $arrJSON = $dao->listarEstablecimientoByID($_GET['establecimientoID']);
+                   
+                    if(!is_array($arrJSON))
+                        {                            
+                            $funcion->setJsonResponse($arrJSON, 500, 1);
+                        }else
+                            {
+                                if ($arrJSON == NULL) {
+                                    $arrJSON['message']='Oops!';
+                                    $arrJSON['info']='No se encontro el establecimiento, verificar valores!';
+
+                                    $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                                }else
+                                {
+                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);
+                                }
+                            }                                                         
+                }                        
+              break;
+              
+          default:
+              $aJSON['message']='Acceso denegado!';
+              $aJSON['info']='No se permiten otras peticiones';
+              $funcion->setJsonResponse($aJSON, 403, 1);
+              break;
+     }#End Establecimiento
+     break;              
+     
+  default :
+              $aJSON['message']='Acceso denegado!';
+              $aJSON['info']='Contacte con el administrador admin@admin.com';
+              $funcion->setJsonResponse($aJSON, 403, 1);
+  break;
 }
 
 ?>

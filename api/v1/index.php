@@ -6,6 +6,11 @@ include_once '../sos../sos_helper.php';
 include_once '../dao../dao_usuario.php';
 include_once '../dao../dao_comentario.php';
 include_once '../dao../dao_calificacion.php';
+include_once '../dao../dao_categoria.php';
+include_once '../dao../dao_distrito.php';
+include_once '../dao../dao_establecimiento.php';
+include_once '../dao../dao_ranking.php';
+include_once '../dao../dao_coordenadas.php';
 
 
 #Variables Globales
@@ -227,6 +232,89 @@ switch ($entity) {
               break;
      }#End Calificacion
    
+     break;
+     
+  case 'categoria':
+      
+      $dao = new categoria();
+      switch ($_SERVER['REQUEST_METHOD']) {
+                            
+      #Metodo GET - Calificacion    
+          case 'GET':
+              $param = array('categoriaID'=>$_GET['categoriaID']);
+              $estado = $funcion->chkParmeters($param);
+              
+                if($estado!='ok'){
+                  $funcion->setJsonResponse($estado, 400, 1);}
+                else {                    
+                    $arrJSON = $dao->listarCategoriaByID($_GET['categoriaID']);
+                   
+                    if(!is_array($arrJSON))
+                        {                            
+                            $funcion->setJsonResponse($arrJSON, 500, 1);
+                        }else
+                            {
+                                if ($arrJSON == NULL) {
+                                    $arrJSON['message']='Oops!';
+                                    $arrJSON['info']='No hay categoria!';
+
+                                    $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                                }else
+                                {
+                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);
+                                }
+                            }                                                         
+                }                        
+              break;
+              
+          default:
+              $aJSON['message']='Acceso denegado!';
+              $aJSON['info']='No se permiten otras peticiones';
+              $funcion->setJsonResponse($aJSON, 403, 1);
+              break;
+     }#End Categoria
+   
+     break;
+  
+  case 'categoria':
+      
+      $dao = new ranking();
+      switch ($_SERVER['REQUEST_METHOD']) {
+                            
+      #Metodo GET - Calificacion    
+          case 'GET':
+              $param = array('rankingID'=>$_GET['rankingID']);
+              $estado = $funcion->chkParmeters($param);
+              
+                if($estado!='ok'){
+                  $funcion->setJsonResponse($estado, 400, 1);}
+                else {                    
+                    $arrJSON = $dao->listarCategoriaByID($_GET['rankingID']);
+                   
+                    if(!is_array($arrJSON))
+                        {                            
+                            $funcion->setJsonResponse($arrJSON, 500, 1);
+                        }else
+                            {
+                                if ($arrJSON == NULL) {
+                                    $arrJSON['message']='Oops!';
+                                    $arrJSON['info']='No hay un ranking con ese ID!';
+
+                                    $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                                }else
+                                {
+                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);
+                                }
+                            }                                                         
+                }                        
+              break;
+              
+          default:
+              $aJSON['message']='Acceso denegado!';
+              $aJSON['info']='No se permiten otras peticiones';
+              $funcion->setJsonResponse($aJSON, 403, 1);
+              break;
+     }#End Categoria
      break;
      
   default :

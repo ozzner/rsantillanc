@@ -50,7 +50,6 @@ class comentario {
                   
     }#End registrar
     
-    
     public function listarComentarioByID($userID) {
         $aData = array();
         $conexion = $this->dbc->getConexion();

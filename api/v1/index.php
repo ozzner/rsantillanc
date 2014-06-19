@@ -158,8 +158,9 @@ switch ($entity) {
       }#End Usuario
    
      break;
+  
   default :
-    echo 'Acceso denegado!';
+  echo 'Acceso denegado!';
 
 }
 

@@ -62,8 +62,12 @@ class calificacion {
                 $c = 0;
                 while ($row = $result->fetch_assoc()){
                     $c++;
-                    $aData[] = array($c=>$row); }                    
-                
+                    $aData["rating".$c]["userID"]   =$row['usu_id'];
+                    $aData["rating".$c]["estaID"]   =$row['est_id'];
+                    $aData["rating".$c]["queue"]    =$row['cal_sms'];
+                    $aData["rating".$c]["date_at"]  =$row['cal_fec'];
+                    $aData["rating".$c]["hour_at"]  =$row['cal_hor'];
+                 }                                    
                     $conexion->close();
                     
                 if ($aData == NULL)  

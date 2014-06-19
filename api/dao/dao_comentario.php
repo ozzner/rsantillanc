@@ -55,13 +55,18 @@ class comentario {
         $conexion = $this->dbc->getConexion();
         
         if (!is_array($conexion)) {
-                $query= " SELECT * FROM tb_comentario WHERE usu_id = '$userID' ORDER BY com_id";
+                $query= " SELECT * FROM tb_comentario WHERE usu_id = '$userID' ORDER BY com_id DESC";
                 $result = $conexion->query($query);
 
                 $c = 0;
                 while ($row = $result->fetch_assoc()){
                     $c++;
-                    $aData[] = array($c=>$row); }                    
+                    $aData["comment".$c]["commentID"]=$row['com_id'];
+                    $aData["comment".$c]["message"]  =$row['com_sms'];
+                    $aData["comment".$c]["date_at"]  =$row['com_fec'];
+                    $aData["comment".$c]["userID"]   =$row['usu_id'];
+                    $aData["comment".$c]["estaID"]   =$row['est_id'];                                        
+                }                    
                 
                     $conexion->close();
                     

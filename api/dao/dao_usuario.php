@@ -64,8 +64,7 @@ class usuario {
              mysqli_close($conexion);                     
                   
     }#End registrar
-    
-    
+        
     public function listarUsuarioByEmail($email,$pass) {
         $aData = array();
         $conexion = $this->dbc->getConexion();

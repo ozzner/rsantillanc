@@ -161,69 +161,69 @@ switch ($entity) {
   
   case 'calificacion':
       
-//      $dao = new comentario();
-//      switch ($_SERVER['REQUEST_METHOD']) {
-//      
-//      #Metodo POST - Comentario
-//          case 'POST':
-//              $aKeys = array('usuario'=>$_POST['usuario'],'establecimiento'=>$_POST['establecimiento']);              
-//              $estado = $funcion->chkParmeters($aKeys);
-//              
-//              if($estado!='ok'){
-//                  $funcion->setJsonResponse($estado, 400, TRUE);
-//              }else{                                    
-//                   $insert =  $dao->registrarComentario($_POST['mensaje'], $aKeys['usuario'],$aKeys['establecimiento']);                                     
-//                        
-//                   switch ($insert['error_cod']) {                            
-//                             case 13.1:                                
-//                                $funcion->setJsonResponse($insert, 400, TRUE);
-//                                break;
-//                             case 13.2:                                
-//                                $funcion->setJsonResponse($insert, 500, TRUE);
-//                                break; 
-//                             default:
-//                                $arrJSON["message"]="Mensaje enviado!";
-//                                $funcion->setJsonResponse($arrJSON, 201, FALSE);
-//                                break;
-//                        }
-//              }
-//              break;            
-//              
-//          
-//      #Metodo GET - Comentario    
-//          case 'GET':
-//              $param = array('userID'=>$_GET['userID']);
-//              $estado = $funcion->chkParmeters($param);
-//              
-//                if($estado!='ok'){
-//                  $funcion->setJsonResponse($estado, 400, 1);}
-//                else {                    
-//                    $arrJSON = $dao->listarComentarioByID($_GET['userID']);
-//                   
-//                    if(!is_array($arrJSON))
-//                        {                            
-//                            $funcion->setJsonResponse($arrJSON, 500, 1);
-//                        }else
-//                            {
-//                                if ($arrJSON == NULL) {
-//                                    $arrJSON['message']='Oops!';
-//                                    $arrJSON['info']='Lo sentimos pero aun no tiene comentarios!';
-//
-//                                    $funcion->setJsonResponse($arrJSON, 200, TRUE);
-//                                }else
-//                                {
-//                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);
-//                                }
-//                            }                                                         
-//                }                        
-//              break;
-//              
-//          default:
-//              $aJSON['message']='Acceso denegado!';
-//              $aJSON['info']='No se permiten otras peticiones';
-//              $funcion->setJsonResponse($aJSON, 403, 1);
-//              break;
-//     }#End Calificacion
+      $dao = new calificacion();
+      switch ($_SERVER['REQUEST_METHOD']) {
+      
+      #Metodo POST - Calificacion
+          case 'POST':
+              $aKeys = array('usuario'=>$_POST['usuario'],'establecimiento'=>$_POST['establecimiento'],'cola'=>$_POST['cola']);              
+              $estado = $funcion->chkParmeters($aKeys);
+              
+              if($estado!='ok'){
+                  $funcion->setJsonResponse($estado, 400, TRUE);
+              }else{                                    
+                   $insert =  $dao->insertarCalificacion($_POST['usuario'], $_POST['establecimiento'], $_POST['cola']);                                     
+                        
+                   switch ($insert['error_cod']) {                            
+                             case 14.1:                                
+                                $funcion->setJsonResponse($insert, 400, TRUE);
+                                break;
+                             case 14.2:                                
+                                $funcion->setJsonResponse($insert, 500, TRUE);
+                                break; 
+                             default:
+                                $arrJSON["message"]="Calificacion exitosa!";
+                                $funcion->setJsonResponse($arrJSON, 201, FALSE);
+                                break;
+                        }
+              }
+              break;            
+              
+          
+      #Metodo GET - Calificacion    
+          case 'GET':
+              $param = array('userID'=>$_GET['userID']);
+              $estado = $funcion->chkParmeters($param);
+              
+                if($estado!='ok'){
+                  $funcion->setJsonResponse($estado, 400, 1);}
+                else {                    
+                    $arrJSON = $dao->listarComentarioByID($_GET['userID']);
+                   
+                    if(!is_array($arrJSON))
+                        {                            
+                            $funcion->setJsonResponse($arrJSON, 500, 1);
+                        }else
+                            {
+                                if ($arrJSON == NULL) {
+                                    $arrJSON['message']='Oops!';
+                                    $arrJSON['info']='No tiene calificaciones!';
+
+                                    $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                                }else
+                                {
+                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);
+                                }
+                            }                                                         
+                }                        
+              break;
+              
+          default:
+              $aJSON['message']='Acceso denegado!';
+              $aJSON['info']='No se permiten otras peticiones';
+              $funcion->setJsonResponse($aJSON, 403, 1);
+              break;
+     }#End Calificacion
    
      break;
      

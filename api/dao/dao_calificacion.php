@@ -33,8 +33,8 @@ class calificacion {
                  switch (mysqli_errno($conexion)) {
                      case 1452:
                         $arData['error_cod']=14.1;
-                        $arData['message']='No se pudo enviar';
-                        $arData['info']='Hay problemas con el usuario o el establecimiento';  
+                        $arData['message']='No se pudo calificar';
+                        $arData['info']='Hay problemas con el usuario o establecimiento';  
                         return $arData;
                          break;
                      default:

@@ -5,6 +5,8 @@ error_reporting(E_ALL & ~E_NOTICE);
 include_once '../sos../sos_helper.php';
 include_once '../dao../dao_usuario.php';
 include_once '../dao../dao_comentario.php';
+include_once '../dao../dao_calificacion.php';
+
 
 #Variables Globales
 #$method = $_SERVER['REQUEST_METHOD'];

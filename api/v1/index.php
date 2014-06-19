@@ -330,7 +330,7 @@ switch ($entity) {
                 if($estado!='ok'){
                   $funcion->setJsonResponse($estado, 400, 1);}
                 else {                    
-                    $arrJSON = $dao->listarcoordendasByID($_GET['coordenadasID']);
+                    $arrJSON = $dao->listarCoordendasByID($_GET['coordenadasID']);
                    
                     if(!is_array($arrJSON))
                         {                            

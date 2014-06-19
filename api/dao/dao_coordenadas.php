@@ -11,7 +11,7 @@ class coordenadas{
         $this->dbc = new conexion(); //General connection      
     }
     
-        public function listarcoordendasByID($coordenadaID) {
+        public function listarCoordendasByID($coordenadaID) {
         $aData = array();
         $conexion = $this->dbc->getConexion();
         

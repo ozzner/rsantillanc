@@ -66,7 +66,7 @@ class usuario {
     }#End registrar
     
     
-    public function listarUsuarioById($email,$pass) {
+    public function listarUsuarioByEmail($email,$pass) {
         $aData = array();
         $conexion = $this->dbc->getConexion();
         $aux = new funciones(); 

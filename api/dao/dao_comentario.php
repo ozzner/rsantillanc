@@ -14,7 +14,7 @@ class comentario {
         $this->dbc = new conexion(); //General connection      
     }
     
-    public function registrarComentario($mensaje,$fecha,$userID,$estID) {
+    public function registrarComentario($mensaje,$userID,$estID) {
         $aux = new funciones();  
         $this->time = $aux->genDataTime();
         $conexion = $this->dbc->getConexion();
@@ -23,15 +23,21 @@ class comentario {
                    VALUES(?,?,?,?)";  
 
              $stmt = mysqli_prepare($conexion, $sql);             
-             mysqli_stmt_bind_param($stmt,"ssii",$mensaje,$fecha,$userID,$estID);
+             mysqli_stmt_bind_param($stmt,"ssii",$mensaje,$this->time,$userID,$estID);
              $res = mysqli_stmt_execute($stmt);  //True - False
              
              if ($res) {
                    return "ok!";
              }  else{               
                  switch (mysqli_errno($conexion)) {
-                     default:
+                     case 1452:
                         $arData['error_cod']=13.1;
+                        $arData['message']='No se pudo enviar';
+                        $arData['info']='Hay problemas con el usuario o el establecimiento';  
+                        return $arData;
+                         break;
+                     default:
+                        $arData['error_cod']=13.2;
                         $arData['message']='Error de conexion';
                         $arData['info']=mysqli_error($conexion);  
                         return $arData;
@@ -45,33 +51,27 @@ class comentario {
     }#End registrar
     
     
-    public function listarUsuarioById($email,$pass) {
-//        $aData = array();
-//        $conexion = $this->dbc->getConexion();
-//        $aux = new funciones(); 
-//        
-//        if (!is_array($conexion)) {
-//                $passHash = $aux->setHash($pass);
-//                $query= " SELECT * FROM db_apprade.tb_usuario u
-//                INNER JOIN tb_ranking r ON u.ran_id=r.ran_id
-//                WHERE(usu_mail = '$email' AND usu_pass = '$passHash')";
-//
-//                $result = $conexion->query($query);
-//
-//                $c = 0;
-//                while ($row = $result->fetch_assoc()){
-//                    $c++;
-//                    $aData[] = array('User'.$c=>$row); }
-//                    
-//                $conexion->close();
-//                
-//                if ($aData == NULL)  
-//                    return $aData;
-//                else
-//                    return $aData;
-//               
-//        }else            
-//            return $conexion;
+    public function listarComentarioByID($userID) {
+        $aData = array();
+        $conexion = $this->dbc->getConexion();
+        
+        if (!is_array($conexion)) {
+                $query= " SELECT * FROM tb_comentario WHERE usu_id = '$userID' ORDER BY com_id";
+                $result = $conexion->query($query);
+
+                $c = 0;
+                while ($row = $result->fetch_assoc()){
+                    $c++;
+                    $aData[] = array($c=>$row); }                    
+                
+                    $conexion->close();
+                    
+                if ($aData == NULL)  
+                    return $aData;
+                else
+                    return $aData;               
+        }else            
+            return $conexion;
             
     } #End Listar_By_ID
 

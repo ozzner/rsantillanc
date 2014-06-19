@@ -10,14 +10,14 @@ include_once '../dao../dao_comentario.php';
 #$method = $_SERVER['REQUEST_METHOD'];
 $entity = $_REQUEST['entity'];
 $funcion = new funciones();
-$daoUser = new usuario();
 
 $arrJSON = array();
 
 switch ($entity) {
    
   case 'usuario':
-      
+        
+      $dao = new usuario();      
       switch ($_SERVER['REQUEST_METHOD']) {
       
       #Metodo POST - Usuario
@@ -31,7 +31,7 @@ switch ($entity) {
               if($estado!='ok'){
                   $funcion->setJsonResponse($estado, 400, TRUE);
               }else{                                    
-                   $insert =  $daoUser->registrarUsuario
+                   $insert =  $dao->registrarUsuario
                    ($aKeys['email'],$aKeys['sexo'], $aKeys['nombre'], $aKeys['fecha'], $aKeys['apellido1'], $aKeys['apellido2'],$aKeys['password']);
                    
                         switch ($insert['error_cod']) {
@@ -62,7 +62,7 @@ switch ($entity) {
                 if($estado!='ok'){
                   $funcion->setJsonResponse($estado, 400, 1);}
                 else {                    
-                    $arrJSON = $daoUser->listarUsuarioById($_GET['email'],$_GET['password']);  
+                    $arrJSON = $dao->listarUsuarioByEmail($_GET['email'],$_GET['password']);  
                    
                     if(!is_array($arrJSON))
                         {                            
@@ -93,50 +93,44 @@ switch ($entity) {
           
   case 'comentario':
       
+      $dao = new comentario();
       switch ($_SERVER['REQUEST_METHOD']) {
       
       #Metodo POST - Comentario
           case 'POST':
-              $aKeys = array(
-                  'usuario'=>$_POST['usuario'],'establecimiento'=>$_POST['establecimiento'],'fecha'=>$_POST['fecha']);
-              
+              $aKeys = array('usuario'=>$_POST['usuario'],'establecimiento'=>$_POST['establecimiento']);              
               $estado = $funcion->chkParmeters($aKeys);
               
               if($estado!='ok'){
                   $funcion->setJsonResponse($estado, 400, TRUE);
               }else{                                    
-                   $insert =  $daoUser->registrarUsuario
-                   ($aKeys['email'],$aKeys['sexo'], $aKeys['nombre'], $aKeys['fecha'], $aKeys['apellido1'], $aKeys['apellido2'],$aKeys['password']);
-                   
-                        switch ($insert['error_cod']) {
-                            
-                             case 11.1:                                
-                                $funcion->setJsonResponse($insert, 500, TRUE);
+                   $insert =  $dao->registrarComentario($_POST['mensaje'], $aKeys['usuario'],$aKeys['establecimiento']);                                     
+                        
+                   switch ($insert['error_cod']) {                            
+                             case 13.1:                                
+                                $funcion->setJsonResponse($insert, 400, TRUE);
                                 break;
-                             case 11.2:
+                             case 13.2:                                
                                 $funcion->setJsonResponse($insert, 500, TRUE);
-                                break;
-                             case 11.3:
-                                $funcion->setJsonResponse($insert, 500, TRUE);
-                                break;
+                                break; 
                              default:
-                                $arrJSON["message"]="Usuario creado!";
+                                $arrJSON["message"]="Mensaje enviado!";
                                 $funcion->setJsonResponse($arrJSON, 201, FALSE);
                                 break;
-                                          }
+                        }
               }
               break;            
               
           
-      #Metodo GET - Usuario    
+      #Metodo GET - Comentario    
           case 'GET':
-              $arrParam2 = array('email'=>$_GET['email'],'password'=>$_GET['password']);
-              $estado = $funcion->chkParmeters($arrParam2);
+              $param = array('userID'=>$_GET['userID']);
+              $estado = $funcion->chkParmeters($param);
               
                 if($estado!='ok'){
                   $funcion->setJsonResponse($estado, 400, 1);}
                 else {                    
-                    $arrJSON = $daoUser->listarUsuarioById($_GET['email'],$_GET['password']);  
+                    $arrJSON = $dao->listarComentarioByID($_GET['userID']);
                    
                     if(!is_array($arrJSON))
                         {                            
@@ -144,8 +138,8 @@ switch ($entity) {
                         }else
                             {
                                 if ($arrJSON == NULL) {
-                                    $arrJSON['message']='Invalido';
-                                    $arrJSON['info']='Dato inexistente!';
+                                    $arrJSON['message']='Oops!';
+                                    $arrJSON['info']='Lo sentimos pero aun no tiene comentarios!';
 
                                     $funcion->setJsonResponse($arrJSON, 200, TRUE);
                                 }else

@@ -8,5 +8,4 @@
     const DB_PASS = "";
     const DB_NAME = "db_apprade";
 
-
 ?>

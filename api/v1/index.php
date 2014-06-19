@@ -126,13 +126,13 @@ switch ($entity) {
           
       #Metodo GET - Comentario    
           case 'GET':
-              $param = array('userID'=>$_GET['userID']);
+              $param = array('usuarioID'=>$_GET['usuarioID']);
               $estado = $funcion->chkParmeters($param);
               
                 if($estado!='ok'){
                   $funcion->setJsonResponse($estado, 400, 1);}
                 else {                    
-                    $arrJSON = $dao->listarComentarioByUserID($_GET['userID']);
+                    $arrJSON = $dao->listarCalificacionByUserID($_GET['usuarioID']);
                    
                     if(!is_array($arrJSON))
                         {                            
@@ -194,13 +194,13 @@ switch ($entity) {
           
       #Metodo GET - Calificacion    
           case 'GET':
-              $param = array('userID'=>$_GET['userID']);
+              $param = array('usuarioID'=>$_GET['usuarioID']);
               $estado = $funcion->chkParmeters($param);
               
                 if($estado!='ok'){
                   $funcion->setJsonResponse($estado, 400, 1);}
                 else {                    
-                    $arrJSON = $dao->listarComentarioByID($_GET['userID']);
+                    $arrJSON = $dao->listarCalificacionByUserID($_GET['usuarioID']);
                    
                     if(!is_array($arrJSON))
                         {                            

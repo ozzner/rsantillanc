@@ -20,7 +20,7 @@ class calificacion {
         $this->hora = $aux->genDataTime('H:i:s');
         $conexion = $this->dbc->getConexion();
         
-            $sql= "INSERT INTO tb_calificacion (usu_id,est_id,cat_cola,cat_hor,cat_fec)
+            $sql= "INSERT INTO tb_calificacion (usu_id,est_id,cal_cola,cal_hor,cal_fec)
                    VALUES(?,?,?,?,?)";  
 
              $stmt = mysqli_prepare($conexion, $sql);             
@@ -51,7 +51,7 @@ class calificacion {
                   
     }#End Insertar
     
-    public function listarComentarioByUserID($userID) {
+    public function listarCalificacionByUserID($userID) {
         $aData = array();
         $conexion = $this->dbc->getConexion();
         

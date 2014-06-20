@@ -84,7 +84,7 @@ class usuario {
                      $aData["user".$c]["userID"]  =$row['usu_id'];
                      $aData["user".$c]["email"]  =$row['usu_mail'];
                      $aData["user".$c]["sex"]  =$row['usu_sex'];
-                     $aData["user".$c]["name"]  =$row['usu_name'];
+                     $aData["user".$c]["name"]  =$row['usu_nom'];
                      $aData["user".$c]["date_birth"]  =$row['usu_fec_nac'];
                      $aData["user".$c]["last_name1"]  =$row['usu_ap1'];
                      $aData["user".$c]["last_name2"]  =$row['usu_ap2'];

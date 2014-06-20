@@ -26,9 +26,9 @@ class establecimiento{
                     $aData["establishment".$c]["address"]        =$row['est_nom'];                                    
                     $aData["establishment".$c]["name"]           =$row['est_name'];  
                     $aData["establishment".$c]["ruc"]            =$row['est_ruc'];
-                    $aData["establishment".$c]["categoryID"]     =$row['est_nom'];                                    
-                    $aData["establishment".$c]["districtID"]     =$row['est_cod']; 
-                    $aData["establishment".$c]["coordinatesID"]  =$row['est_cod']; 
+                    $aData["establishment".$c]["categoryID"]     =$row['cat_id'];                                    
+                    $aData["establishment".$c]["districtID"]     =$row['dis_id']; 
+                    $aData["establishment".$c]["coordinatesID"]  =$row['coo_id']; 
                 }                                    
                     $conexion->close();
                     

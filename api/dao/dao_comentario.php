@@ -50,12 +50,12 @@ class comentario {
                   
     }#End registrar
     
-    public function listarCalificacionByUserID($userID) {
+    public function listarComentariosALL() {
         $aData = array();
         $conexion = $this->dbc->getConexion();
         
         if (!is_array($conexion)) {
-                $query= " SELECT * FROM tb_comentario WHERE usu_id = '$userID' ORDER BY com_id DESC";
+                $query= " SELECT * FROM tb_comentario ORDER BY com_fec DESC";
                 $result = $conexion->query($query);
 
                 $c = 0;

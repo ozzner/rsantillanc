@@ -131,13 +131,8 @@ switch ($entity) {
           
       #Metodo GET - Comentario    
           case 'GET':
-              $param = array('usuarioID'=>$_GET['usuarioID']);
-              $estado = $funcion->chkParmeters($param);
               
-                if($estado!='ok'){
-                  $funcion->setJsonResponse($estado, 400, 1);}
-                else {                    
-                    $arrJSON = $dao->listarCalificacionByUserID($_GET['usuarioID']);
+                    $arrJSON = $dao->listarComentariosALL();
                    
                     if(!is_array($arrJSON))
                         {                            
@@ -146,7 +141,7 @@ switch ($entity) {
                             {
                                 if ($arrJSON == NULL) {
                                     $arrJSON['message']='Oops!';
-                                    $arrJSON['info']='Lo sentimos pero aun no tiene comentarios!';
+                                    $arrJSON['info']='No se cargaron los comentarios!';
 
                                     $funcion->setJsonResponse($arrJSON, 200, TRUE);
                                 }else
@@ -154,7 +149,7 @@ switch ($entity) {
                                     $funcion->setJsonResponse($arrJSON, 200, FALSE);
                                 }
                             }                                                         
-                }                        
+                                      
               break;
               
           default:
@@ -406,30 +401,25 @@ switch ($entity) {
                             
       #Metodo GET - Establecimiento    
           case 'GET':
-              $param = array('establecimientoID'=>$_GET['establecimientoID']);
-              $estado = $funcion->chkParmeters($param);
-              
-                if($estado!='ok'){
-                  $funcion->setJsonResponse($estado, 400, 1);}
-                else {                    
-                    $arrJSON = $dao->listarEstablecimientoByID($_GET['establecimientoID']);
-                   
-                    if(!is_array($arrJSON))
-                        {                            
-                            $funcion->setJsonResponse($arrJSON, 500, 1);
-                        }else
-                            {
-                                if ($arrJSON == NULL) {
-                                    $arrJSON['message']='Oops!';
-                                    $arrJSON['info']='No se encontro el establecimiento, verificar valores!';
 
-                                    $funcion->setJsonResponse($arrJSON, 200, TRUE);
-                                }else
-                                {
-                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);
-                                }
-                            }                                                         
-                }                        
+            $arrJSON = $dao->listarEstablecimientoALL();
+
+            if(!is_array($arrJSON))
+                {                            
+                    $funcion->setJsonResponse($arrJSON, 500, 1);
+                }else
+                    {
+                        if ($arrJSON == NULL) {
+                            $arrJSON['message']='Oops!';
+                            $arrJSON['info']='No se encontro el establecimiento, verificar valores!';
+
+                            $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                        }else
+                        {
+                            $funcion->setJsonResponse($arrJSON, 200, FALSE);
+                        }
+                    }                                                         
+                        
               break;
               
           default:

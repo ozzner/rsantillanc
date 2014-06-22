@@ -11,12 +11,12 @@ class establecimiento{
         $this->dbc = new conexion(); //General connection      
     }
     
-        public function listarEstablecimientoByID($establecimientoID) {
+        public function listarEstablecimientoALL() {
         $aData = array();
         $conexion = $this->dbc->getConexion();
         
         if (!is_array($conexion)) {
-                $query= " SELECT * FROM tb_establecimiento WHERE est_id = '$establecimientoID' ORDER BY dis_id ASC";
+                $query= " SELECT * FROM tb_establecimiento ORDER BY est_nom ASC";
                 $result = $conexion->query($query);
 
                 $c = 0;

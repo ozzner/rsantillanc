@@ -13,8 +13,8 @@ class conexion
        $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME); 
        
        if ($conn->connect_errno) {
-           $aJson['message']="Error conexion";
-           $aJson['info'] = 'No se establecio conexion con el servidor';
+           $aJson['message']="Error de conexion";
+           $aJson['info'] = 'El servidor no responde, verificar estado o parámetros de conexión.';
            return $aJson;
        }else{
             return $conn;  

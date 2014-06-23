@@ -78,30 +78,37 @@ class usuario {
 
                 $result = $conexion->query($query);
 
-                $c = 0;
-                while ($row = $result->fetch_assoc()){
-                    $c++;
-                     $aData["user".$c]["userID"]  =$row['usu_id'];
-                     $aData["user".$c]["email"]  =$row['usu_mail'];
-                     $aData["user".$c]["sex"]  =$row['usu_sex'];
-                     $aData["user".$c]["name"]  =$row['usu_nom'];
-                     $aData["user".$c]["date_birth"]  =$row['usu_fec_nac'];
-                     $aData["user".$c]["last_name1"]  =$row['usu_ap1'];
-                     $aData["user".$c]["last_name2"]  =$row['usu_ap2'];
-                     $aData["user".$c]["rate"]  =$row['usu_rate'];
-                     $aData["user".$c]["Api_key"]  =$row['usu_uid'];
-                     $aData["user".$c]["date_at"]  =$row['usu_fec_ing'];
-                     $aData["user".$c]["ranking"]["rankingID"] =$row['ran_id'];
-                     $aData["user".$c]["ranking"]["name"] =$row['ran_nom'];                     
-                }
-                    
-                $conexion->close();
-                
-                if ($aData == NULL)  
-                    return $aData;
-                else
-                    return $aData;
-               
+                   if ($result) {
+                    $c = 0;
+                        while ($row = $result->fetch_assoc()){
+                         $c++;
+                         $aData["user".$c]["userID"]  =$row['usu_id'];
+                         $aData["user".$c]["email"]  =$row['usu_mail'];
+                         $aData["user".$c]["sex"]  =$row['usu_sex'];
+                         $aData["user".$c]["name"]  =$row['usu_nom'];
+                         $aData["user".$c]["date_birth"]  =$row['usu_fec_nac'];
+                         $aData["user".$c]["last_name1"]  =$row['usu_ap1'];
+                         $aData["user".$c]["last_name2"]  =$row['usu_ap2'];
+                         $aData["user".$c]["rate"]  =$row['usu_rate'];
+                         $aData["user".$c]["Api_key"]  =$row['usu_uid'];
+                         $aData["user".$c]["date_at"]  =$row['usu_fec_ing'];
+                         $aData["user".$c]["ranking"]["rankingID"] =$row['ran_id'];
+                         $aData["user".$c]["ranking"]["name"] =$row['ran_nom'];                         
+                    }                    
+                        $conexion->close();
+
+                      if ($aData == NULL)  
+                        return $aData = array(
+                        "error_cod"=>16.1,
+                        "message"=>"Error de consulta",
+                        "info"=>"Error con el parámetro ingresado") ;
+                    else
+                        return $aData; 
+                }else
+                    return $aData = array(
+                        "error_cod"=>16.2,
+                        "message"=>"Error desconocido",
+                        "info"=>"Error con el servicio.") ;              
         }else            
             return $conexion;
             

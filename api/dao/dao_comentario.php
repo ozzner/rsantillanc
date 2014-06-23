@@ -50,30 +50,47 @@ class comentario {
                   
     }#End registrar
     
-    public function listarComentariosALL() {
+    public function listarComentariosByID($establecimientoID) {
         $aData = array();
         $conexion = $this->dbc->getConexion();
         
         if (!is_array($conexion)) {
-                $query= " SELECT * FROM tb_comentario ORDER BY com_fec DESC";
+              $query = "SELECT com_id,com_fec,com_sms,usu_mail,usu_nom,est_nom
+                        FROM db_apprade.tb_comentario e
+                        INNER JOIN tb_usuario u
+                        ON e.usu_id=u.usu_id
+                        INNER JOIN tb_establecimiento s 
+                        ON e.est_id=s.est_id
+                        WHERE  e.est_id='$establecimientoID'";
+              
                 $result = $conexion->query($query);
-
-                $c = 0;
-                while ($row = $result->fetch_assoc()){
-                    $c++;
-                    $aData["comment".$c]["commentID"]=$row['com_id'];
-                    $aData["comment".$c]["message"]  =$row['com_sms'];
-                    $aData["comment".$c]["date_at"]  =$row['com_fec'];
-                    $aData["comment".$c]["userID"]   =$row['usu_id'];
-                    $aData["comment".$c]["estaID"]   =$row['est_id'];                                        
-                }                    
                 
-                    $conexion->close();
-                    
-                if ($aData == NULL)  
-                    return $aData;
-                else
-                    return $aData;               
+                if ($result) {
+                    $c = 0;
+                    while ($row = $result->fetch_assoc()){
+                        $c++;
+                        $aData["comment".$c]["commentID"]=$row['com_id'];
+                        $aData["comment".$c]["message"]  =$row['com_sms'];
+                        $aData["comment".$c]["date_at"]  =$row['com_fec'];
+                        $aData["comment".$c]["user"]["name"]    =$row['usu_nom'];
+                        $aData["comment".$c]["user"]["usu_mail"]=$row['usu_mail']; 
+                        $aData["comment".$c]["establishment"]["name"] =$row['est_nom'];                      
+                    }                    
+                        $conexion->close();
+
+                    if ($aData == NULL)  
+                        return $aData = array(
+                        "error_cod"=>15.1,
+                        "message"=>"Error de consulta",
+                        "info"=>"Error con el parámetro ingresado") ;
+                    else
+                        return $aData; 
+                }else
+                    return $aData = array(
+                        "error_cod"=>15.2,
+                        "message"=>"Error desconocido",
+                        "info"=>"Error con el servicio.") ;
+                              
         }else            
             return $conexion;
             

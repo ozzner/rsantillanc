@@ -132,7 +132,13 @@ switch ($entity) {
       #Metodo GET - Comentario    
           case 'GET':
               
-                    $arrJSON = $dao->listarComentariosALL();
+              $param = array('establecimientoID'=>$_GET['establecimientoID']);
+              $estado = $funcion->chkParmeters($param);
+              
+                if($estado!='ok'){
+                  $funcion->setJsonResponse($estado, 400, 1);}
+                else {                    
+                    $arrJSON = $dao->listarComentariosByID($_GET['establecimientoID']);
                    
                     if(!is_array($arrJSON))
                         {                            
@@ -141,7 +147,7 @@ switch ($entity) {
                             {
                                 if ($arrJSON == NULL) {
                                     $arrJSON['message']='Oops!';
-                                    $arrJSON['info']='No se cargaron los comentarios!';
+                                    $arrJSON['info']='Error, no se pudo listar los comentarios.';
 
                                     $funcion->setJsonResponse($arrJSON, 200, TRUE);
                                 }else
@@ -149,6 +155,7 @@ switch ($entity) {
                                     $funcion->setJsonResponse($arrJSON, 200, FALSE);
                                 }
                             }                                                         
+                }                                                                   
                                       
               break;
               

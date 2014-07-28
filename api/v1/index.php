@@ -24,14 +24,14 @@ switch ($entity) {
    
   case 'usuario':
         
-      $dao = new usuario();      
+      $dao = new usuario();    
       switch ($method) {
       
       #Metodo POST - Usuario
           case 'POST':
               $aKeys = array(
                   'email'=>$_POST['email'],'sexo'=>$_POST['sexo'],'nombre'=>$_POST['nombre'],'password'=>$_POST['password'],
-                  'fecha'=>$_POST['fecha'],'apellido1'=>$_POST['apellido1']);
+                  'fecha'=>$_POST['fecha']);
               
               $estado = $funcion->chkParmeters($aKeys);
               

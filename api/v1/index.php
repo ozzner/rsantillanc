@@ -34,13 +34,13 @@ switch ($entity) {
                   'fecha'=>$_POST['fecha']);
               
               $estado = $funcion->chkParmeters($aKeys);
-              
+             
               if($estado!='ok'){
                   $funcion->setJsonResponse($estado, 400, TRUE);
               }else{                                    
                    $insert =  $dao->registrarUsuario
                    ($aKeys['email'],$aKeys['sexo'], $aKeys['nombre'], $aKeys['fecha'], $aKeys['apellido1'], $aKeys['apellido2'],$aKeys['password']);
-                   
+                    var_dump($insert);
                         switch ($insert['error_cod']) {
                             
                              case 11.1:                                

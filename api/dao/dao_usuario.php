@@ -22,16 +22,16 @@ class usuario {
         $conexion = $this->dbc->getConexion();
         
             $sql= "INSERT INTO tb_usuario 
-               (usu_mail,usu_sex,usu_nom,usu_fec_nac,usu_ap1,usu_ap2,usu_rate,ran_id,usu_uid,usu_fec_ing,usu_pass)
-               VALUES(?,?,?,?,?,?,?,?,?,?,?)";  
+               (usu_mail,usu_sex,usu_nom,usu_fec_nac,usu_rate,ran_id,usu_uid,usu_fec_ing,usu_pass)
+               VALUES(?,?,?,?,?,?,?,?,?)";  
 
              $rate = 0;
              $ranid= 1;
 
              $stmt = mysqli_prepare($conexion, $sql);
           
-             mysqli_stmt_bind_param($stmt,"ssssssiisss",
-             $mail,$sex,$nom,$feh,$app,$apm,$rate,$ranid,$this->uid,$this->time,$this->passHash);
+             mysqli_stmt_bind_param($stmt,"ssssiisss",
+             $mail,$sex,$nom,$feh,$rate,$ranid,$this->uid,$this->time,$this->passHash);
              $res = mysqli_stmt_execute($stmt);  //True - False
              
              if ($res) {

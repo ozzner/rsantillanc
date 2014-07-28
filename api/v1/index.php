@@ -40,7 +40,6 @@ switch ($entity) {
               }else{                                    
                    $insert =  $dao->registrarUsuario
                    ($aKeys['email'],$aKeys['sexo'], $aKeys['nombre'], $aKeys['fecha'], $aKeys['apellido1'], $aKeys['apellido2'],$aKeys['password']);
-                    var_dump($insert);
                         switch ($insert['error_cod']) {
                             
                              case 11.1:                                

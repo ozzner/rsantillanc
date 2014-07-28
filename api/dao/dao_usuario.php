@@ -37,17 +37,17 @@ class usuario {
              if ($res) {
                    return "ok!";
              }  else{               
-                 switch (mysqli_errno($conexion)) {
+                 switch (mysqli_errno($conexion)) {/*SQL - ERRORS*/
                      case 1062:
                         $arData['error_cod']=11.1;
-                        $arData['message']='Error SQL - Entrada duplicada';
+                        $arData['message']='Entrada duplicada';
                         $arData['info']= 'El correo: '.$mail. " ya fue registrado!";
                         return $arData;
                      break;
 
                      case 1022:
                         $arData['error_cod']=11.2;
-                        $arData['message']='Error SQL - No puede escribir';
+                        $arData['message']='No puede escribir';
                         $arData['info']=mysqli_error($conexion);  
                         return $arData;
                      break;
@@ -87,8 +87,8 @@ class usuario {
                          $aData["user".$c]["sex"]  =$row['usu_sex'];
                          $aData["user".$c]["name"]  =$row['usu_nom'];
                          $aData["user".$c]["date_birth"]  =$row['usu_fec_nac'];
-//                         $aData["user".$c]["last_name1"]  =$row['usu_ap1'];
-//                         $aData["user".$c]["last_name2"]  =$row['usu_ap2'];
+                         $aData["user".$c]["last_name1"]  =$row['usu_ap1'];
+                         $aData["user".$c]["last_name2"]  =$row['usu_ap2'];
                          $aData["user".$c]["rate"]  =$row['usu_rate'];
                          $aData["user".$c]["Api_key"]  =$row['usu_uid'];
                          $aData["user".$c]["date_at"]  =$row['usu_fec_ing'];

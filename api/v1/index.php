@@ -14,7 +14,7 @@ include_once '../dao../dao_coordenadas.php';
 
 
 #Variables Globales
-#$method = $_SERVER['REQUEST_METHOD'];
+$method = $_SERVER['REQUEST_METHOD'];
 $entity = $_REQUEST['entity'];
 $funcion = new funciones();
 
@@ -25,13 +25,13 @@ switch ($entity) {
   case 'usuario':
         
       $dao = new usuario();      
-      switch ($_SERVER['REQUEST_METHOD']) {
+      switch ($method) {
       
       #Metodo POST - Usuario
           case 'POST':
               $aKeys = array(
                   'email'=>$_POST['email'],'sexo'=>$_POST['sexo'],'nombre'=>$_POST['nombre'],'password'=>$_POST['password'],
-                  'fecha'=>$_POST['fecha']);
+                  'fecha'=>$_POST['fecha'],'apellido1'=>$_POST['apellido1']);
               
               $estado = $funcion->chkParmeters($aKeys);
               
@@ -67,13 +67,13 @@ switch ($entity) {
               $estado = $funcion->chkParmeters($arrParam2);
               
                 if($estado!='ok'){
-                  $funcion->setJsonResponse($estado, 400, 1);}
+                  $funcion->setJsonResponse($estado, 400, TRUE);}
                 else {                    
                     $arrJSON = $dao->listarUsuarioByEmail($_GET['email'],$_GET['password']);  
                    
                     if(!is_array($arrJSON))
                         {                            
-                            $funcion->setJsonResponse($arrJSON, 500, 1);
+                            $funcion->setJsonResponse($arrJSON, 500, TRUE);
                         }else
                             {
                                 if ($arrJSON == NULL) {
@@ -83,7 +83,11 @@ switch ($entity) {
                                     $funcion->setJsonResponse($arrJSON, 200, TRUE);
                                 }else
                                 {
-                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);
+                                
+                                    if ($arrJSON['error_cod']>0) {
+                                        $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                                    }
+                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);                                                                        
                                 }
                             }                                                         
                 }                        
@@ -92,7 +96,7 @@ switch ($entity) {
           default:
               $aJSON['message']='Acceso denegado!';
               $aJSON['info']='No se permiten otras peticiones';
-              $funcion->setJsonResponse($aJSON, 403, 1);
+              $funcion->setJsonResponse($aJSON, 403, TRUE);
               break;
       }#End Usuario
    
@@ -101,7 +105,7 @@ switch ($entity) {
   case 'comentario':
       
       $dao = new comentario();
-      switch ($_SERVER['REQUEST_METHOD']) {
+      switch ($method) {
       
       #Metodo POST - Comentario
           case 'POST':
@@ -136,13 +140,13 @@ switch ($entity) {
               $estado = $funcion->chkParmeters($param);
               
                 if($estado!='ok'){
-                  $funcion->setJsonResponse($estado, 400, 1);}
+                  $funcion->setJsonResponse($estado, 400, TRUE);}
                 else {                    
                     $arrJSON = $dao->listarComentariosByID($_GET['establecimientoID']);
                    
                     if(!is_array($arrJSON))
                         {                            
-                            $funcion->setJsonResponse($arrJSON, 500, 1);
+                            $funcion->setJsonResponse($arrJSON, 500, TRUE);
                         }else
                             {
                                 if ($arrJSON == NULL) {
@@ -151,8 +155,11 @@ switch ($entity) {
 
                                     $funcion->setJsonResponse($arrJSON, 200, TRUE);
                                 }else
-                                {
-                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);
+                                { 
+                                    if ($arrJSON['error_cod']>0) {
+                                        $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                                    }
+                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);   
                                 }
                             }                                                         
                 }                                                                   
@@ -162,7 +169,7 @@ switch ($entity) {
           default:
               $aJSON['message']='Acceso denegado!';
               $aJSON['info']='No se permiten otras peticiones';
-              $funcion->setJsonResponse($aJSON, 403, 1);
+              $funcion->setJsonResponse($aJSON, 403, TRUE);
               break;
       }#End Comentario
    
@@ -171,7 +178,7 @@ switch ($entity) {
   case 'calificacion':
       
       $dao = new calificacion();
-      switch ($_SERVER['REQUEST_METHOD']) {
+      switch ($method) {
       
       #Metodo POST - Calificacion
           case 'POST':
@@ -205,13 +212,13 @@ switch ($entity) {
               $estado = $funcion->chkParmeters($param);
               
                 if($estado!='ok'){
-                  $funcion->setJsonResponse($estado, 400, 1);}
+                  $funcion->setJsonResponse($estado, 400, TRUE);}
                 else {                    
                     $arrJSON = $dao->listarCalificacionByUserID($_GET['usuarioID']);
                    
                     if(!is_array($arrJSON))
                         {                            
-                            $funcion->setJsonResponse($arrJSON, 500, 1);
+                            $funcion->setJsonResponse($arrJSON, 500,TRUE);
                         }else
                             {
                                 if ($arrJSON == NULL) {
@@ -220,8 +227,10 @@ switch ($entity) {
 
                                     $funcion->setJsonResponse($arrJSON, 200, TRUE);
                                 }else
-                                {
-                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);
+                                { if ($arrJSON['error_cod']>0) {
+                                        $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                                    }
+                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);   
                                 }
                             }                                                         
                 }                        
@@ -230,7 +239,7 @@ switch ($entity) {
           default:
               $aJSON['message']='Acceso denegado!';
               $aJSON['info']='No se permiten otras peticiones';
-              $funcion->setJsonResponse($aJSON, 403, 1);
+              $funcion->setJsonResponse($aJSON, 403,TRUE);
               break;
      }#End Calificacion
    
@@ -239,7 +248,7 @@ switch ($entity) {
   case 'categoria':
       
       $dao = new categoria();
-      switch ($_SERVER['REQUEST_METHOD']) {
+      switch ($method) {
                             
       #Metodo GET - Categoria    
           case 'GET':
@@ -247,13 +256,13 @@ switch ($entity) {
               $estado = $funcion->chkParmeters($param);
               
                 if($estado!='ok'){
-                  $funcion->setJsonResponse($estado, 400, 1);}
+                  $funcion->setJsonResponse($estado, 400, TRUE);}
                 else {                    
                     $arrJSON = $dao->listarCategoriaByID($_GET['categoriaID']);
                    
                     if(!is_array($arrJSON))
                         {                            
-                            $funcion->setJsonResponse($arrJSON, 500, 1);
+                            $funcion->setJsonResponse($arrJSON, 500, TRUE);
                         }else
                             {
                                 if ($arrJSON == NULL) {
@@ -263,7 +272,10 @@ switch ($entity) {
                                     $funcion->setJsonResponse($arrJSON, 200, TRUE);
                                 }else
                                 {
-                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);
+                                    if ($arrJSON['error_cod']>0) {
+                                        $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                                    }
+                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);   
                                 }
                             }                                                         
                 }                        
@@ -272,7 +284,7 @@ switch ($entity) {
           default:
               $aJSON['message']='Acceso denegado!';
               $aJSON['info']='No se permiten otras peticiones';
-              $funcion->setJsonResponse($aJSON, 403, 1);
+              $funcion->setJsonResponse($aJSON, 403, TRUE);
               break;
      }#End Categoria
    
@@ -281,7 +293,7 @@ switch ($entity) {
   case 'ranking':
       
       $dao = new ranking();
-      switch ($_SERVER['REQUEST_METHOD']) {
+      switch ($method) {
                             
       #Metodo GET - Ranking    
           case 'GET':
@@ -289,13 +301,13 @@ switch ($entity) {
               $estado = $funcion->chkParmeters($param);
               
                 if($estado!='ok'){
-                  $funcion->setJsonResponse($estado, 400, 1);}
+                  $funcion->setJsonResponse($estado, 400, TRUE);}
                 else {                    
                     $arrJSON = $dao->listarRankingByID($_GET['rankingID']);
                    
                     if(!is_array($arrJSON))
                         {                            
-                            $funcion->setJsonResponse($arrJSON, 500, 1);
+                            $funcion->setJsonResponse($arrJSON, 500, TRUE);
                         }else
                             {
                                 if ($arrJSON == NULL) {
@@ -305,7 +317,10 @@ switch ($entity) {
                                     $funcion->setJsonResponse($arrJSON, 200, TRUE);
                                 }else
                                 {
-                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);
+                                    if ($arrJSON['error_cod']>0) {
+                                        $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                                    }
+                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);   
                                 }
                             }                                                         
                 }                        
@@ -314,7 +329,7 @@ switch ($entity) {
           default:
               $aJSON['message']='Acceso denegado!';
               $aJSON['info']='No se permiten otras peticiones';
-              $funcion->setJsonResponse($aJSON, 403, 1);
+              $funcion->setJsonResponse($aJSON, 403, TRUE);
               break;
      }#End Ranking
      break;
@@ -322,7 +337,7 @@ switch ($entity) {
   case 'coordenadas':
       
       $dao = new coordenadas();
-      switch ($_SERVER['REQUEST_METHOD']) {
+      switch ($method) {
                             
       #Metodo GET - Coordenadas    
           case 'GET':
@@ -330,13 +345,13 @@ switch ($entity) {
               $estado = $funcion->chkParmeters($param);
               
                 if($estado!='ok'){
-                  $funcion->setJsonResponse($estado, 400, 1);}
+                  $funcion->setJsonResponse($estado, 400, TRUE);}
                 else {                    
                     $arrJSON = $dao->listarCoordendasByID($_GET['coordenadasID']);
                    
                     if(!is_array($arrJSON))
                         {                            
-                            $funcion->setJsonResponse($arrJSON, 500, 1);
+                            $funcion->setJsonResponse($arrJSON, 500, TRUE);
                         }else
                             {
                                 if ($arrJSON == NULL) {
@@ -346,7 +361,10 @@ switch ($entity) {
                                     $funcion->setJsonResponse($arrJSON, 200, TRUE);
                                 }else
                                 {
-                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);
+                                    if ($arrJSON['error_cod']>0) {
+                                        $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                                    }
+                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);   
                                 }
                             }                                                         
                 }                        
@@ -355,7 +373,7 @@ switch ($entity) {
           default:
               $aJSON['message']='Acceso denegado!';
               $aJSON['info']='No se permiten otras peticiones';
-              $funcion->setJsonResponse($aJSON, 403, 1);
+              $funcion->setJsonResponse($aJSON, 403, TRUE);
               break;
      }#End Coordenadas
      break;
@@ -363,7 +381,7 @@ switch ($entity) {
   case 'distrito':
       
       $dao = new distrito();
-      switch ($_SERVER['REQUEST_METHOD']) {
+      switch ($method) {
                             
       #Metodo GET - Distrito    
           case 'GET':
@@ -371,13 +389,13 @@ switch ($entity) {
               $estado = $funcion->chkParmeters($param);
               
                 if($estado!='ok'){
-                  $funcion->setJsonResponse($estado, 400, 1);}
+                  $funcion->setJsonResponse($estado, 400, TRUE);}
                 else {                    
                     $arrJSON = $dao->listarDistritoByID($_GET['distritoID']);
                    
                     if(!is_array($arrJSON))
                         {                            
-                            $funcion->setJsonResponse($arrJSON, 500, 1);
+                            $funcion->setJsonResponse($arrJSON, 500, TRUE);
                         }else
                             {
                                 if ($arrJSON == NULL) {
@@ -387,7 +405,10 @@ switch ($entity) {
                                     $funcion->setJsonResponse($arrJSON, 200, TRUE);
                                 }else
                                 {
-                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);
+                                   if ($arrJSON['error_cod']>0) {
+                                        $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                                    }
+                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);   
                                 }
                             }                                                         
                 }                        
@@ -396,7 +417,7 @@ switch ($entity) {
           default:
               $aJSON['message']='Acceso denegado!';
               $aJSON['info']='No se permiten otras peticiones';
-              $funcion->setJsonResponse($aJSON, 403, 1);
+              $funcion->setJsonResponse($aJSON, 403,TRUE);
               break;
      }#End Distrito
      break;
@@ -404,7 +425,7 @@ switch ($entity) {
   case 'establecimiento':
       
       $dao = new establecimiento();
-      switch ($_SERVER['REQUEST_METHOD']) {
+      switch ($method) {
                             
       #Metodo GET - Establecimiento    
           case 'GET':
@@ -413,7 +434,7 @@ switch ($entity) {
 
             if(!is_array($arrJSON))
                 {                            
-                    $funcion->setJsonResponse($arrJSON, 500, 1);
+                    $funcion->setJsonResponse($arrJSON, 500, TRUE);
                 }else
                     {
                         if ($arrJSON == NULL) {
@@ -423,7 +444,10 @@ switch ($entity) {
                             $funcion->setJsonResponse($arrJSON, 200, TRUE);
                         }else
                         {
-                            $funcion->setJsonResponse($arrJSON, 200, FALSE);
+                             if ($arrJSON['error_cod']>0) {
+                                        $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                                    }
+                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);   
                         }
                     }                                                         
                         
@@ -432,7 +456,7 @@ switch ($entity) {
           default:
               $aJSON['message']='Acceso denegado!';
               $aJSON['info']='No se permiten otras peticiones';
-              $funcion->setJsonResponse($aJSON, 403, 1);
+              $funcion->setJsonResponse($aJSON, 403,TRUE);
               break;
      }#End Establecimiento
      break;              
@@ -440,7 +464,7 @@ switch ($entity) {
   default :
               $aJSON['message']='Acceso denegado!';
               $aJSON['info']='Contacte con el administrador admin@admin.com';
-              $funcion->setJsonResponse($aJSON, 403, 1);
+              $funcion->setJsonResponse($aJSON, 403,TRUE);
   break;
 }
 

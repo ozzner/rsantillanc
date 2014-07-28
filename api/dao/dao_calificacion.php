@@ -17,7 +17,7 @@ class calificacion {
     public function insertarCalificacion($userID,$estID,$cola) {
         $aux = new funciones();  
         $this->fecha = $aux->genDataTime('Y.m.d');
-        $this->hora = $aux->genDataTime('H:i:s');
+        $this->hora = $aux->genDataTime('H:i');
         $conexion = $this->dbc->getConexion();
         
             $sql= "INSERT INTO tb_calificacion (usu_id,est_id,cal_cola,cal_hor,cal_fec)
@@ -37,8 +37,14 @@ class calificacion {
                         $arData['info']='Hay problemas con el usuario o establecimiento';  
                         return $arData;
                          break;
-                     default:
+                     case 1062:
                         $arData['error_cod']=14.2;
+                        $arData['message']='Entrada duplicada';
+                        $arData['info']= 'Debe esperar que cambie la cola';
+                        return $arData;
+                     break;
+                     default:
+                        $arData['error_cod']=14.3;
                         $arData['message']='Error de conexion';
                         $arData['info']=mysqli_error($conexion);  
                         return $arData;
@@ -64,7 +70,7 @@ class calificacion {
                     $c++;
                     $aData["rating".$c]["userID"]   =$row['usu_id'];
                     $aData["rating".$c]["estaID"]   =$row['est_id'];
-                    $aData["rating".$c]["queue"]    =$row['cal_sms'];
+                    $aData["rating".$c]["queue"]    =$row['cal_cola'];
                     $aData["rating".$c]["date_at"]  =$row['cal_fec'];
                     $aData["rating".$c]["hour_at"]  =$row['cal_hor'];
                  }                                    

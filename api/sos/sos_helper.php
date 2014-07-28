@@ -6,18 +6,18 @@ class funciones {
     
     #SET
     static function setHash($pass) {    
-        $base64 = base64_decode($pass);
+        $base64 = base64_encode($pass);
         return sha1(self::$inicio.$base64.self::$final);
     }
       function setJsonResponse($array,$httpCode,$status) {
-        header('Content-Type: application/json'); 
+        header('Content-Type: application/json;charset=UTF-8'); 
         $arrJson = array();
 
         $arrJson['httpCode']=$httpCode;
         $arrJson['error_status']=$status;
         $arrJson['data']=$array;
         
-        echo (json_encode($arrJson));
+        echo json_encode($arrJson);
 
     }
     #GEN
@@ -46,7 +46,7 @@ class funciones {
          if ($error) {
               $arrJson['error_cod']   = 10;
               $arrJson['message'] = "Campo(s) requeridos!";
-              $arrJson['values']  = substr($campos, 0, strlen($campos)-2);
+              $arrJson['info']  = substr($campos, 0, strlen($campos)-2);
               return $arrJson;
          }else{
              return 'ok';

@@ -432,7 +432,7 @@ switch ($entity) {
             $arrJSON = $dao->listarEstablecimientoALL();
 
             if(!is_array($arrJSON))
-                {                            
+                {                        
                     $funcion->setJsonResponse($arrJSON, 500, TRUE);
                 }else
                     {

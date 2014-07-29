@@ -24,16 +24,16 @@ class establecimiento{
                         ON e.dis_id=d.dis_id
                         INNER JOIN tb_coordenadas co 
                         ON e.coo_id=co.coo_id;";
-                
+              
                 $result = $conexion->query($query);
 
                    if ($result) {
-                    $c = 0;
+                    $c = 0;                     
                     while ($row = $result->fetch_assoc()){
                         $c++;
                         $aData["establishment".$c]["establishmentID"]=$row['est_id'];
-                        $aData["establishment".$c]["address"]        =$row['est_nom'];                                    
-                        $aData["establishment".$c]["name"]           =$row['est_name'];  
+                        $aData["establishment".$c]["address"]        =$row['est_dir'];                                    
+                        $aData["establishment".$c]["name"]           =$row['est_nom'];  
                         $aData["establishment".$c]["ruc"]            =$row['est_ruc'];
                         $aData["establishment".$c]["category"]["categoryID"]  =$row['cat_id'];  
                         $aData["establishment".$c]["category"]["name"]        =$row['cat_nom'];
@@ -43,25 +43,26 @@ class establecimiento{
                         $aData["establishment".$c]["coordinates"]["coordinatesID"]=$row['coo_id'];                     
                         $aData["establishment".$c]["coordinates"]["latitude"]  =$row['coo_lat']; 
                         $aData["establishment".$c]["coordinates"]["longitude"] =$row['coo_lon']; 
-                        $aData["establishment".$c]["coordinates"]["reference"]  =$row['coo_ref'];                     
+                        $aData["establishment".$c]["coordinates"]["reference"]  =$row['coo_ref'];  
+                          
                     }                    
                         $conexion->close();
 
-                      if ($aData == NULL)  
+                      if ($aData == NULL){  
                         return $aData = array(
                         "error_cod"=>14.1,
                         "message"=>"Error de consulta",
                         "info"=>"Error con el parámetro ingresado") ;
-                    else
-                        return $aData; 
+                      }else{
+                      return $aData;} 
                 }else
-                    return $aData = array(
+                {return $aData = array(
                         "error_cod"=>14.2,
                         "message"=>"Error desconocido",
-                        "info"=>"Error con el servicio.") ;                                                                                           
-        }else            
+                 "info"=>"Error con el servicio.") ;      }                                                                                     
+        }else {          
             return $conexion;
-            
+        }
     } #End Listar_ALL
 }
 ?>

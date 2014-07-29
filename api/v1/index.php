@@ -430,7 +430,7 @@ switch ($entity) {
           case 'GET':
 
             $arrJSON = $dao->listarEstablecimientoALL();
-
+                           
             if(!is_array($arrJSON))
                 {                        
                     $funcion->setJsonResponse($arrJSON, 500, TRUE);
@@ -443,10 +443,13 @@ switch ($entity) {
                             $funcion->setJsonResponse($arrJSON, 200, TRUE);
                         }else
                         {
+                            
                              if ($arrJSON['error_cod']>0) {
                                         $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                                    }  else {                              
+                                         $funcion->setJsonResponse($arrJSON, 200, FALSE);   
                                     }
-                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);   
+                                   
                         }
                     }                                                         
                         

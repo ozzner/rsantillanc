@@ -41,10 +41,9 @@ class establecimiento{
                         $aData["establishment".$c]["district"]["name"]      =$row['dis_nom'];
                         $aData["establishment".$c]["district"]["zipcode"]   =$row['dis_cod'];
                         $aData["establishment".$c]["coordinates"]["coordinatesID"]=$row['coo_id'];                     
-                        $aData["establishment".$c]["coordinates"]["latitude"]  =$row['coo_lat']; 
-                        $aData["establishment".$c]["coordinates"]["longitude"] =$row['coo_lon']; 
-                        $aData["establishment".$c]["coordinates"]["reference"]  =$row['coo_ref'];  
-                          
+                        $aData["establishment".$c]["coordinates"]["latitude"]     =$row['coo_lat']; 
+                        $aData["establishment".$c]["coordinates"]["longitude"]    =$row['coo_lon']; 
+                        $aData["establishment".$c]["coordinates"]["reference"]    =$row['coo_ref'];  
                     }                    
                         $conexion->close();
 

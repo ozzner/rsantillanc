@@ -11,15 +11,15 @@ class funciones {
     }
       function setJsonResponse($array,$httpCode,$status) {
         header('Content-Type: application/json;charset=UTF-8'); 
-        $arrJson = array();
-
+        
+        $arrJson = array();       
         $arrJson['httpCode']=$httpCode;
         $arrJson['error_status']=$status;
         $arrJson['data']=$array;
-        
-        echo json_encode($arrJson);
 
+        echo json_encode($arrJson);
     }
+    
     #GEN
     public function genApiKey() {
         return md5(uniqid(rand(), true));

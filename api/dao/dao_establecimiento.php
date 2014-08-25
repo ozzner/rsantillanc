@@ -34,10 +34,10 @@ class establecimiento{
                         $c++;
                         $aData["establishment".$c]["establishmentID"]=$row['est_id'];
                         $aData["establishment".$c]["address"]        =utf8_encode($row['est_dir']);                                    
-                        $aData["establishment".$c]["name"]           =utf8_decode($row['est_nom']) ;  
+                        $aData["establishment".$c]["name"]           =utf8_encode($row['est_nom']) ;  
                         $aData["establishment".$c]["ruc"]            =$row['est_ruc'];
                         $aData["establishment".$c]["category"]["categoryID"]  =$row['cat_id'];  
-                        $aData["establishment".$c]["category"]["name"]        =utf8_encode($row['cat_nom']);
+                        $aData["establishment".$c]["category"]["name"]        =($row['cat_nom']);
                         $aData["establishment".$c]["district"]["districtID"]=$row['dis_id'];
                         $aData["establishment".$c]["district"]["name"]      =utf8_encode($row['dis_nom']);
                         $aData["establishment".$c]["district"]["zipcode"]   =utf8_encode($row['dis_cod']);

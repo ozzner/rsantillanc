@@ -24,7 +24,7 @@ class distrito{
                     $c++;
                     $aData["district".$c]["districtID"]=$row['dis_id'];
                     $aData["district".$c]["name"]      = utf8_encode ($row['dis_nom']);                                    
-                    $aData["district".$c]["zipcode"]   =$row['dis_cod'];   
+                    $aData["district".$c]["zipcode"]   =utf8_encode($row['dis_cod']);   
                 }                                    
                     $conexion->close();
                     

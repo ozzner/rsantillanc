@@ -70,7 +70,7 @@ class calificacion {
                     $c++;
                     $aData["rating".$c]["userID"]   =$row['usu_id'];
                     $aData["rating".$c]["estaID"]   =$row['est_id'];
-                    $aData["rating".$c]["queue"]    =$row['cal_cola'];
+                    $aData["rating".$c]["queue"]    =utf8_encode($row['cal_cola']);
                     $aData["rating".$c]["date_at"]  =$row['cal_fec'];
                     $aData["rating".$c]["hour_at"]  =$row['cal_hor'];
                  }                                    

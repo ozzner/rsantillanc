@@ -24,7 +24,7 @@ class ranking{
                 while ($row = $result->fetch_assoc()){
                     $c++;
                     $aData["ranking".$c]["rankingID"]=$row['ran_id'];
-                    $aData["ranking".$c]["name"]  =$row['ran_nom'];                                      
+                    $aData["ranking".$c]["name"]  =utf8_encode($row['ran_nom']);                                      
                 }                                    
                     $conexion->close();
                     

@@ -83,17 +83,17 @@ class usuario {
                         while ($row = $result->fetch_assoc()){
                          $c++;
                          $aData["user".$c]["userID"]  =$row['usu_id'];
-                         $aData["user".$c]["email"]  =$row['usu_mail'];
+                         $aData["user".$c]["email"]  =utf8_encode($row['usu_mail']);
                          $aData["user".$c]["sex"]  =$row['usu_sex'];
-                         $aData["user".$c]["name"]  =$row['usu_nom'];
+                         $aData["user".$c]["name"]  =utf8_encode($row['usu_nom']);
                          $aData["user".$c]["date_birth"]  =$row['usu_fec_nac'];
-                         $aData["user".$c]["last_name1"]  =$row['usu_ap1'];
-                         $aData["user".$c]["last_name2"]  =$row['usu_ap2'];
+                         $aData["user".$c]["last_name1"]  =utf8_encode($row['usu_ap1']);
+                         $aData["user".$c]["last_name2"]  =utf8_encode($row['usu_ap2']);
                          $aData["user".$c]["rate"]  =$row['usu_rate'];
                          $aData["user".$c]["Api_key"]  =$row['usu_uid'];
                          $aData["user".$c]["date_at"]  =$row['usu_fec_ing'];
                          $aData["user".$c]["ranking"]["rankingID"] =$row['ran_id'];
-                         $aData["user".$c]["ranking"]["name"] =$row['ran_nom'];                         
+                         $aData["user".$c]["ranking"]["name"] =utf8_encode($row['ran_nom']);                         
                     }                    
                         $conexion->close();
 

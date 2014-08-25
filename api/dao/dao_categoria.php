@@ -24,7 +24,7 @@ class categoria{
                 while ($row = $result->fetch_assoc()){
                     $c++;
                     $aData["category".$c]["categoryID"]=$row['cat_id'];
-                    $aData["category".$c]["name"]  =$row['cat_nom'];                                      
+                    $aData["category".$c]["name"]  =utf8_encode($row['cat_nom']);                                      
                 }                                    
                     $conexion->close();
                     

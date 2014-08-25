@@ -70,7 +70,7 @@ class comentario {
                     while ($row = $result->fetch_assoc()){
                         $c++;
                         $aData["comment".$c]["commentID"]=$row['com_id'];
-                        $aData["comment".$c]["message"]  =$row['com_sms'];
+                        $aData["comment".$c]["message"]  =utf8_encode($row['com_sms']);
                         $aData["comment".$c]["date_at"]  =$row['com_fec'];
                         $aData["comment".$c]["user"]["name"]    =$row['usu_nom'];
                         $aData["comment".$c]["user"]["usu_mail"]=$row['usu_mail']; 

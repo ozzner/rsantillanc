@@ -25,7 +25,7 @@ class coordenadas{
                     $aData["coordinates".$c]["coordinatesID"]=$row['coo_id'];
                     $aData["coordinates".$c]["latitude"]     =$row['coo_lat'];                                    
                     $aData["coordinates".$c]["longitude"]    =$row['coo_lon'];   
-                    $aData["coordinates".$c]["reference"]    =$row['coo_ref']; 
+                    $aData["coordinates".$c]["reference"]    =utf8_encode($row['coo_ref']); 
                 }                                    
                     $conexion->close();
                     

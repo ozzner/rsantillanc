@@ -61,7 +61,7 @@ class comentario {
                         ON e.usu_id=u.usu_id
                         INNER JOIN tb_establecimiento s 
                         ON e.est_id=s.est_id
-                        WHERE  e.est_id='$establecimientoID'";
+                        WHERE  e.est_id='$establecimientoID' ORDER BY com_fec DESC";
               
                 $result = $conexion->query($query);
                 

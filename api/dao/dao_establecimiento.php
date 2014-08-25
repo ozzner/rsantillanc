@@ -1,6 +1,7 @@
 <?php
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 
+
 class establecimiento{
         
         function __construct() {
@@ -33,7 +34,7 @@ class establecimiento{
                         $c++;
                         $aData["establishment".$c]["establishmentID"]=$row['est_id'];
                         $aData["establishment".$c]["address"]        =$row['est_dir'];                                    
-                        $aData["establishment".$c]["name"]           =$row['est_nom'];  
+                        $aData["establishment".$c]["name"]           =utf8_decode($row['est_nom']) ;  
                         $aData["establishment".$c]["ruc"]            =$row['est_ruc'];
                         $aData["establishment".$c]["category"]["categoryID"]  =$row['cat_id'];  
                         $aData["establishment".$c]["category"]["name"]        =$row['cat_nom'];
@@ -43,7 +44,7 @@ class establecimiento{
                         $aData["establishment".$c]["coordinates"]["coordinatesID"]=$row['coo_id'];                     
                         $aData["establishment".$c]["coordinates"]["latitude"]     =$row['coo_lat']; 
                         $aData["establishment".$c]["coordinates"]["longitude"]    =$row['coo_lon']; 
-                        $aData["establishment".$c]["coordinates"]["reference"]    =$row['coo_ref'];  
+                        $aData["establishment".$c]["coordinates"]["reference"]    =  utf8_encode($row['coo_ref']);  
                     }                    
                         $conexion->close();
 

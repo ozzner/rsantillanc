@@ -1,4 +1,6 @@
+
 <?php
+header("Content-Type: application/json; charset=utf-8");
 class funciones {
     
     Private static $inicio = '$r.d.s.';
@@ -10,7 +12,6 @@ class funciones {
         return sha1(self::$inicio.$base64.self::$final);
     }
       function setJsonResponse($array,$httpCode,$status) {
-        header('Content-Type: application/json;charset=UTF-8'); 
         
         $arrJson = array();       
         $arrJson['httpCode']=$httpCode;
@@ -52,7 +53,6 @@ class funciones {
              return 'ok';
          }
     }
-    
 
     
 }//End Class

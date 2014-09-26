@@ -5,9 +5,10 @@ class coordenadas{
         
         function __construct() {
         
-        require_once '../db../db_conexion.php';
-        require_once '../sos../sos_helper.php';
-              
+        require_once '/home/appradec/public_html/api/db/db_conexion.php';
+        require_once '/home/appradec/public_html/api/sos/sos_helper.php';
+//           require_once '../db../db_conexion.php';
+//        require_once '../sos../sos_helper.php';             
         $this->dbc = new conexion(); //General connection      
     }
     

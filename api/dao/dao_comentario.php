@@ -1,16 +1,16 @@
 <?php
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 
-
 class comentario {
     
     private $dbc,$time;
     
     function __construct() {
         
-        require_once '../db../db_conexion.php';
-        require_once '../sos../sos_helper.php';
-              
+        require_once '/home/appradec/public_html/api/db/db_conexion.php';
+        require_once '/home/appradec/public_html/api/sos/sos_helper.php';
+//                 require_once '../db../db_conexion.php';
+//        require_once '../sos../sos_helper.php';       
         $this->dbc = new conexion(); //General connection      
     }
     
@@ -56,7 +56,7 @@ class comentario {
         
         if (!is_array($conexion)) {
               $query = "SELECT com_id,com_fec,com_sms,usu_mail,usu_nom,est_nom
-                        FROM db_apprade.tb_comentario e
+                        FROM tb_comentario e
                         INNER JOIN tb_usuario u
                         ON e.usu_id=u.usu_id
                         INNER JOIN tb_establecimiento s 

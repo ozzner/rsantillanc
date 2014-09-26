@@ -1,6 +1,6 @@
 
 <?php
-header("Content-Type: application/json; charset=utf-8");
+//header("Content-Type: application/json; charset=utf-8");
 class funciones {
     
     Private static $inicio = '$r.d.s.';

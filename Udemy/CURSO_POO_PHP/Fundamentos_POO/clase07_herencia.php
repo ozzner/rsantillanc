@@ -1,7 +1,7 @@
 <?php
 /**
  * @author Renzo Santillan <rsantillanc@gmail.com>
- * @name Crear una funcion destruc para los objetos de nuestra clase
+ * @name Fundamentos php, herencia de clases.
  */
 header('Content-Type: text/html; charset=UTF-8');
 
@@ -34,18 +34,22 @@ class Gatos {
 	}
 }
 
+class GatosVoladores extends Gatos{ /*Hereda de Gatos*/
+    
+}
 
-//Instanciamos objetos
-$cucho = new Gatos("Cucho","rosa");
-$benito = new Gatos("Benito Bodoque","azul");
-$espanto = new Gatos("Espanto","verde");
 
-$cucho->saludo();
-$benito->saludo();
-$espanto->saludo();
+$cucho =  new Gatos("Cuchos", "pelo negro");
+$benito = new GatosVoladores("Benito", "tengo pelo amarillo");
 
-unset($cucho); /* Forma para eliminar una variable o un objeto*/
-unset($espanto);
 unset($benito);
+unset($cucho);
 
+echo 'El pariente de la clase GatosVoladores es_'.  get_parent_class("GatosVoladores")."<br>";
+echo 'El pariente de la clase Gatos es_'.  get_parent_class("Gatos")."<br>";
+
+print "<br>";
+print is_subclass_of("Gatos", "GatosVoladores")?"Si":"No";
+print "<br>";
+print is_subclass_of("GatosVoladores", "Gatos")?"Si":"No";
 ?>

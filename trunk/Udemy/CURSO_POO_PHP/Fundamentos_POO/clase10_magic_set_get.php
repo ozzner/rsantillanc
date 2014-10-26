@@ -1,13 +1,16 @@
 <?php
 /**
  * @author Renzo Santillan <rsantillanc@gmail.com>
- * @name Crear una funcion destruc para los objetos de nuestra clase
+ * @name Fundamentos, modificadores de acceso (public, private, protected)
  */
 header('Content-Type: text/html; charset=UTF-8');
 
 class Gatos {
-    
-    var $nombre;
+    /* Protected = Accedida desde la misma clase y subclases.
+     * Privada = Solamente desde la clase.
+     * Public = Desde cualquier lugar.
+     */
+    protected $nombre;
     var $colorPelo;
     var $corbata = "Si";   
 
@@ -34,18 +37,23 @@ class Gatos {
 	}
 }
 
+class GatosVoladores extends Gatos{ /*Hereda de Gatos*/
+    function nombre(){
+       print "El nombre del gato volador es: ".$this->nombre."<br>";
+    }
+}
 
-//Instanciamos objetos
-$cucho = new Gatos("Cucho","rosa");
-$benito = new Gatos("Benito Bodoque","azul");
-$espanto = new Gatos("Espanto","verde");
 
-$cucho->saludo();
-$benito->saludo();
-$espanto->saludo();
+$cucho =  new Gatos("Cuchos", "pelo negro");
+$benito = new GatosVoladores("Benito", "tengo pelo amarillo");
 
-unset($cucho); /* Forma para eliminar una variable o un objeto*/
-unset($espanto);
-unset($benito);
+$benito->nombre();
+
+
+//unset($benito);
+//unset($cucho);
+//echo 'El pariente de la clase GatosVoladores es_'.  get_parent_class("GatosVoladores")."<br>";
+//echo 'El pariente de la clase Gatos es_'.  get_parent_class("Gatos")."<br>";
+
 
 ?>

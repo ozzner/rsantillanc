@@ -1,5 +1,3 @@
-
-
 <?php
 /**
  * @author Renzo Santillan <rsantillanc@gmail.com>
@@ -24,7 +22,7 @@ class Gatos {
     }
 
     public function __destruct() {
-       print $this->nombre." dice: Adiós mundo cruel."."<br>";
+//       print $this->nombre." dice: Adiós mundo cruel."."<br>";
     }
 
     function saludo(){
@@ -32,7 +30,7 @@ class Gatos {
 	}
 	
 	function maullar(){
-		print "miau miau<br>";	
+		print $this->nombre. " dice miau miau<br>";	
 	}
 	
 	function tieneCorbata(){
@@ -54,8 +52,7 @@ class Gatos {
         public function getName() {
             return $this->nombre;
         }
-        
-     
+       
 }
 
 class GatosVoladores extends Gatos{ /*Hereda de Gatos*/
@@ -63,14 +60,18 @@ class GatosVoladores extends Gatos{ /*Hereda de Gatos*/
     function nombre(){
        print "El nombre del gato volador es: ".$this->nombre."<br>";
     }
+    
+    function maullar(){
+		print $this->nombre. " dice miauzzz miauzzzzz<br>";	
+	}
 }
 
 
 $cucho =  new Gatos("Cuchos", "pelo negro");
 $benito = new GatosVoladores("Benito", "tengo pelo amarillo");
 
-Gatos::generarApikey();
-print "Su apiKey es: ".Gatos::$apiKey . "<br>";
+echo $cucho->maullar();
+echo $benito->maullar();
 
 
 //unset($benito);

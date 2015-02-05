@@ -79,7 +79,7 @@ switch ($entity) {
                 if ($estado != 'ok') {
                     $funcion->setJsonResponse($estado, 400, TRUE);
                 } else {
-                    $arrJSON = $dao->login($_GET['email'], $_GET['password']);
+                    $arrJSON = $dao->login($_GET['email'], $_GET['password'],$_GET['controller']);
 
                     if (!is_array($arrJSON)) {
                         $funcion->setJsonResponse($arrJSON, 500, TRUE);

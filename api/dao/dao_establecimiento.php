@@ -6,14 +6,14 @@ class establecimiento {
 
     function __construct() {
 
-        require_once '/home/appradec/public_html/api/db/db_conexion.php';
-        require_once '/home/appradec/public_html/api/sos/sos_helper.php';
-//        require_once '../db../db_conexion.php';
-//        require_once '../sos../sos_helper.php';             
+//        require_once '/home/appradec/public_html/api/db/db_conexion.php';
+//        require_once '/home/appradec/public_html/api/sos/sos_helper.php';
+        require_once '../db../db_conexion.php';
+        require_once '../sos../sos_helper.php';             
         $this->dbc = new conexion(); //General connection      
     }
 
-    public function listarEstablecimientoALL() {
+    public function listEstablishmentByCategoryID($categoryID) {
         $aData = array();
         $conexion = $this->dbc->getConexion();
 
@@ -30,15 +30,16 @@ class establecimiento {
 						,co.coo_lat
 						,co.coo_lon
 						,co.coo_ref
-						,ifnull(cc.cal_cola,'No hay cola') as 'cal_cola'
-						,ifnull(cc.cal_create_at,now()) as 'cal_create_at'
+						,ifnull(cc.cal_cola,'No hay cola') AS 'cal_cola'
+						,ifnull(cc.cal_create_at,now()) AS 'cal_create_at'
 					  FROM tb_calificacion cc
 					  RIGHT JOIN  tb_establecimiento e ON  cc.est_id = e.est_id 
 					  INNER JOIN tb_categoria c ON e.cat_id=c.cat_id
 					  INNER JOIN tb_distrito d ON e.dis_id=d.dis_id
 					  INNER JOIN tb_coordenadas co ON e.coo_id=co.coo_id 
-				order by (cc.cal_create_at) desc ) as tabla
-			group by(est_id)
+                                          WHERE c.cat_id = '$categoryID'
+				ORDER BY (cc.cal_create_at) DESC ) AS tabla
+			GROUP BY(est_id)
 ";
 
             $result = $conexion->query($query);
@@ -50,7 +51,7 @@ class establecimiento {
                     $c++;
                     $aData["establishment" . $c]["establishmentID"] = $row['est_id'];
                     $aData["establishment" . $c]["address"] = utf8_encode($row['est_dir']);
-                    $aData["establishment" . $c]["name"] = utf8_decode($row['est_nom']);
+                    $aData["establishment" . $c]["name"] = utf8_encode($row['est_nom']);
                     $aData["establishment" . $c]["ruc"] = $row['est_ruc'];
                     $aData["establishment" . $c]["category"]["categoryID"] = $row['cat_id'];
                     $aData["establishment" . $c]["category"]["name"] = utf8_encode($row['cat_nom']);
@@ -61,8 +62,8 @@ class establecimiento {
                     $aData["establishment" . $c]["coordinates"]["latitude"] = $row['coo_lat'];
                     $aData["establishment" . $c]["coordinates"]["longitude"] = $row['coo_lon'];
                     $aData["establishment" . $c]["coordinates"]["reference"] = utf8_encode($row['coo_ref']);
-                    $aData["establishment" . $c]["rating"]["cal_create_at"] = utf8_decode($row['cal_create_at']);
-                    $aData["establishment" . $c]["rating"]["cal_cola"] = utf8_decode($row['cal_cola']);
+                    $aData["establishment" . $c]["rating"]["cal_create_at"] = utf8_encode($row['cal_create_at']);
+                    $aData["establishment" . $c]["rating"]["cal_cola"] = utf8_encode($row['cal_cola']);
                 }
                 $conexion->close();
 

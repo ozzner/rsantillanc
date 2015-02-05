@@ -6,10 +6,10 @@ class categoria{
     
         function __construct() {
 //        
-        include_once '/home/appradec/public_html/api/db/db_conexion.php';
-        include_once '/home/appradec/public_html/api/sos/sos_helper.php';
-//                require_once '../db../db_conexion.php';
-//        require_once '../sos../sos_helper.php';        
+//        include_once '/home/appradec/public_html/api/db/db_conexion.php';
+//        include_once '/home/appradec/public_html/api/sos/sos_helper.php';
+                require_once '../db../db_conexion.php';
+        require_once '../sos../sos_helper.php';        
         $this->dbc = new conexion(); //General connection      
     }
     

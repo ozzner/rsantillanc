@@ -7,10 +7,10 @@ class comentario {
     
     function __construct() {
         
-        require_once '/home/appradec/public_html/api/db/db_conexion.php';
-        require_once '/home/appradec/public_html/api/sos/sos_helper.php';
-//                 require_once '../db../db_conexion.php';
-//        require_once '../sos../sos_helper.php';       
+//        require_once '/home/appradec/public_html/api/db/db_conexion.php';
+//        require_once '/home/appradec/public_html/api/sos/sos_helper.php';
+                 require_once '../db../db_conexion.php';
+        require_once '../sos../sos_helper.php';       
         $this->dbc = new conexion(); //General connection      
     }
     
@@ -66,6 +66,7 @@ class comentario {
                 $result = $conexion->query($query);
                 
                 if ($result) {
+                    
                     $c = 0;
                     while ($row = $result->fetch_assoc()){
                         $c++;
@@ -78,18 +79,22 @@ class comentario {
                     }                    
                         $conexion->close();
 
-                    if ($aData == NULL)  
+                    if ($aData == NULL)
+                     {
                         return $aData = array(
                         "error_cod"=>15.1,
-                        "message"=>"Error de consulta",
-                        "info"=>"Error con el parámetro ingresado") ;
+                        "message"=>"Sin comentarios",
+                        "info"=>"");
+                    }                         
                     else
                         return $aData; 
-                }else
+                }else{
                     return $aData = array(
                         "error_cod"=>15.2,
                         "message"=>"Error desconocido",
                         "info"=>"Error con el servicio.") ;
+                }
+                    
                               
         }else            
             return $conexion;

@@ -8,11 +8,11 @@ class usuario {
     
     function __construct() {
 //        include_once dirname(__FILE__) . './Config.php';
-        include_once '/home/appradec/public_html/api/db/db_conexion.php';
-        include_once '/home/appradec/public_html/api/sos/sos_helper.php';
+//        include_once '/home/appradec/public_html/api/db/db_conexion.php';
+//        include_once '/home/appradec/public_html/api/sos/sos_helper.php';
         
-//         include_once '../db../db_conexion.php';
-//        include_once '../sos../sos_helper.php';             
+         include_once '../db../db_conexion.php';
+        include_once '../sos../sos_helper.php';             
         $this->dbc = new conexion(); //General connection      
     }
     
@@ -21,6 +21,7 @@ class usuario {
         $this->time = $aux->genDataTime('Y.m.d H:i:s');
         $this->uid = $aux->genApiKey();
         $this->passHash= $aux->setHash($pass);
+        
         $conexion = $this->dbc->getConexion();
         
             $sql= "INSERT INTO tb_usuario 
@@ -73,16 +74,29 @@ class usuario {
                   
     }#End registrar
         
-    public function login($email,$pass) {
+    public function login($email,$pass,$controller) {
         $aData = array();
         $conexion = $this->dbc->getConexion();
         $aux = new funciones(); 
         
         if (!is_array($conexion)) {
                 $passHash = $aux->setHash($pass);
-                $query = "SELECT * FROM tb_usuario u
-                INNER JOIN tb_ranking r ON u.ran_id=r.ran_id
-                WHERE(usu_mail = '$email' AND usu_pass = '$passHash')";
+                
+                
+                if ($controller == 0) {
+                    
+                   $query = "SELECT * FROM tb_usuario u
+                   INNER JOIN tb_ranking r ON u.ran_id=r.ran_id
+                   WHERE(usu_mail = '$email' AND usu_pass = '$passHash')";
+                     
+                }else {
+                    
+                   $query = "SELECT * FROM tb_usuario u
+                   INNER JOIN tb_ranking r ON u.ran_id=r.ran_id
+                   WHERE(usu_mail = '$email')";
+                }
+                
+               
 
                 $result = $conexion->query($query);
 
@@ -110,8 +124,8 @@ class usuario {
                       if ($aData == NULL)  
                         return $aData = array(
                         "error_cod"=>16.1,
-                        "message"=>"Error de consulta",
-                        "info"=>"Error con el parámetro ingresado") ;
+                        "message"=>"Acceso denegado",
+                        "info"=>"Verifique sus credenciales") ;
                     else
                         return $aData; 
                 }else
@@ -124,7 +138,6 @@ class usuario {
             
     } #End Login
 
-    
 }
 
 ?>

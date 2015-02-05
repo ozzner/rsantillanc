@@ -5,8 +5,8 @@ class conexion
 
     public function __construct()
     {
-        include_once '/home/appradec/public_html/api/db/db_server.php';
-//        include_once '../db../db_server.php';
+//        include_once '/home/appradec/public_html/api/db/db_server.php';
+        include_once '../db../db_server.php';
     }
 
     public function getConexion() {

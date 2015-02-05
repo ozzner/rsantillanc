@@ -3,26 +3,27 @@
 error_reporting(E_ALL & ~E_NOTICE);
 
 #Includes
-include_once '/home/appradec/public_html/api/sos/sos_helper.php';
-include_once '/home/appradec/public_html/api/dao/dao_usuario.php';
-include_once '/home/appradec/public_html/api/dao/dao_comentario.php';
-include_once '/home/appradec/public_html/api/dao/dao_calificacion.php';
-include_once '/home/appradec/public_html/api/dao/dao_categoria.php';
-include_once '/home/appradec/public_html/api/dao/dao_distrito.php';
-include_once '/home/appradec/public_html/api/dao/dao_establecimiento.php';
-include_once '/home/appradec/public_html/api/dao/dao_ranking.php';
-include_once '/home/appradec/public_html/api/dao/dao_coordenadas.php';
+//include_once '/home/appradec/public_html/api/sos/sos_helper.php';
+//include_once '/home/appradec/public_html/api/dao/dao_usuario.php';
+//include_once '/home/appradec/public_html/api/dao/dao_comentario.php';
+//include_once '/home/appradec/public_html/api/dao/dao_calificacion.php';
+//include_once '/home/appradec/public_html/api/dao/dao_categoria.php';
+//include_once '/home/appradec/public_html/api/dao/dao_distrito.php';
+//include_once '/home/appradec/public_html/api/dao/dao_establecimiento.php';
+//include_once '/home/appradec/public_html/api/dao/dao_ranking.php';
+//include_once '/home/appradec/public_html/api/dao/dao_coordenadas.php';
 
 
-//include_once '../sos../sos_helper.php';
-//include_once '../dao../dao_usuario.php';
-//include_once '../dao../dao_comentario.php';
-//include_once '../dao../dao/dao_calificacion.php';
-//include_once '../dao../dao_categoria.php';
-//include_once '../dao../dao_distrito.php';
-//include_once '../dao../dao_establecimiento.php';
-//include_once '../dao../dao_ranking.php';
-//include_once '../dao../dao_coordenadas.php';
+include_once '../sos../sos_helper.php';
+include_once '../dao../dao_usuario.php';
+include_once '../dao../dao_comentario.php';
+include_once '../dao../dao_calificacion.php';
+include_once '../dao../dao_categoria.php';
+include_once '../dao../dao_distrito.php';
+include_once '../dao../dao_establecimiento.php';
+include_once '../dao../dao_ranking.php';
+include_once '../dao../dao_coordenadas.php';
+
 #Variables Globales
 $method = $_SERVER['REQUEST_METHOD'];
 $entity = $_REQUEST['entity'];
@@ -72,7 +73,7 @@ switch ($entity) {
 
             #Metodo GET - Usuario    
             case 'GET':
-                $arrParam2 = array('email' => $_GET['email'], 'password' => $_GET['password']);
+                $arrParam2 = array('email' => $_GET['email'], 'password' => $_GET['password'], 'controller' => $_GET['controller']);
                 $estado = $funcion->chkParmeters($arrParam2);
 
                 if ($estado != 'ok') {
@@ -201,7 +202,7 @@ switch ($entity) {
                             $funcion->setJsonResponse($insert, 500, TRUE);
                             break;
                         default:
-                            $arrJSON["message"] = "Calificacion exitosa!";
+                            $arrJSON["message"] = "¡Calificacion exitosa!";
                             $funcion->setJsonResponse($arrJSON, 201, FALSE);
                             break;
                     }
@@ -223,8 +224,8 @@ switch ($entity) {
                         $funcion->setJsonResponse($arrJSON, 500, TRUE);
                     } else {
                         if ($arrJSON == NULL) {
-                            $arrJSON['message'] = 'Oops!';
-                            $arrJSON['info'] = 'No tiene calificaciones!';
+                            $arrJSON['message'] = 'OK';
+                            $arrJSON['info'] = 'No hay cola';
 
                             $funcion->setJsonResponse($arrJSON, 200, TRUE);
                         } else {
@@ -419,25 +420,42 @@ switch ($entity) {
             #Metodo GET - Establecimiento    
             case 'GET':
 
-                $arrJSON = $dao->listarEstablecimientoALL();
+                $param = array('categoriaID' => $_GET['categoriaID']);
+                $estado = $funcion->chkParmeters($param);
 
-                if (!is_array($arrJSON)) {
-                    $funcion->setJsonResponse($arrJSON, 500, TRUE);
+                if ($estado != 'ok') {
+                    $funcion->setJsonResponse($estado, 400, TRUE);
+                    
                 } else {
-                    if ($arrJSON == NULL) {
-                        $arrJSON['message'] = 'Oops!';
-                        $arrJSON['info'] = 'No se encontro el establecimiento, verificar valores!';
-
-                        $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                    
+                    $arrJSON = $dao->listEstablishmentByCategoryID($_GET['categoriaID']);
+                    
+                    if (!is_array($arrJSON)) {
+                        $funcion->setJsonResponse($arrJSON, 500, TRUE);
+                        
                     } else {
+                        
+                        if ($arrJSON == NULL) {
+                            $arrJSON['message'] = 'Oops!';
+                            $arrJSON['info'] = 'No se encontro el establecimiento, verificar valores!';
 
-                        if ($arrJSON['error_cod'] > 0) {
                             $funcion->setJsonResponse($arrJSON, 200, TRUE);
                         } else {
-                            $funcion->setJsonResponse($arrJSON, 200, FALSE);
+
+                            if ($arrJSON['error_cod'] > 0) {
+                                $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                            } else {
+                                $funcion->setJsonResponse($arrJSON, 200, FALSE);
+                            }
                         }
                     }
                 }
+
+
+
+
+
+
 
                 break;
 

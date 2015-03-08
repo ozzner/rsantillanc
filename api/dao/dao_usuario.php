@@ -84,7 +84,7 @@ class usuario {
             $passHash = $aux->setHash($pass);
 
 
-            if ($controller == 0) {
+            if ($controller == 1) {
 
                 $query = "SELECT * FROM tb_usuario u
                    INNER JOIN tb_ranking r ON u.ran_id=r.ran_id
@@ -120,18 +120,23 @@ class usuario {
                 }
                 $conexion->close();
 
-                if ($aData == NULL)
-                    return $aData = array(
+                if ($aData == NULL){
+                     return $aData = array(
                         "error_cod" => 16.1,
                         "message" => "Acceso denegado",
                         "info" => "Verifique sus credenciales");
-                else
+                }                  
+                else{
                     return $aData;
-            } else
+                }
+                    
+            } else{
                 return $aData = array(
                     "error_cod" => 16.2,
                     "message" => "Error desconocido",
                     "info" => "Error con el servicio.");
+            }
+                
         } else
             return $conexion;
     }

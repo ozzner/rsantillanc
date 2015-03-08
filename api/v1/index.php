@@ -3,26 +3,26 @@
 error_reporting(E_ALL & ~E_NOTICE);
 
 #Includes
-//include_once '/home/appradec/public_html/api/sos/sos_helper.php';
-//include_once '/home/appradec/public_html/api/dao/dao_usuario.php';
-//include_once '/home/appradec/public_html/api/dao/dao_comentario.php';
-//include_once '/home/appradec/public_html/api/dao/dao_calificacion.php';
-//include_once '/home/appradec/public_html/api/dao/dao_categoria.php';
-//include_once '/home/appradec/public_html/api/dao/dao_distrito.php';
-//include_once '/home/appradec/public_html/api/dao/dao_establecimiento.php';
-//include_once '/home/appradec/public_html/api/dao/dao_ranking.php';
-//include_once '/home/appradec/public_html/api/dao/dao_coordenadas.php';
+include_once '/home/appradec/public_html/api/sos/sos_helper.php';
+include_once '/home/appradec/public_html/api/dao/dao_usuario.php';
+include_once '/home/appradec/public_html/api/dao/dao_comentario.php';
+include_once '/home/appradec/public_html/api/dao/dao_calificacion.php';
+include_once '/home/appradec/public_html/api/dao/dao_categoria.php';
+include_once '/home/appradec/public_html/api/dao/dao_distrito.php';
+include_once '/home/appradec/public_html/api/dao/dao_establecimiento.php';
+include_once '/home/appradec/public_html/api/dao/dao_ranking.php';
+include_once '/home/appradec/public_html/api/dao/dao_coordenadas.php';
 
 
-include_once '../sos../sos_helper.php';
-include_once '../dao../dao_usuario.php';
-include_once '../dao../dao_comentario.php';
-include_once '../dao../dao_calificacion.php';
-include_once '../dao../dao_categoria.php';
-include_once '../dao../dao_distrito.php';
-include_once '../dao../dao_establecimiento.php';
-include_once '../dao../dao_ranking.php';
-include_once '../dao../dao_coordenadas.php';
+//include_once '../sos../sos_helper.php';
+//include_once '../dao../dao_usuario.php';
+//include_once '../dao../dao_comentario.php';
+//include_once '../dao../dao_calificacion.php';
+//include_once '../dao../dao_categoria.php';
+//include_once '../dao../dao_distrito.php';
+//include_once '../dao../dao_establecimiento.php';
+//include_once '../dao../dao_ranking.php';
+//include_once '../dao../dao_coordenadas.php';
 
 #Variables Globales
 $method = $_SERVER['REQUEST_METHOD'];
@@ -84,6 +84,7 @@ switch ($entity) {
                     if (!is_array($arrJSON)) {
                         $funcion->setJsonResponse($arrJSON, 500, TRUE);
                     } else {
+                        
                         if ($arrJSON == NULL) {
                             $arrJSON['message'] = 'Invalido';
                             $arrJSON['info'] = 'Dato inexistente!';
@@ -420,7 +421,7 @@ switch ($entity) {
             #Metodo GET - Establecimiento    
             case 'GET':
 
-                $param = array('categoriaID' => $_GET['categoriaID']);
+                $param = array('tag' => $_GET['tag']);
                 $estado = $funcion->chkParmeters($param);
 
                 if ($estado != 'ok') {
@@ -428,34 +429,89 @@ switch ($entity) {
                     
                 } else {
                     
-                    $arrJSON = $dao->listEstablishmentByCategoryID($_GET['categoriaID']);
+                    $tag = $_GET['tag'];
                     
-                    if (!is_array($arrJSON)) {
-                        $funcion->setJsonResponse($arrJSON, 500, TRUE);
+                    switch ($tag) {
                         
-                    } else {
-                        
-                        if ($arrJSON == NULL) {
-                            $arrJSON['message'] = 'Oops!';
-                            $arrJSON['info'] = 'No se encontro el establecimiento, verificar valores!';
+                    case "categoryID":
+                                       
+                $param = array('categoryID' => $_GET['categoryID']);
+                $estado = $funcion->chkParmeters($param);
 
-                            $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                if ($estado != 'ok') {
+                    $funcion->setJsonResponse($estado, 400, TRUE);
+                    
+                }else{
+                    
+                      $arrJSON = $dao->listEstablishmentByCategoryID($_GET['categoryID']);
+
+                        if (!is_array($arrJSON)) {
+                            $funcion->setJsonResponse($arrJSON, 500, TRUE);
+
                         } else {
 
-                            if ($arrJSON['error_cod'] > 0) {
+                            if ($arrJSON == NULL) {
+                                $arrJSON['message'] = 'Oops!';
+                                $arrJSON['info'] = 'No se encontro el establecimiento, verificar valores!';
+
                                 $funcion->setJsonResponse($arrJSON, 200, TRUE);
                             } else {
-                                $funcion->setJsonResponse($arrJSON, 200, FALSE);
+
+                                if ($arrJSON['error_cod'] > 0) {
+                                    $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                                } else {
+                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);
+                                }
                             }
                         }
-                    }
                 }
+                            
+                      
 
+                            break;
+                    case "name":
+                        
+                         $param = array('name' => $_GET['name']);
+                $estado = $funcion->chkParmeters($param);
 
+                if ($estado != 'ok') {
+                    $funcion->setJsonResponse($estado, 400, TRUE);
+                    
+                }else{
+                        $arrJSON = $dao->listEstablishmentByName($_GET['name']);
+  
+                        if (!is_array($arrJSON)) {
+                            $funcion->setJsonResponse($arrJSON, 500, TRUE);
 
+                        } else {
 
+                            if ($arrJSON == NULL) {
+                                $arrJSON['message'] = 'Oops!';
+                                $arrJSON['info'] = 'No se encontro el establecimiento, verificar valores!';
 
+                                $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                            } else {
 
+                                if ($arrJSON['error_cod'] > 0) {
+                                    $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                                } else {
+                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);
+                                }
+                            }
+                        }
+                }
+                        
+                        
+              
+
+                            break;
+
+                        default:
+                            break;
+                    }
+                    
+                                     
+                }
 
                 break;
 

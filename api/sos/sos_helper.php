@@ -44,6 +44,7 @@ class funciones {
               $campos .= $clave .", ";
             }
          }
+         
          if ($error) {
               $arrJson['error_cod']   = 10;
               $arrJson['message'] = "Campo(s) requeridos!";

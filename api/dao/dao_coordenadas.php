@@ -1,43 +1,71 @@
 <?php
+
 error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 
-class coordenadas{
-        
-        function __construct() {
-        
-//        require_once '/home/appradec/public_html/api/db/db_conexion.php';
-//        require_once '/home/appradec/public_html/api/sos/sos_helper.php';
-           require_once '../db../db_conexion.php';
-        require_once '../sos../sos_helper.php';             
+class coordenadas {
+
+    function __construct() {
+
+        require_once '/home/appradec/public_html/api/db/db_conexion.php';
+        require_once '/home/appradec/public_html/api/sos/sos_helper.php';
+//        require_once '../db../db_conexion.php';
+//        require_once '../sos../sos_helper.php';
         $this->dbc = new conexion(); //General connection      
     }
-    
-        public function listarCoordendasByID($coordenadaID) {
+
+    public function listarCoordendasByID($coordenadaID) {
         $aData = array();
         $conexion = $this->dbc->getConexion();
-        
-        if (!is_array($conexion)) {
-                $query= " SELECT * FROM tb_coordenadas WHERE coo_id = '$coordenadaID' ORDER BY coo_id DESC";
-                $result = $conexion->query($query);
 
-                $c = 0;
-                while ($row = $result->fetch_assoc()){
-                    $c++;
-                    $aData["coordinates".$c]["coordinatesID"]=$row['coo_id'];
-                    $aData["coordinates".$c]["latitude"]     =$row['coo_lat'];                                    
-                    $aData["coordinates".$c]["longitude"]    =$row['coo_lon'];   
-                    $aData["coordinates".$c]["reference"]    =utf8_encode($row['coo_ref']); 
-                }                                    
-                    $conexion->close();
-                    
-                if ($aData == NULL)  
-                    return $aData;
-                else
-                    return $aData;               
-        }else            
+        if (!is_array($conexion)) {
+            $query = " SELECT * FROM tb_coordenadas WHERE coo_id = '$coordenadaID' ORDER BY coo_id DESC";
+            $result = $conexion->query($query);
+
+            $c = 0;
+            while ($row = $result->fetch_assoc()) {
+                $c++;
+                $aData["coordinates" . $c]["coordinatesID"] = $row['coo_id'];
+                $aData["coordinates" . $c]["latitude"] = $row['coo_lat'];
+                $aData["coordinates" . $c]["longitude"] = $row['coo_lon'];
+                $aData["coordinates" . $c]["reference"] = utf8_encode($row['coo_ref']);
+            }
+            $conexion->close();
+
+            if ($aData == NULL)
+                return $aData;
+            else
+                return $aData;
+        }else {
             return $conexion;
+        }
+    }
+
+#End Listar_By_ID
+
+    public function storeCoordinates($latitude, $longitude, $referencia) {
+        $conexion = $this->dbc->getConexion();
+
+        if (!is_array($conexion)) {
+            $query = "INSERT INTO tb_coordenadas (coo_lat,coo_lon,coo_ref) values (?,?,?)";
+
+            $stmt = mysqli_prepare($conexion, $query);
+            mysqli_stmt_bind_param($stmt, 'dds', $latitude, $longitude, $referencia);
+            $res = mysqli_stmt_execute($stmt);  //True - False
+
+            if ($res) {
+
+                $last_id = mysql_insert_id(); // last inserted id
+                return $last_id;
+                
+            }else{
+                return "Error al crear coordenadas. " . $latitude . $longitude . $referencia;
+            }
             
-    } #End Listar_By_ID
+        } else {
+            return $conexion;
+        }
+    }
+
 }
 
 ?>

@@ -8,6 +8,7 @@ class establecimiento {
 
         require_once '/home/appradec/public_html/api/db/db_conexion.php';
         require_once '/home/appradec/public_html/api/sos/sos_helper.php';
+        require_once '/home/appradec/public_html/api/dao/dao_coordenadas.php';
 //        require_once '../db../db_conexion.php';
 //        require_once '../sos../sos_helper.php';             
         $this->dbc = new conexion(); //General connection      
@@ -65,7 +66,7 @@ class establecimiento {
                     $aData["establishment" . $c]["rating"]["cal_create_at"] = utf8_encode($row['cal_create_at']);
                     $aData["establishment" . $c]["rating"]["cal_cola"] = utf8_encode($row['cal_cola']);
                 }
-                
+
                 $conexion->close();
 
                 if ($aData == NULL) {
@@ -87,13 +88,12 @@ class establecimiento {
         }
     }
 
-    
     public function listEstablishmentByName($name) {
         $aData = array();
         $conexion = $this->dbc->getConexion();
 
         if (!is_array($conexion)) {
-              $query = "select  * from (SELECT  e.est_id
+            $query = "select  * from (SELECT  e.est_id
 						,e.est_dir
 						,e.est_nom
 						,e.dis_id
@@ -115,7 +115,7 @@ class establecimiento {
                                           WHERE e.est_nom Like '%$name%'
 				ORDER BY (cc.cal_create_at) DESC ) AS tabla
 			GROUP BY(est_id);";
-              
+
             $result = $conexion->query($query);
 
 
@@ -139,7 +139,7 @@ class establecimiento {
                     $aData["establishment" . $c]["rating"]["cal_create_at"] = utf8_encode($row['cal_create_at']);
                     $aData["establishment" . $c]["rating"]["cal_cola"] = utf8_encode($row['cal_cola']);
                 }
-                
+
                 $conexion->close();
 
                 if ($aData == NULL) {
@@ -160,19 +160,38 @@ class establecimiento {
             return $conexion;
         }
     }
-    
-    public function storeEstablishment(){
-        
-    }
-    
-    
-    
-    
-    
-    
-    
 
-    
-    
+    public function storeEstablishmentFromUser($direccion, $nombre, $ruc, $status, $catID, $disID, $latitide, $longitude) {
+        $aData = array();
+        $conexion = $this->dbc->getConexion();
+        $oCorden = new coordenadas();
+
+        if (!is_array($conexion)) {
+            $coo_id = $oCorden->storeCoordinates($latitide, $longitude, $direccion);
+
+            if ($coo_id > 0) {
+                $query = "Insert into tb_establecimiento "
+                        . "(est_dir,est_nom,est_ruc,est_status,cat_id,dis_id,coo_id) "
+                        . "values (?,?,?,?,?,?,?);";
+                
+                $stmt = mysqli_prepare($conexion, $query);
+                mysqli_stmt_bind_param($stmt, "ssisiii",$direccion,$nombre,$ruc,$status,$catID,$disID,$coo_id);
+                $res = mysqli_stmt_execute($stmt);  //True - False
+                
+                if ($res) {
+                   return 1;
+                }else{  
+                  return  -2;
+                }
+                
+            }  else {
+                 return $coo_id;
+            }
+        } else {
+            return $conexion;
+        }
     }
+
+}
+
 ?>

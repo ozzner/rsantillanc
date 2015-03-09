@@ -11,7 +11,7 @@ class funciones {
         $base64 = base64_encode($pass);
         return sha1(self::$inicio.$base64.self::$final);
     }
-      function setJsonResponse($array,$httpCode,$status) {
+      function setJsonResponse($array,$httpCode,$status_error) {
         
         $arrJson = array();       
         $arrJson['httpCode']=$httpCode;

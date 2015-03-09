@@ -45,6 +45,7 @@ class usuario {
                 WHERE(usu_id = '$uid')";
 
             $result = $conexion->query($query);
+            
         } else {
             switch (mysqli_errno($conexion)) {/* SQL - ERRORS */
                 case 1062:

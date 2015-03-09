@@ -12,7 +12,7 @@ include_once '/home/appradec/public_html/api/dao/dao_distrito.php';
 include_once '/home/appradec/public_html/api/dao/dao_establecimiento.php';
 include_once '/home/appradec/public_html/api/dao/dao_ranking.php';
 include_once '/home/appradec/public_html/api/dao/dao_coordenadas.php';
-
+require '../vendor/Slim/Slim.php';
 
 //include_once '../sos../sos_helper.php';
 //include_once '../dao../dao_usuario.php';
@@ -23,13 +23,15 @@ include_once '/home/appradec/public_html/api/dao/dao_coordenadas.php';
 //include_once '../dao../dao_establecimiento.php';
 //include_once '../dao../dao_ranking.php';
 //include_once '../dao../dao_coordenadas.php';
-
 #Variables Globales
 $method = $_SERVER['REQUEST_METHOD'];
 $entity = $_REQUEST['entity'];
 $funcion = new funciones();
-
 $arrJSON = array();
+
+#inicializing slim
+\Slim\Slim::registerAutoloader();
+$app = new Slim\Slim();
 
 switch ($entity) {
 
@@ -51,6 +53,7 @@ switch ($entity) {
                 } else {
                     $insert = $dao->registrarUsuario
                             ($aKeys['email'], $aKeys['sexo'], $aKeys['nombre'], $aKeys['fecha'], $aKeys['apellido1'], $aKeys['apellido2'], $aKeys['password']);
+
                     switch ($insert['error_cod']) {
 
                         case 11.1:
@@ -79,12 +82,12 @@ switch ($entity) {
                 if ($estado != 'ok') {
                     $funcion->setJsonResponse($estado, 400, TRUE);
                 } else {
-                    $arrJSON = $dao->login($_GET['email'], $_GET['password'],$_GET['controller']);
+                    $arrJSON = $dao->login($_GET['email'], $_GET['password'], $_GET['controller']);
 
                     if (!is_array($arrJSON)) {
                         $funcion->setJsonResponse($arrJSON, 500, TRUE);
                     } else {
-                        
+
                         if ($arrJSON == NULL) {
                             $arrJSON['message'] = 'Invalido';
                             $arrJSON['info'] = 'Dato inexistente!';
@@ -426,107 +429,139 @@ switch ($entity) {
 
                 if ($estado != 'ok') {
                     $funcion->setJsonResponse($estado, 400, TRUE);
-                    
                 } else {
-                    
+
                     $tag = $_GET['tag'];
-                    
+
                     switch ($tag) {
-                        
-                    case "categoryID":
-                                       
-                $param = array('categoryID' => $_GET['categoryID']);
-                $estado = $funcion->chkParmeters($param);
 
-                if ($estado != 'ok') {
-                    $funcion->setJsonResponse($estado, 400, TRUE);
-                    
-                }else{
-                    
-                      $arrJSON = $dao->listEstablishmentByCategoryID($_GET['categoryID']);
+                        case "categoryID":
 
-                        if (!is_array($arrJSON)) {
-                            $funcion->setJsonResponse($arrJSON, 500, TRUE);
+                            $param = array('categoryID' => $_GET['categoryID']);
+                            $estado = $funcion->chkParmeters($param);
 
-                        } else {
-
-                            if ($arrJSON == NULL) {
-                                $arrJSON['message'] = 'Oops!';
-                                $arrJSON['info'] = 'No se encontro el establecimiento, verificar valores!';
-
-                                $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                            if ($estado != 'ok') {
+                                $funcion->setJsonResponse($estado, 400, TRUE);
                             } else {
 
-                                if ($arrJSON['error_cod'] > 0) {
-                                    $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                                $arrJSON = $dao->listEstablishmentByCategoryID($_GET['categoryID']);
+
+                                if (!is_array($arrJSON)) {
+                                    $funcion->setJsonResponse($arrJSON, 500, TRUE);
                                 } else {
-                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);
+
+                                    if ($arrJSON == NULL) {
+                                        $arrJSON['message'] = 'Oops!';
+                                        $arrJSON['info'] = 'No se encontro el establecimiento, verificar valores!';
+
+                                        $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                                    } else {
+
+                                        if ($arrJSON['error_cod'] > 0) {
+                                            $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                                        } else {
+                                            $funcion->setJsonResponse($arrJSON, 200, FALSE);
+                                        }
+                                    }
                                 }
                             }
-                        }
-                }
-                            
-                      
+
+
 
                             break;
-                    case "name":
-                        
-                         $param = array('name' => $_GET['name']);
-                $estado = $funcion->chkParmeters($param);
+                        case "name":
 
-                if ($estado != 'ok') {
-                    $funcion->setJsonResponse($estado, 400, TRUE);
-                    
-                }else{
-                        $arrJSON = $dao->listEstablishmentByName($_GET['name']);
-  
-                        if (!is_array($arrJSON)) {
-                            $funcion->setJsonResponse($arrJSON, 500, TRUE);
+                            $param = array('name' => $_GET['name']);
+                            $estado = $funcion->chkParmeters($param);
 
-                        } else {
-
-                            if ($arrJSON == NULL) {
-                                $arrJSON['message'] = 'Oops!';
-                                $arrJSON['info'] = 'No se encontro el establecimiento, verificar valores!';
-
-                                $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                            if ($estado != 'ok') {
+                                $funcion->setJsonResponse($estado, 400, TRUE);
                             } else {
+                                $arrJSON = $dao->listEstablishmentByName($_GET['name']);
 
-                                if ($arrJSON['error_cod'] > 0) {
-                                    $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                                if (!is_array($arrJSON)) {
+                                    $funcion->setJsonResponse($arrJSON, 500, TRUE);
                                 } else {
-                                    $funcion->setJsonResponse($arrJSON, 200, FALSE);
+
+                                    if ($arrJSON == NULL) {
+                                        $arrJSON['message'] = 'Oops!';
+                                        $arrJSON['info'] = 'No se encontro el establecimiento, verificar valores!';
+
+                                        $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                                    } else {
+
+                                        if ($arrJSON['error_cod'] > 0) {
+                                            $funcion->setJsonResponse($arrJSON, 200, TRUE);
+                                        } else {
+                                            $funcion->setJsonResponse($arrJSON, 200, FALSE);
+                                        }
+                                    }
                                 }
                             }
-                        }
-                }
-                        
-                        
-              
+
+
+
 
                             break;
 
                         default:
                             break;
                     }
-                    
-                                     
                 }
 
                 break;
+            case 'POST':
 
-            default:
                 $aJSON['message'] = 'Acceso denegado!';
-                $aJSON['info'] = 'No se permiten otras peticiones';
+                $aJSON['info'] = 'Contacte con el administrador admin@admin.com';
                 $funcion->setJsonResponse($aJSON, 403, TRUE);
-                break;
         }#End Establecimiento
         break;
 
     default :
-        $aJSON['message'] = 'Acceso denegado!';
-        $aJSON['info'] = 'Contacte con el administrador admin@admin.com';
-        $funcion->setJsonResponse($aJSON, 403, TRUE);
-        break;
-}
+
+        $app->post('/establishments', function () use ($app, $dao, $funcion) {
+
+            $dao = new establecimiento();
+            $param = array(
+                'direccion' => $_REQUEST['direccion'],
+                'nombre' => $_REQUEST['nombre'],
+                'estado' => $_REQUEST['estado'],
+                'cat_id' => $_REQUEST['cat_id'],
+                'dis_id' => $_REQUEST['dis_id'],
+                'latitude' => $_REQUEST['latitude'],
+                'longitude' => $_REQUEST['longitude']);
+
+            $estado = $funcion->chkParmeters($param);
+            if ($estado != 'ok') {
+                $funcion->setJsonResponse($estado, 400, TRUE);
+            } else {
+
+                $direccion = $app->request->post('direccion');
+                $nombre = $app->request->post('nombre');
+                $status = $app->request->post('estado');
+                $catID = $app->request->post('cat_id');
+                $disID = $app->request->post('dis_id');
+                $latitide = $app->request->post('latitude');
+                $longitude = $app->request->post('longitude');
+                $ruc = 10458688350; #My ruc.
+
+                $result = $dao->storeEstablishmentFromUser(
+                        $direccion, $nombre, $ruc, $status, $catID, $disID, $latitide, $longitude);
+                if ($result > 1) {
+
+                    $arrJSON['message'] = '¡Muchas gracias!';
+                    $arrJSON['info'] = 'Creado correctamente.';
+                    $funcion->setJsonResponse($arrJSON, 201, FALSE);
+                } else {
+                    $arrJSON['message'] = 'Error';
+                    $arrJSON['info'] = 'Informe. ' . $result;
+                    $funcion->setJsonResponse($arrJSON, 400, TRUE);
+                }
+            }
+        });
+} //End switch
+//
+#Slim RUN
+$app->run();
 ?>
